@@ -12,6 +12,8 @@ namespace PizzaShop.Controllers
 
         public ActionResult Index()
         {
+            string name = "ala";
+
             return View();
         }
     }
