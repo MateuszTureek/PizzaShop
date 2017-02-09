@@ -9,34 +9,64 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div id="Container" class="container">
+        <header class="navbar navbar-pizza">
+            <div class="container-fluid">
+                <div id="Logo" class="pull-left">
+                    @Html.ActionLink("Pizza Shop", "", "",null,new { @class = "navbar-logo" })
+                </div>
+                <div id="OrderNumber" class="navbar-right">
+                    <p>Zamówienia telefoniczne: <span>Dostępne</span></p>
+                    <p>Pod numerem: 555 111 222</p>
+                </div>
+                <div class="clearfix"></div>
+                <nav class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Strona główna", "", "")</li>
+                        <li>@Html.ActionLink("Menu", "", "")</li>
+                        <li>@Html.ActionLink("Galeria", "", "")</li>
+                        <li>@Html.ActionLink("Kontakt", "", "")</li>
+                    </ul>
+                </nav>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+        </header>
+        <main class="container-fluid">
+            <div class="row">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+    <footer>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-offset-1 col-md-5">
+                    <h4 style="margin-left: 10px;">Kontakt:</h4>
+                    <hr />
+                    <div class="col-md-6">
+                        <p><strong>Pizza shop</strong></p>
+                        <p>Adres: 00-000 Fake Kraków</p>
+                        <p>ul. Fake ulica 00</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>E-mail: fakeEmail@@gmail.com</p>
+                        <p>Telefon: 000 000 000</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h4>Godziny otwarcia:</h4>
+                    <hr />
+                    <p>Pon.-Czw.: 12.00 - 22.00</p>
+                    <p>Pt.-Sob.: </p>
+                    <p>Niedź.: 12.00 - 22.00</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>Oferujemy:</h4>
+                    <hr />
+                    <p>Pizza,Sałatki, Dodatki, Napoje,Sosy</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

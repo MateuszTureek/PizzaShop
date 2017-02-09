@@ -8,13 +8,13 @@ namespace PizzaShop.Controllers
 {
     public class HomeController : Controller
     {
-
-
+        /// <summary>
+        /// Main page.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
-            string name = "ala";
-
-            return View();
+            return View("Index");
         }
     }
 }

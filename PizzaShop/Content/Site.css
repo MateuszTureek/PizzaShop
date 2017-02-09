@@ -1,24 +1,105 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    font-size: 12px;
+    font-family: 'DejaVu Sans';
+    background-color: #b1adcf;
 }
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+#Container{
 }
+header{
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
 }
+nav{
+    font-size: 22px;
+}
+nav>ul.navbar-nav{
+    position: relative;
+    bottom: 30px;
+    right: 30px;
+}
+#OrderNumber{
+    color: white;
+    position: relative;
+    right: 60px;
+    top: 20px;
+}
+#OrderNumber span{
+    color: #23b621;
+}
+nav>ul.navbar-nav a:hover{
+    background: white;
+    color: #221D46;
+}
+main{
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+}
+.navbar-pizza{
+    min-height: 150px;
+    background: #312D51;
+    border-radius: 2px 2px 0 0;
+    margin:0;
+}
+.navbar-pizza a{
+    color: #ffffff;
+    text-decoration: none;
+}
+.navbar-pizza a:hover{
+    opacity: 0.7;
+}
+.navbar-logo{
+    font-size: 58px;
+    display: inline-block;
+    margin: 30px 0 0 70px;
+}
+#Carousel img{
+    height: 350px;
+    width: 100%;
+}
+#CarouselSection{
+    margin-bottom: 5px;
+    padding: 0;
+}
+#InformationSection{
+    font-size: 1.3em;
+    background: #312D51;
+    color: white;
+    margin-bottom: 5px;
+}
+#Announcement{
+    color: white;
+    font-size: 1.3em;
+    padding: 0;
+    margin-bottom: 10px;
+}
+#News{
+    background: #312D51;
+    width: 49%;
+    margin-left: 1%;
+}
+#Events{
+    background: #312D51;
+    width: 49%;
+    margin-right: 1%;
+}
+#Events>ul{
+    padding:0;
+}
+#Events>ul li{
+    display: block;
+    list-style: none;
+    padding: 5px;
+}
+.addedDate{
+    font-size: 0.8em;
+    background: #b1adcf;
+    color: black;
+    padding: 2px;
+    display: inline-block;
+    border-radius: 5px;
+}
+.eventContent{
+    font-size: 1.2em;
+}
+footer{
+    color: white;
+    background: #0F0E14;
 }
