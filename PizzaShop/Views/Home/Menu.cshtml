@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div id="PizzaPrezentation" class="col-md-12">
+        <img src="~/Content/Images/pizzaSlide_1.jpg" />
+    </div>
+    <div id="MenuItems" class="col-md-2">
+        <ul class="nav nav-stacked">
+            <li><a href="#">Pizza</a></li>
+            <li><a href="#">Sałatki</a></li>
+            <li><a href="#">Sosy</a></li>
+            <li><a href="#">Napoje</a></li>
+        </ul>
+    </div>
+    <!-- Tutaj partial view z pizza sosami itp -->
+    <div id="MenuItemsResult" class="col-md-10">
+        <table class="table table-hover">
+            <tr>
+                <th>Pizza</th>
+                <th>24cm</th>
+                <th>32cm</th>
+                <th>45cm</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>Pieczarkowa</td>
+                <td>9,00</td>
+                <td>11,00</td>
+                <td>21,00</td>
+                <td>@Html.ActionLink("Szczegóły","","",null)</td>
+            </tr>
+            <tr>
+                <td>Pieczarkowa</td>
+                <td>9,00</td>
+                <td>11,00</td>
+                <td>21,00</td>
+                <td>@Html.ActionLink("Szczegóły", "", "", null)</td>
+            </tr>
+            <tr>
+                <td>Pieczarkowa</td>
+                <td>9,00</td>
+                <td>11,00</td>
+                <td>21,00</td>
+                <td>@Html.ActionLink("Szczegóły", "", "", null)</td>
+            </tr>
+            <tr>
+                <td>Pieczarkowa</td>
+                <td>9,00</td>
+                <td>11,00</td>
+                <td>21,00</td>
+                <td>@Html.ActionLink("Szczegóły", "", "", null)</td>
+            </tr>
+        </table>
+    </div>
+</div>

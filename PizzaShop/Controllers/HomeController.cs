@@ -16,5 +16,33 @@ namespace PizzaShop.Controllers
         {
             return View("Index");
         }
+
+        /// <summary>
+        /// Menu page.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Menu()
+        {
+            return View("Menu");
+        }
+
+
+        /// <summary>
+        /// Gallery page
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Gallery()
+        {
+            return View("Gallery");
+        }
+
+        /// <summary>
+        /// Contact page.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Contact()
+        {
+            return View("Contact");
+        }
     }
 }

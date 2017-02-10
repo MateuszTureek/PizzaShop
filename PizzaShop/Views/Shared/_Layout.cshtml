@@ -13,58 +13,54 @@
         <header class="navbar navbar-pizza">
             <div class="container-fluid">
                 <div id="Logo" class="pull-left">
-                    @Html.ActionLink("Pizza Shop", "", "",null,new { @class = "navbar-logo" })
+                    @Html.ActionLink("Pizza Shop", "", "", null, new { @class = "navbar-logo" })
                 </div>
-                <div id="OrderNumber" class="navbar-right">
+                <div id="OrderPhoneNumber" class="navbar-right">
                     <p>Zamówienia telefoniczne: <span>Dostępne</span></p>
                     <p>Pod numerem: 555 111 222</p>
                 </div>
                 <div class="clearfix"></div>
                 <nav class="navbar-right">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Strona główna", "", "")</li>
-                        <li>@Html.ActionLink("Menu", "", "")</li>
-                        <li>@Html.ActionLink("Galeria", "", "")</li>
-                        <li>@Html.ActionLink("Kontakt", "", "")</li>
+                        <li>@Html.ActionLink("Strona główna", "Index", "Home", null, new { area = "" })</li>
+                        <li>@Html.ActionLink("Menu", "Menu", "Home", null, new { area = "" })</li>
+                        <li>@Html.ActionLink("Galeria", "Gallery", "Home", null, new { area = "" })</li>
+                        <li>@Html.ActionLink("Kontakt", "Contact", "Home", null, new { area = "" })</li>
                     </ul>
                 </nav>
             </div>
         </header>
         <main class="container-fluid">
-            <div class="row">
+            <div>
                 @RenderBody()
             </div>
         </main>
     </div>
-    <footer>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-offset-1 col-md-5">
-                    <h4 style="margin-left: 10px;">Kontakt:</h4>
-                    <hr />
-                    <div class="col-md-6">
-                        <p><strong>Pizza shop</strong></p>
-                        <p>Adres: 00-000 Fake Kraków</p>
-                        <p>ul. Fake ulica 00</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>E-mail: fakeEmail@@gmail.com</p>
-                        <p>Telefon: 000 000 000</p>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <h4>Godziny otwarcia:</h4>
-                    <hr />
-                    <p>Pon.-Czw.: 12.00 - 22.00</p>
-                    <p>Pt.-Sob.: </p>
-                    <p>Niedź.: 12.00 - 22.00</p>
-                </div>
-                <div class="col-md-3">
-                    <h4>Oferujemy:</h4>
-                    <hr />
-                    <p>Pizza,Sałatki, Dodatki, Napoje,Sosy</p>
-                </div>
+    <footer class="col-md-12">
+        <div class="col-md-offset-1 col-md-5">
+            <h4 style="margin-left: 10px;">Kontakt:</h4>
+            <hr />
+            <div class="col-md-6">
+                <p><strong>Pizza shop</strong></p>
+                <p>Adres: 00-000 Fake Kraków</p>
+                <p>ul. Fake ulica 00</p>
             </div>
+            <div class="col-md-6">
+                <p>E-mail: fakeEmail@@gmail.com</p>
+                <p>Telefon: 000 000 000</p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <h4>Godziny otwarcia:</h4>
+            <hr />
+            <p>Pon.-Czw.: 12.00 - 22.00</p>
+            <p>Pt.-Sob.: 12.00 - 24.00</p>
+            <p>Niedź.: 12.00 - 22.00</p>
+        </div>
+        <div class="col-md-3">
+            <h4>Oferujemy:</h4>
+            <hr />
+            <p>Pizza,Sałatki, Napoje,Sosy</p>
         </div>
     </footer>
     @Scripts.Render("~/bundles/jquery")

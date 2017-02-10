@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<shopContact>
+  <contact>
+    <postalCode>00-000</postalCode>
+    <city>Fake Kraków</city>
+    <street>ul. Fake ulica 00</street>
+  </contact>
+  <address>
+    <email>fakeEmail@gmail.com</email>
+    <informationContact>000 000 000</informationContact>
+    <deliveryContact>510 000 111</deliveryContact>
+  </address>
+</shopContact>

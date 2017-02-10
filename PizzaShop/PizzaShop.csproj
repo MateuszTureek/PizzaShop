@@ -198,14 +198,18 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\OpeningHours.xml" />
+    <Content Include="App_Data\ShopContact.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\back_1.jpg" />
     <Content Include="Content\Images\pizzaSlide_2.jpg" />
     <Content Include="Content\Images\pizzaSlide_3.jpg" />
     <Content Include="Content\Images\pizzaSlide_1.jpg" />
+    <Content Include="Content\Images\pizza_1.jpg" />
+    <Content Include="Content\Images\pizza_2.jpg" />
+    <Content Include="Content\Images\pizza_3.jpeg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1038,9 +1042,12 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\Home\Gallery.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Models\PizzaShopModels\Entities\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,81 +1,83 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Strona główna";
 }
 
-<section id="CarouselSection" class="col-md-12">
-    <div id="Carousel" data-interval="4000" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carousel" data-slide="0" class="active"></li>
-            <li data-target="#carousel" data-slide="1"></li>
-            <li data-target="#carousel" data-slide="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="@Url.Content("/Content/Images/pizzaSlide_1.jpg")" />
+<div class="row">
+    <section id="CarouselSection" class="col-md-12">
+        <div id="Carousel" data-interval="4000" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide="0" class="active"></li>
+                <li data-target="#carousel" data-slide="1"></li>
+                <li data-target="#carousel" data-slide="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img src="@Url.Content("/Content/Images/pizzaSlide_1.jpg")" />
+                </div>
+                <div class="item">
+                    <img src="@Url.Content("/Content/Images/pizzaSlide_2.jpg")" />
+                </div>
+                <div class="item">
+                    <img src="@Url.Content("/Content/Images/pizzaSlide_3.jpg")" />
+                </div>
             </div>
-            <div class="item">
-                <img src="@Url.Content("/Content/Images/pizzaSlide_2.jpg")" />
-            </div>
-            <div class="item">
-                <img src="@Url.Content("/Content/Images/pizzaSlide_3.jpg")" />
-            </div>
+            <a href="#Carousel" class="left carousel-control" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a href="#Carousel" class="right carousel-control" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
         </div>
-        <a href="#Carousel" class="left carousel-control" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a href="#Carousel" class="right carousel-control" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-    </div>
-</section>
-<section id="InformationSection" class="col-md-12">
-    <div class="col-md-4">
-        <h3>Menu:</h3>
-        <img src="~/Content/Images/pizzaSlide_3.jpg" style="width: 100%; height: 200px;" />
-        <p>
-            Ut at viverra arcu. Donec sed interdum nulla, eu porttitor lorem. Morbi efficitur sapien ullamcorper lorem vestibulum, ut aliquet turpis consequat. Suspendisse ac nibh non velit scelerisque bibendum. 
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h3>Promocja:</h3>
-        <img src="~/Content/Images/pizzaSlide_1.jpg" style="width: 100%; height: 200px;" />
-        <p>
-            Praesent in placerat risus, et ornare lectus. Praesent turpis tortor, consectetur quis enim id, consequat pharetra velit. Nullam tempor convallis ante at finibus.
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h3>O nas:</h3>
-        <img src="~/Content/Images/pizzaSlide_2.jpg" style="width: 100%; height: 200px;" />
-        <p>
-            Suspendisse sed enim porttitor, auctor urna et, bibendum enim. In imperdiet tellus ex, sed efficitur odio dignissim eget. Ut fermentum ipsum eget lorem ornare condimentum.
-        </p>
-    </div>
-</section>
-<section id="Announcement" class="col-md-12">
-    <dv id="Events" class="col-md-6">
-        <h3><span class="glyphicon glyphicon-tag"></span> Wydarzenia:</h3>
-        <ul>
-            <li>
-                <p class="addedDate">Dodano: @DateTime.Now.ToShortDateString()</p>
-                <p class="eventContent">Treść zdarzenia jeden.</p>
-                <hr />
-            </li>
-            <li>
-                <p class="addedDate">Dodano: @DateTime.Now.AddDays(-3).ToShortDateString()</p>
-                <p class="eventContent">Treść zdarzenia dwa.</p>
-                <hr />
-            </li>
-            <li>
-                <p class="addedDate">Dodano: @DateTime.Now.AddDays(-10).ToShortDateString()</p>
-                <p class="eventContent">Treść zdarzenia trzy.</p>
-                <hr />
-            </li>
-        </ul>
-    </dv>
-    <div id="News" class="col-md-6">
-        <h3>Co nowego:</h3>
-        <p>
-            Quisque nulla nunc, tempor eu lorem non, pharetra laoreet massa. Sed vitae rhoncus sem. Sed ut purus at erat ornare luctus. Nunc iaculis, elit eu aliquam placerat, diam est feugiat urna, et lacinia tellus lectus a sem.
-        </p>
-    </div>
-</section>
+    </section>
+    <section id="InformationSection" class="col-md-12">
+        <div class="col-md-4">
+            <h3>Menu:</h3>
+            <img src="~/Content/Images/pizzaSlide_3.jpg" style="width: 100%; height: 200px;" />
+            <p>
+                Ut at viverra arcu. Donec sed interdum nulla, eu porttitor lorem. Morbi efficitur sapien ullamcorper lorem vestibulum, ut aliquet turpis consequat. Suspendisse ac nibh non velit scelerisque bibendum.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3>Promocja:</h3>
+            <img src="~/Content/Images/pizzaSlide_1.jpg" style="width: 100%; height: 200px;" />
+            <p>
+                Praesent in placerat risus, et ornare lectus. Praesent turpis tortor, consectetur quis enim id, consequat pharetra velit. Nullam tempor convallis ante at finibus.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3>O nas:</h3>
+            <img src="~/Content/Images/pizzaSlide_2.jpg" style="width: 100%; height: 200px;" />
+            <p>
+                Suspendisse sed enim porttitor, auctor urna et, bibendum enim. In imperdiet tellus ex, sed efficitur odio dignissim eget. Ut fermentum ipsum eget lorem ornare condimentum.
+            </p>
+        </div>
+    </section>
+    <section id="Announcement" class="col-md-12">
+        <dv id="Events" class="col-md-6">
+            <h3><span class="glyphicon glyphicon-tag"></span> Wydarzenia:</h3>
+            <ul>
+                <li>
+                    <p class="addedDate">Dodano: @DateTime.Now.ToShortDateString()</p>
+                    <p class="eventContent">Treść zdarzenia jeden.</p>
+                    <hr />
+                </li>
+                <li>
+                    <p class="addedDate">Dodano: @DateTime.Now.AddDays(-3).ToShortDateString()</p>
+                    <p class="eventContent">Treść zdarzenia dwa.</p>
+                    <hr />
+                </li>
+                <li>
+                    <p class="addedDate">Dodano: @DateTime.Now.AddDays(-10).ToShortDateString()</p>
+                    <p>Treść zdarzenia trzy.</p>
+                    <hr />
+                </li>
+            </ul>
+        </dv>
+        <div id="News" class="col-md-6">
+            <h3>Co nowego:</h3>
+            <p>
+                Quisque nulla nunc, tempor eu lorem non, pharetra laoreet massa. Sed vitae rhoncus sem. Sed ut purus at erat ornare luctus. Nunc iaculis, elit eu aliquam placerat, diam est feugiat urna, et lacinia tellus lectus a sem.
+            </p>
+        </div>
+    </section>
+</div>

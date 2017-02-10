@@ -9,20 +9,23 @@ header{
 
 }
 nav{
-    font-size: 22px;
+    font-size: 1.4em;
+    letter-spacing: 2px;
 }
 nav>ul.navbar-nav{
     position: relative;
-    bottom: 30px;
+    bottom: 20px;
     right: 30px;
 }
-#OrderNumber{
+#OrderPhoneNumber{
     color: white;
     position: relative;
     right: 60px;
     top: 20px;
+    letter-spacing: 1px;
+
 }
-#OrderNumber span{
+#OrderPhoneNumber span{
     color: #23b621;
 }
 nav>ul.navbar-nav a:hover{
@@ -49,6 +52,7 @@ main{
     font-size: 58px;
     display: inline-block;
     margin: 30px 0 0 70px;
+    letter-spacing: 5px;
 }
 #Carousel img{
     height: 350px;
@@ -63,12 +67,14 @@ main{
     background: #312D51;
     color: white;
     margin-bottom: 5px;
+    letter-spacing: 1px;
 }
 #Announcement{
     color: white;
     font-size: 1.3em;
     padding: 0;
     margin-bottom: 10px;
+    letter-spacing: 1px;
 }
 #News{
     background: #312D51;
@@ -102,4 +108,43 @@ main{
 footer{
     color: white;
     background: #0F0E14;
+    letter-spacing: 1px;
+}
+#MenuItems{
+    font-size: 1.3em;
+    letter-spacing: 2px;
+    background: #312D51;
+    padding: 0;
+}
+#MenuItems a{
+    color: white;
+}
+#MenuItems a:hover{
+    background: #221D46;
+}
+#PizzaPrezentation{
+    padding: 0;
+}
+#PizzaPrezentation>img{
+    height: 200px;
+    width: 100%;
+}
+#MenuItemsResult{
+    font-size: 1.3em;
+    letter-spacing: 2px;
+    background: white;
+}
+#Gallery{
+    padding: 0;
+    background: #312D51;
+    color: white;
+}
+#GalleryItems img{
+    margin-bottom: 20px;
+}
+#Contact{
+    background: #312D51;
+    padding-bottom: 30px;
+    font-size: 1.3em;
+    color: white;
 }
