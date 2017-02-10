@@ -10,6 +10,10 @@ namespace PizzaShop.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using Repositories.PizzaShopRepositories.Interfaces;
+    using Repositories.PizzaShopRepositories.Classes;
+    using System.Data.Entity;
+    using Models.PizzaShopModels;
 
     public static class NinjectWebCommon 
     {
@@ -61,6 +65,11 @@ namespace PizzaShop.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<DbContext>().To<PizzaShopDbContext>();
+
+            kernel.Bind<IComponentRepository>().To<ComponentRepository>();
+            kernel.Bind<IDrinkRepository>().To<DrinkRepository>();
+            kernel.Bind<IEventRepostory>().To<EventRepository>();
         }        
     }
 }

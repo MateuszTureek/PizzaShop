@@ -185,16 +185,50 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\MovieStore\201702101713311_InitialCreate.cs" />
+    <Compile Include="Migrations\MovieStore\201702101713311_InitialCreate.Designer.cs">
+      <DependentUpon>201702101713311_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\MovieStore\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\Component.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\Drink.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\Event.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\Pizza.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\PizzaSize.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\Salad.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\Sauce.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\SrcPicture.cs" />
+    <Compile Include="Models\PizzaShopModels\PizzaShopDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IChangeRepository.cs" />
+    <Compile Include="Repositories\IGetRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\ComponentRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\DrinkRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\EventRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\PizzaRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\PizzaSizeRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\SaladRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\SauceRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\SrcPictureRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IComponentRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IDrinkRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IEventRepostory.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IPizzaRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IPizzaSizeRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISaladRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISauceRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISrcPictureRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -993,6 +1027,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -1047,13 +1082,20 @@
     <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\PizzaShopModels\Entities\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\MovieStore\201702101713311_InitialCreate.resx">
+      <DependentUpon>201702101713311_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

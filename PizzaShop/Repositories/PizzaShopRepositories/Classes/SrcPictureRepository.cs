@@ -1,0 +1,17 @@
+﻿using PizzaShop.Models.PizzaShopModels.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.Entity;
+using PizzaShop.Repositories.PizzaShopRepositories.Interfaces;
+
+namespace PizzaShop.Repositories.PizzaShopRepositories.Classes
+{
+    public class SrcPictureRepository : Repository<SrcPicture>, IGetRepository<SrcPicture>, IChangeRepository<SrcPicture>, ISrcPictureRepository
+    {
+        public SrcPictureRepository(DbContext context) : base(context)
+        {
+        }
+    }
+}
