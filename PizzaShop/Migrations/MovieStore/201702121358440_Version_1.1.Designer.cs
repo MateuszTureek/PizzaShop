@@ -7,13 +7,13 @@ namespace PizzaShop.Migrations.MovieStore
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class Version_11 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Version_11));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702101713311_InitialCreate"; }
+            get { return "201702121358440_Version_1.1"; }
         }
         
         string IMigrationMetadata.Source

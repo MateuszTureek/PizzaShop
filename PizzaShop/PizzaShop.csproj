@@ -192,42 +192,55 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\MovieStore\201702101713311_InitialCreate.cs" />
-    <Compile Include="Migrations\MovieStore\201702101713311_InitialCreate.Designer.cs">
-      <DependentUpon>201702101713311_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\Cms\201702121811434_Initial.cs" />
+    <Compile Include="Migrations\Cms\201702121811434_Initial.Designer.cs">
+      <DependentUpon>201702121811434_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Cms\Configuration.cs" />
+    <Compile Include="Migrations\MovieStore\201702121150019_Initial.cs" />
+    <Compile Include="Migrations\MovieStore\201702121150019_Initial.Designer.cs">
+      <DependentUpon>201702121150019_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\MovieStore\201702121358440_Version_1.1.cs" />
+    <Compile Include="Migrations\MovieStore\201702121358440_Version_1.1.Designer.cs">
+      <DependentUpon>201702121358440_Version_1.1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MovieStore\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PizzaShopModels\CmsDbContext.cs" />
+    <Compile Include="Models\PizzaShopModels\CmsSampleData.cs" />
+    <Compile Include="Models\PizzaShopModels\CMS\Event.cs" />
+    <Compile Include="Models\PizzaShopModels\CMS\GalleryItem.cs" />
+    <Compile Include="Models\PizzaShopModels\CMS\InformationItem.cs" />
+    <Compile Include="Models\PizzaShopModels\CMS\MenuItem.cs" />
+    <Compile Include="Models\PizzaShopModels\CMS\New.cs" />
+    <Compile Include="Models\PizzaShopModels\CMS\SliderItem.cs" />
     <Compile Include="Models\PizzaShopModels\Entities\Component.cs" />
     <Compile Include="Models\PizzaShopModels\Entities\Drink.cs" />
-    <Compile Include="Models\PizzaShopModels\Entities\Event.cs" />
     <Compile Include="Models\PizzaShopModels\Entities\Pizza.cs" />
     <Compile Include="Models\PizzaShopModels\Entities\PizzaSize.cs" />
+    <Compile Include="Models\PizzaShopModels\Entities\PizzaSizePrice.cs" />
     <Compile Include="Models\PizzaShopModels\Entities\Salad.cs" />
     <Compile Include="Models\PizzaShopModels\Entities\Sauce.cs" />
-    <Compile Include="Models\PizzaShopModels\Entities\SrcPicture.cs" />
     <Compile Include="Models\PizzaShopModels\PizzaShopDbContext.cs" />
+    <Compile Include="Models\PizzaShopModels\PizzaShopSampleData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IChangeRepository.cs" />
     <Compile Include="Repositories\IGetRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\ComponentRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\DrinkRepository.cs" />
-    <Compile Include="Repositories\PizzaShopRepositories\Classes\EventRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\PizzaRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\PizzaSizeRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\SaladRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\SauceRepository.cs" />
-    <Compile Include="Repositories\PizzaShopRepositories\Classes\SrcPictureRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IComponentRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IDrinkRepository.cs" />
-    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IEventRepostory.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IPizzaRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IPizzaSizeRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISaladRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISauceRepository.cs" />
-    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISrcPictureRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1093,8 +1106,14 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\MovieStore\201702101713311_InitialCreate.resx">
-      <DependentUpon>201702101713311_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\Cms\201702121811434_Initial.resx">
+      <DependentUpon>201702121811434_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\MovieStore\201702121150019_Initial.resx">
+      <DependentUpon>201702121150019_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\MovieStore\201702121358440_Version_1.1.resx">
+      <DependentUpon>201702121358440_Version_1.1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

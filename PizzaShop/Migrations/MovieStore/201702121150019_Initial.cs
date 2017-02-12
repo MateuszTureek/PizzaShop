@@ -3,7 +3,7 @@ namespace PizzaShop.Migrations.MovieStore
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -22,12 +22,22 @@ namespace PizzaShop.Migrations.MovieStore
                     {
                         ID = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 50),
-                        Price = c.Decimal(nullable: false, precision: 5, scale: 2),
-                        PSizeID = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("pizza.PizzaSizes", t => t.PSizeID, cascadeDelete: true)
-                .Index(t => t.PSizeID);
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "pizza.PizzaSizePrices",
+                c => new
+                    {
+                        PizzaID = c.Int(nullable: false),
+                        PizzaSizeID = c.Int(nullable: false),
+                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                    })
+                .PrimaryKey(t => new { t.PizzaID, t.PizzaSizeID })
+                .ForeignKey("pizza.PizzaSizes", t => t.PizzaSizeID, cascadeDelete: true)
+                .ForeignKey("pizza.Pizzas", t => t.PizzaID, cascadeDelete: true)
+                .Index(t => t.PizzaID)
+                .Index(t => t.PizzaSizeID);
             
             CreateTable(
                 "pizza.PizzaSizes",
@@ -120,14 +130,16 @@ namespace PizzaShop.Migrations.MovieStore
         {
             DropForeignKey("pizza.SaladComponents", "CompRefID", "pizza.Components");
             DropForeignKey("pizza.SaladComponents", "SaladIDRef", "pizza.Salads");
-            DropForeignKey("pizza.Pizzas", "PSizeID", "pizza.PizzaSizes");
+            DropForeignKey("pizza.PizzaSizePrices", "PizzaID", "pizza.Pizzas");
+            DropForeignKey("pizza.PizzaSizePrices", "PizzaSizeID", "pizza.PizzaSizes");
             DropForeignKey("pizza.PizzaComponents", "CompIDRef", "pizza.Components");
             DropForeignKey("pizza.PizzaComponents", "PizzaIDRef", "pizza.Pizzas");
             DropIndex("pizza.SaladComponents", new[] { "CompRefID" });
             DropIndex("pizza.SaladComponents", new[] { "SaladIDRef" });
             DropIndex("pizza.PizzaComponents", new[] { "CompIDRef" });
             DropIndex("pizza.PizzaComponents", new[] { "PizzaIDRef" });
-            DropIndex("pizza.Pizzas", new[] { "PSizeID" });
+            DropIndex("pizza.PizzaSizePrices", new[] { "PizzaSizeID" });
+            DropIndex("pizza.PizzaSizePrices", new[] { "PizzaID" });
             DropTable("pizza.SaladComponents");
             DropTable("pizza.PizzaComponents");
             DropTable("pizza.SrcPictures");
@@ -136,6 +148,7 @@ namespace PizzaShop.Migrations.MovieStore
             DropTable("pizza.Drinks");
             DropTable("pizza.Salads");
             DropTable("pizza.PizzaSizes");
+            DropTable("pizza.PizzaSizePrices");
             DropTable("pizza.Pizzas");
             DropTable("pizza.Components");
         }

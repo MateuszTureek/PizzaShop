@@ -10,6 +10,6 @@ namespace PizzaShop.Models.PizzaShopModels.Entities
         public int ID { get; set; }
         public string Size { get; set; }
 
-        public virtual ICollection<Pizza> Pizzas { get; set; }
+        public virtual ICollection<PizzaSizePrice> PizzaSizePrices { get; set; }
     }
 }
