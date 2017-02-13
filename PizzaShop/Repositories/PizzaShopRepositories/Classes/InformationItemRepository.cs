@@ -1,4 +1,4 @@
-﻿using PizzaShop.Models.PizzaShopModels.Entities;
+﻿using PizzaShop.Models.PizzaShopModels.CMS;
 using PizzaShop.Repositories.PizzaShopRepositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ using System.Data.Entity;
 
 namespace PizzaShop.Repositories.PizzaShopRepositories.Classes
 {
-    public class ComponentRepository : Repository<Component>, IComponentRepository
+    public class InformationItemRepository : Repository<InformationItem>, IInformationItemRepository
     {
-        public ComponentRepository(DbContext context) : base(context)
+        public InformationItemRepository(DbContext context) : base(context)
         {
         }
     }

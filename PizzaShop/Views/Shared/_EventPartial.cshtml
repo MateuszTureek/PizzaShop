@@ -1,0 +1,13 @@
+﻿
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.Event>
+
+<ul>
+    @foreach (var eventItem in Model)
+    {
+        <li>
+            <p class="addedDate">Dodano: @eventItem.AddedDate</p>
+            <p class="eventContent">@eventItem.Content</p>
+            <hr />
+        </li>
+    }
+</ul>

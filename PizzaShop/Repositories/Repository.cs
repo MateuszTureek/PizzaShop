@@ -20,7 +20,6 @@ namespace PizzaShop.Repositories
         public void Add(T entity)
         {
             _dbSet.Add(entity);
-            _context.SaveChanges();
         }
 
         public List<T> All()
@@ -38,13 +37,16 @@ namespace PizzaShop.Repositories
         public void Remove(T entity)
         {
             _dbSet.Remove(entity);
+        }
+
+        public void Save()
+        {
             _context.SaveChanges();
         }
 
         public void Update(T entity)
         {
             _context.Entry<T>(entity).State = EntityState.Modified;
-            _context.SaveChanges();
         }
     }
 }

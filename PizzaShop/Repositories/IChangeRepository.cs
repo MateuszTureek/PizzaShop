@@ -11,5 +11,6 @@ namespace PizzaShop.Repositories
         void Add(T entity);
         void Remove(T entity);
         void Update(T entity);
+        void Save();
     }
 }

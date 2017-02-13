@@ -14,6 +14,10 @@ namespace PizzaShop.App_Start
     using Repositories.PizzaShopRepositories.Classes;
     using System.Data.Entity;
     using Models.PizzaShopModels;
+    using Models;
+    using Models.PizzaShopModels.CMS;
+    using Repositories;
+    using UnitOfWork;
 
     public static class NinjectWebCommon 
     {
@@ -65,7 +69,15 @@ namespace PizzaShop.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<DbContext>().To<PizzaShopDbContext>();
-        }        
+            kernel.Bind<DbContext>().To<PizzaShopDbContext>().Named("pizzaShop");
+            kernel.Bind<DbContext>().To<CmsDbContext>().Named("cms");
+            kernel.Bind<IGetRepository<MenuItem>>().To<MenuItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+            kernel.Bind<IMenuItemRepository>().To<MenuItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+            kernel.Bind<IGetRepository<InformationItem>>().To<InformationItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+            kernel.Bind<IGetRepository<SliderItem>>().To<SliderItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+            kernel.Bind<IGetRepository<Event>>().To<EventRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+            kernel.Bind<IGetRepository<New>>().To<Repository<New>>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+            kernel.Bind<HomeUnitOfWork>().ToSelf().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+        }
     }
 }

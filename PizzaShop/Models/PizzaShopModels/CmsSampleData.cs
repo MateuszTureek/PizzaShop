@@ -21,7 +21,7 @@ namespace PizzaShop.Models.PizzaShopModels
             List<MenuItem> menuItems = new List<MenuItem>()
             {
                 new MenuItem() { Position=1, Title="Strona główna", ActionName="Index" },
-                new MenuItem() { Position=2, Title="Menu", ActionName="SiteMenu" },
+                new MenuItem() { Position=2, Title="Menu", ActionName="Menu" },
                 new MenuItem() { Position=3, Title="Galeria", ActionName="Gallery" },
                 new MenuItem() { Position=4, Title="Kontakt", ActionName="Contact" }
             };
@@ -44,7 +44,7 @@ namespace PizzaShop.Models.PizzaShopModels
             {
                 new SliderItem() { Position=1,ShortDescription="Slider description 1",PictureUrl="/Content/Images/pizzaSlide_1.jpg" },
                 new SliderItem() { Position=2,ShortDescription="Slider description 2",PictureUrl="/Content/Images/pizzaSlide_2.jpg" },
-                new SliderItem() { Position=3,ShortDescription="Slider description 3",PictureUrl="/Content/Images/pizzaSlide_1.jpg" }
+                new SliderItem() { Position=3,ShortDescription="Slider description 3",PictureUrl="/Content/Images/pizzaSlide_1.jpeg" }
             };
             AddToContext<SliderItem>(sliderItems, context);
             List<New> news = new List<New>()

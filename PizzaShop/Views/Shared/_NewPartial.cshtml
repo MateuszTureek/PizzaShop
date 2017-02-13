@@ -1,0 +1,11 @@
+﻿
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.New>
+
+@foreach(var newItem in Model)
+{
+    <div class="col-md-12">
+        <p class="addedDate">Dodano: @newItem.AddedDate</p>
+        <h4>@newItem.Title</h4>
+        <p>@newItem.Content</p>
+    </div>
+}

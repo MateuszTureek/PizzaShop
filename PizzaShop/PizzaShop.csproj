@@ -231,21 +231,37 @@
     <Compile Include="Repositories\IGetRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\ComponentRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\DrinkRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\EventRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\InformationItemRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\MenuItemRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\PizzaRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\PizzaSizeRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\SaladRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Classes\SauceRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Classes\SliderItemRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IComponentRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IDrinkRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IEventRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IInformationItemRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IMenuItemRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IPizzaRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\IPizzaSizeRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISaladRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISauceRepository.cs" />
+    <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISliderItemRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UnitOfWork\HomeUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\CmsDb.mdf" />
+    <Content Include="App_Data\CmsDb_log.ldf" />
     <Content Include="App_Data\OpeningHours.xml" />
+    <Content Include="App_Data\PizzaShopDb.mdf" />
+    <Content Include="App_Data\PizzaShopDb_log.ldf">
+      <DependentUpon>PizzaShopDb.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\ShopContact.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1052,6 +1068,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\OwnScripts\BasicScripts.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -1093,6 +1110,11 @@
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Home\Gallery.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Shared\_SiteMenuPartial.cshtml" />
+    <Content Include="Views\Shared\_SliderPartial.cshtml" />
+    <Content Include="Views\Shared\_InformationPartial.cshtml" />
+    <Content Include="Views\Shared\_EventPartial.cshtml" />
+    <Content Include="Views\Shared\_NewPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />

@@ -1,4 +1,4 @@
-﻿using PizzaShop.Models.PizzaShopModels.Entities;
+﻿using PizzaShop.Models.PizzaShopModels.CMS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories.PizzaShopRepositories.Interfaces
 {
-    public interface IPizzaSizeRepository : IGetRepository<PizzaSize>, IChangeRepository<PizzaSize>
+    public interface IMenuItemRepository : IGetRepository<MenuItem>, IChangeRepository<MenuItem>
     {
     }
 }

@@ -8,7 +8,7 @@ using PizzaShop.Repositories.PizzaShopRepositories.Interfaces;
 
 namespace PizzaShop.Repositories.PizzaShopRepositories.Classes
 {
-    public class DrinkRepository : Repository<Drink>, IGetRepository<Drink>, IChangeRepository<Drink>, IDrinkRepository
+    public class DrinkRepository : Repository<Drink>, IDrinkRepository
     {
         public DrinkRepository(DbContext context) : base(context)
         {

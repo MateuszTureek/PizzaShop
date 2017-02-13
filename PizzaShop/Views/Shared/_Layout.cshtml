@@ -21,12 +21,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <nav class="navbar-right">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Strona główna", "Index", "Home", null, new { area = "" })</li>
-                        <li>@Html.ActionLink("Menu", "Menu", "Home", null, new { area = "" })</li>
-                        <li>@Html.ActionLink("Galeria", "Gallery", "Home", null, new { area = "" })</li>
-                        <li>@Html.ActionLink("Kontakt", "Contact", "Home", null, new { area = "" })</li>
-                    </ul>
+                    @Html.Action("SiteMenuPartial","Home")
                 </nav>
             </div>
         </header>
@@ -65,6 +60,7 @@
     </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/basic")
     @RenderSection("scripts", required: false)
 </body>
 </html>

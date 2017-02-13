@@ -1,0 +1,8 @@
+﻿@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.MenuItem>
+
+<ul class="nav navbar-nav">
+    @foreach(var menuItem in Model)
+    {
+        <li>@Html.ActionLink(menuItem.Title,menuItem.ActionName,"Home")</li>
+    }
+</ul>
