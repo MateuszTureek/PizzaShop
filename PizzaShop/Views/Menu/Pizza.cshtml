@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Pizza";
+    Layout = "~/Views/Menu/_MenuLayout.cshtml";
+}
+
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.Entities.Pizza>
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-responsive">
+    <tr>
+        <th></th>
+        @foreach (var pizzaSize in Model.Select(s=>s.PizzaSizePrices).First())
+        {
+            <th>@pizzaSize.PizzaSize.Size</th>
+        }
+        <th></th>
+    </tr>
+
+    @using PizzaShop.Models.PizzaShopModels.Entities;
+    @foreach (var pizza in Model)
+    {
+        <tr>
+            <td>
+                <p>@pizza.Name</p>
+                @{
+                    string pom = "";
+                    var components = pizza.Components.ToList();
+                    for (var i = 0; i < components.Count; ++i)
+                    {
+                        pom += components[i].Name + ", ";
+                    }
+                    pom = pom.Remove(pom.Length - 2);
+                    <p class="component">@pom</p>
+                }
+            </td>
+            @foreach(var price in pizza.PizzaSizePrices)
+            {
+                <td>@string.Format("{0:C}", price.Price)</td>
+            }
+            <td>@Html.ActionLink("Szczegóły", "", "", null)</td>
+        </tr>
+    }
+</table>

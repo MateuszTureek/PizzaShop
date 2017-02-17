@@ -37,7 +37,7 @@ namespace PizzaShop.Models.PizzaShopModels
             modelBuilder.Entity<Component>().Property(p => p.Name).HasMaxLength(30).IsRequired();
             modelBuilder.Entity<Salad>().HasKey(k => k.ID);
             modelBuilder.Entity<Salad>().Property(p => p.Name).HasMaxLength(30).IsRequired();
-            modelBuilder.Entity<Salad>().Property(p => p.Price).HasPrecision(5, 3).IsRequired();
+            modelBuilder.Entity<Salad>().Property(p => p.Price).HasPrecision(5, 2).IsRequired();
             modelBuilder.Entity<PizzaSizePrice>().HasKey(k => new { k.PizzaID, k.PizzaSizeID });
             modelBuilder.Entity<PizzaSizePrice>().Property(p => p.Price).IsRequired();
 

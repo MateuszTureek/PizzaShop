@@ -64,7 +64,13 @@ namespace PizzaShop.Models.PizzaShopModels
             {
                 new PizzaSizePrice() { Pizza=pizzas[0],PizzaSize=pizzaSizes[0],Price=9.00M },
                 new PizzaSizePrice() { Pizza=pizzas[1],PizzaSize=pizzaSizes[0],Price=11.50M },
-                new PizzaSizePrice() { Pizza=pizzas[2],PizzaSize=pizzaSizes[0],Price=11.50M }
+                new PizzaSizePrice() { Pizza=pizzas[2],PizzaSize=pizzaSizes[0],Price=11.50M },
+                new PizzaSizePrice() { Pizza=pizzas[0], PizzaSize=pizzaSizes[1],Price=11.00M },
+                new PizzaSizePrice() { Pizza=pizzas[1], PizzaSize=pizzaSizes[1],Price=14.00M },
+                new PizzaSizePrice() { Pizza=pizzas[2], PizzaSize=pizzaSizes[1],Price=14.00M },
+                new PizzaSizePrice() { Pizza=pizzas[0], PizzaSize=pizzaSizes[2],Price=21.00M },
+                new PizzaSizePrice() { Pizza=pizzas[1], PizzaSize=pizzaSizes[2],Price=25.00M },
+                new PizzaSizePrice() { Pizza=pizzas[2], PizzaSize=pizzaSizes[2],Price=25.00M }
             };
             AddToContext<PizzaSizePrice>(pizzaSizePrices, context);
             List<Salad> salads = new List<Salad>()

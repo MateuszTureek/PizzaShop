@@ -1,6 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<openingHours>
-  <option content="Pon.-Czw.">12.00 - 22.00</option>
-  <option content="Pt.-Sob.">12.00 - 24.00</option>
-  <option content="Nieź.">12.00 - 22.00</option>
-</openingHours>
+<?xml version="1.0" encoding="utf-8"?>
+<OpeningHours xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <WorksDays>
+    <Days Name="Pon-Czw.">12.00-22.00</Days>
+    <Days Name="Pt-Sob.">12.00-24.00</Days>
+    <Days Name="Nieź.">12.00-22.00</Days>
+  </WorksDays>
+</OpeningHours>

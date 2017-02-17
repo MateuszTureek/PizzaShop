@@ -36,6 +36,7 @@ namespace PizzaShop.Models.PizzaShopModels
             modelBuilder.Entity<MenuItem>().Property(p => p.ActionName).HasMaxLength(50).IsRequired();
             modelBuilder.Entity<MenuItem>().Property(p => p.Position).IsRequired();
             modelBuilder.Entity<MenuItem>().Property(p => p.Title).HasMaxLength(30).IsRequired();
+            modelBuilder.Entity<MenuItem>().Property(p => p.ControllerName).HasMaxLength(30).IsRequired();
             modelBuilder.Entity<New>().HasKey(k => k.ID);
             modelBuilder.Entity<New>().Property(p => p.AddedDate).IsRequired();
             modelBuilder.Entity<New>().Property(p => p.Content).HasMaxLength(250).IsRequired();

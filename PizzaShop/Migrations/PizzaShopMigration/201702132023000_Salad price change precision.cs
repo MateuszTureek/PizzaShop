@@ -1,9 +1,9 @@
-namespace PizzaShop.Migrations.MovieStore
+namespace PizzaShop.Migrations.PizzaShopMigration
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class Saladpricechangeprecision : DbMigration
     {
         public override void Up()
         {
@@ -54,7 +54,7 @@ namespace PizzaShop.Migrations.MovieStore
                     {
                         ID = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 30),
-                        Price = c.Decimal(nullable: false, precision: 5, scale: 3),
+                        Price = c.Decimal(nullable: false, precision: 5, scale: 2),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -70,31 +70,12 @@ namespace PizzaShop.Migrations.MovieStore
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "pizza.Events",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        Title = c.String(nullable: false, maxLength: 50),
-                        Content = c.String(nullable: false, maxLength: 250),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
                 "pizza.Sauces",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 50),
                         Price = c.Decimal(nullable: false, precision: 5, scale: 2),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "pizza.SrcPictures",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        Src = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -142,9 +123,7 @@ namespace PizzaShop.Migrations.MovieStore
             DropIndex("pizza.PizzaSizePrices", new[] { "PizzaID" });
             DropTable("pizza.SaladComponents");
             DropTable("pizza.PizzaComponents");
-            DropTable("pizza.SrcPictures");
             DropTable("pizza.Sauces");
-            DropTable("pizza.Events");
             DropTable("pizza.Drinks");
             DropTable("pizza.Salads");
             DropTable("pizza.PizzaSizes");

@@ -5,8 +5,9 @@
     @foreach (var eventItem in Model)
     {
         <li>
-            <p class="addedDate">Dodano: @eventItem.AddedDate</p>
-            <p class="eventContent">@eventItem.Content</p>
+            <p class="addedDate">Dodano: @eventItem.AddedDate.ToShortDateString()</p>
+            <h4>@eventItem.Title</h4>
+            <p>@eventItem.Content</p>
             <hr />
         </li>
     }

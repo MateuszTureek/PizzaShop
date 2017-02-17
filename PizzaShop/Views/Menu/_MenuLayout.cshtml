@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div id="Container" class="container">
@@ -21,17 +20,27 @@
                 </div>
                 <div class="clearfix"></div>
                 <nav class="navbar-right">
-                    @Html.Action("SiteMenuPartial","Home")
+                    @Html.Action("SiteMenuPartial", "Home")
                 </nav>
             </div>
         </header>
         <main class="container-fluid">
-            @RenderBody()
+            <div class="row">
+                <div id="PizzaPrezentation" class="col-md-12">
+                    <img src="~/Content/Images/pizzaSlide_1.jpg" />
+                </div>
+                <div id="MenuItems" class="col-md-2">
+                    @Html.Partial("_MenuCategoryPartial",new { area="" })
+                </div>
+                <div id="MenuItemsResult" class="col-md-10">
+                    @RenderBody()
+                </div>
+            </div>
         </main>
     </div>
     <footer class="col-md-12">
-        @Html.Action("ShopContactPartial","Home")
-        @Html.Action("OpeningHoursPartial","Home")
+        @Html.Action("ShopContactPartial", "Home")
+        @Html.Action("OpeningHoursPartial", "Home")
         <div class="col-md-3">
             <h4>Oferujemy:</h4>
             <hr />

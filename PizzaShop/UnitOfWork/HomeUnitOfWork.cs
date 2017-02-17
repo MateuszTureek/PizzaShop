@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using PizzaShop.Models.PizzaShopModels.CMS;
 using PizzaShop.Repositories;
+using PizzaShop.Repositories.PizzaShopRepositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,7 +17,7 @@ namespace PizzaShop.UnitOfWork
         }
 
         [Inject]
-        public IGetRepository<MenuItem> MenuItemRepository { get;  set; }
+        public IMenuItemRepository MenuItemRepository { get;  set; }
 
         [Inject]
         public IGetRepository<InformationItem> InformationItemRepository { get; set; }
@@ -29,5 +30,8 @@ namespace PizzaShop.UnitOfWork
 
         [Inject]
         public IGetRepository<New> NewRepository { get; set; }
+
+        [Inject]
+        public IGetRepository<GalleryItem> GalleryRepository { get; set; }
     }
 }

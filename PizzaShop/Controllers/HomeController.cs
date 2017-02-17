@@ -1,4 +1,6 @@
-﻿using PizzaShop.UnitOfWork;
+﻿using PizzaShop.Services.XmlServices;
+using PizzaShop.Services.XmlServices.XmlModels;
+using PizzaShop.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +12,12 @@ namespace PizzaShop.Controllers
     public class HomeController : Controller
     {
         HomeUnitOfWork _unitOfWork;
+        IXmlManager _xmlManager;
 
-        public HomeController(HomeUnitOfWork unitOfWork)
+        public HomeController(HomeUnitOfWork unitOfWork, IXmlManager xmlManager)
         {
             _unitOfWork = unitOfWork;
+            _xmlManager = xmlManager;
         }
 
         public ActionResult Index()
@@ -21,26 +25,22 @@ namespace PizzaShop.Controllers
             return View("Index");
         }
 
-        public ActionResult Menu()
-        {
-            return View("Menu");
-        }
-
         public ActionResult Gallery()
         {
-            return View("Gallery");
+            var model = _unitOfWork.GalleryRepository.All();
+            return View("Gallery", model);
         }
 
         public ActionResult Contact()
         {
             return View("Contact");
         }
-        
+
         [ChildActionOnly]
         public ActionResult SiteMenuPartial()
         {
             var model = _unitOfWork.MenuItemRepository.All();
-            return PartialView("_SiteMenuPartial",model);
+            return PartialView("_SiteMenuPartial", model);
         }
 
         [ChildActionOnly]
@@ -69,6 +69,18 @@ namespace PizzaShop.Controllers
         {
             var model = _unitOfWork.NewRepository.All();
             return PartialView("_NewPartial", model);
+        }
+
+        public ActionResult ShopContactPartial()
+        {
+            var model = _xmlManager.GetXmlModel<ShopContact>("ShopContact");
+            return PartialView("_ShopContactPartial", model);
+        }
+
+        public ActionResult OpeningHoursPartial()
+        {
+            var model = _xmlManager.GetXmlModel<OpeningHours>("OpeningHours");
+            return PartialView("_OpeningHoursPartial", model);
         }
     }
 }

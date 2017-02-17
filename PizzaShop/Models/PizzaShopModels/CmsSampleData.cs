@@ -20,10 +20,10 @@ namespace PizzaShop.Models.PizzaShopModels
         {
             List<MenuItem> menuItems = new List<MenuItem>()
             {
-                new MenuItem() { Position=1, Title="Strona główna", ActionName="Index" },
-                new MenuItem() { Position=2, Title="Menu", ActionName="Menu" },
-                new MenuItem() { Position=3, Title="Galeria", ActionName="Gallery" },
-                new MenuItem() { Position=4, Title="Kontakt", ActionName="Contact" }
+                new MenuItem() { Position=1, Title="Strona główna", ActionName="Index", ControllerName="Home" },
+                new MenuItem() { Position=2, Title="Menu", ActionName="Pizza", ControllerName="Menu" },
+                new MenuItem() { Position=3, Title="Galeria", ActionName="Gallery", ControllerName="Home" },
+                new MenuItem() { Position=4, Title="Kontakt", ActionName="Contact", ControllerName="Home" }
             };
             AddToContext<MenuItem>(menuItems, context);
             List<Event> events = new List<Event>()
@@ -37,14 +37,14 @@ namespace PizzaShop.Models.PizzaShopModels
             {
                 new InformationItem() { PictureUrl="/Content/Images/pizza_1.jpg", Title="Menu",Content="Ut at viverra arcu. Donec sed interdum nulla, eu porttitor lorem. Morbi efficitur sapien ullamcorper lorem vestibulum, ut aliquet turpis consequat. Suspendisse ac nibh non velit scelerisque bibendum. " },
                 new InformationItem() { PictureUrl="/Content/Images/pizza_2.jpg", Title="Promocja", Content="Praesent in placerat risus, et ornare lectus. Praesent turpis tortor, consectetur quis enim id, consequat pharetra velit. Nullam tempor convallis ante at finibus. " },
-                new InformationItem() { PictureUrl="/Content/Images/pizza_3.jpg", Title="O nas", Content="Suspendisse sed enim porttitor, auctor urna et, bibendum enim. In imperdiet tellus ex, sed efficitur odio dignissim eget. Ut fermentum ipsum eget lorem ornare condimentum. " }
+                new InformationItem() { PictureUrl="/Content/Images/pizza_3.jpeg", Title="O nas", Content="Suspendisse sed enim porttitor, auctor urna et, bibendum enim. In imperdiet tellus ex, sed efficitur odio dignissim eget. Ut fermentum ipsum eget lorem ornare condimentum. " }
             };
             AddToContext<InformationItem>(informationItems, context);
             List<SliderItem> sliderItems = new List<SliderItem>()
             {
                 new SliderItem() { Position=1,ShortDescription="Slider description 1",PictureUrl="/Content/Images/pizzaSlide_1.jpg" },
                 new SliderItem() { Position=2,ShortDescription="Slider description 2",PictureUrl="/Content/Images/pizzaSlide_2.jpg" },
-                new SliderItem() { Position=3,ShortDescription="Slider description 3",PictureUrl="/Content/Images/pizzaSlide_1.jpeg" }
+                new SliderItem() { Position=3,ShortDescription="Slider description 3",PictureUrl="/Content/Images/pizzaSlide_3.jpg" }
             };
             AddToContext<SliderItem>(sliderItems, context);
             List<New> news = new List<New>()

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Sałatki";
+    Layout = "~/Views/Menu/_MenuLayout.cshtml";
+}
+
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.Entities.Salad>
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-responsive">
+    @foreach(var salad in Model)
+    {
+        <tr>
+            <td>@salad.Name</td>
+            <td>@string.Format("{0:C}",salad.Price)</td>
+        </tr>
+    }
+</table>

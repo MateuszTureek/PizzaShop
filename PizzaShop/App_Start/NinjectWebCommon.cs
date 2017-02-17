@@ -18,6 +18,8 @@ namespace PizzaShop.App_Start
     using Models.PizzaShopModels.CMS;
     using Repositories;
     using UnitOfWork;
+    using Models.PizzaShopModels.Entities;
+    using Services.XmlServices;
 
     public static class NinjectWebCommon 
     {
@@ -71,13 +73,22 @@ namespace PizzaShop.App_Start
         {
             kernel.Bind<DbContext>().To<PizzaShopDbContext>().Named("pizzaShop");
             kernel.Bind<DbContext>().To<CmsDbContext>().Named("cms");
-            kernel.Bind<IGetRepository<MenuItem>>().To<MenuItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+
             kernel.Bind<IMenuItemRepository>().To<MenuItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
-            kernel.Bind<IGetRepository<InformationItem>>().To<InformationItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
-            kernel.Bind<IGetRepository<SliderItem>>().To<SliderItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
-            kernel.Bind<IGetRepository<Event>>().To<EventRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
-            kernel.Bind<IGetRepository<New>>().To<Repository<New>>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+            kernel.Bind<IGetRepository<InformationItem>>().To<InformationItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
+            kernel.Bind<IGetRepository<SliderItem>>().To<SliderItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
+            kernel.Bind<IGetRepository<Event>>().To<EventRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
+            kernel.Bind<IGetRepository<New>>().To<Repository<New>>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
+            kernel.Bind<IGetRepository<GalleryItem>>().To<Repository<GalleryItem>>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
             kernel.Bind<HomeUnitOfWork>().ToSelf().WithConstructorArgument(kernel.Get<DbContext>("cms"));
+
+            kernel.Bind<IGetRepository<Pizza>>().To<PizzaRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
+            kernel.Bind<IGetRepository<Salad>>().To<SaladRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
+            kernel.Bind<IGetRepository<Sauce>>().To<SauceRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
+            kernel.Bind<IGetRepository<Drink>>().To<DrinkRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
+            kernel.Bind<MenuUnitOfWork>().ToSelf().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
+
+            kernel.Bind<IXmlManager>().To<XmlManager>();
         }
     }
 }

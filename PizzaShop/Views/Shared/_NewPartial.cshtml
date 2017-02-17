@@ -4,7 +4,7 @@
 @foreach(var newItem in Model)
 {
     <div class="col-md-12">
-        <p class="addedDate">Dodano: @newItem.AddedDate</p>
+        <p class="addedDate">Dodano: @newItem.AddedDate.ToShortDateString()</p>
         <h4>@newItem.Title</h4>
         <p>@newItem.Content</p>
     </div>

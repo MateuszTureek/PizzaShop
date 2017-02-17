@@ -3,6 +3,6 @@
 <ul class="nav navbar-nav">
     @foreach(var menuItem in Model)
     {
-        <li>@Html.ActionLink(menuItem.Title,menuItem.ActionName,"Home")</li>
+        <li>@Html.ActionLink(menuItem.Title,menuItem.ActionName,menuItem.ControllerName)</li>
     }
 </ul>

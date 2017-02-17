@@ -1,4 +1,4 @@
-namespace PizzaShop.Migrations.MovieStore
+namespace PizzaShop.Migrations.PizzaShopMigration
 {
     using System;
     using System.Data.Entity;
@@ -10,8 +10,7 @@ namespace PizzaShop.Migrations.MovieStore
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"Migrations\MovieStore";
-            ContextKey = "PizzaShop.Models.PizzaShopModels.PizzaShopDbContext";
+            MigrationsDirectory = @"Migrations\PizzaShopMigration";
         }
 
         protected override void Seed(PizzaShop.Models.PizzaShopModels.PizzaShopDbContext context)

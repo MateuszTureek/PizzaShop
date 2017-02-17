@@ -189,6 +189,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,16 +197,16 @@
     <Compile Include="Migrations\Cms\201702121811434_Initial.Designer.cs">
       <DependentUpon>201702121811434_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Cms\201702131534148_Add property ControllerName.cs" />
+    <Compile Include="Migrations\Cms\201702131534148_Add property ControllerName.Designer.cs">
+      <DependentUpon>201702131534148_Add property ControllerName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Cms\Configuration.cs" />
-    <Compile Include="Migrations\MovieStore\201702121150019_Initial.cs" />
-    <Compile Include="Migrations\MovieStore\201702121150019_Initial.Designer.cs">
-      <DependentUpon>201702121150019_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\PizzaShopMigration\201702132023000_Salad price change precision.cs" />
+    <Compile Include="Migrations\PizzaShopMigration\201702132023000_Salad price change precision.Designer.cs">
+      <DependentUpon>201702132023000_Salad price change precision.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\MovieStore\201702121358440_Version_1.1.cs" />
-    <Compile Include="Migrations\MovieStore\201702121358440_Version_1.1.Designer.cs">
-      <DependentUpon>201702121358440_Version_1.1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\MovieStore\Configuration.cs" />
+    <Compile Include="Migrations\PizzaShopMigration\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -250,14 +251,20 @@
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISauceRepository.cs" />
     <Compile Include="Repositories\PizzaShopRepositories\Interfaces\ISliderItemRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Services\XmlServices\IXmlManager.cs" />
+    <Compile Include="Services\XmlServices\XmlManager.cs" />
+    <Compile Include="Services\XmlServices\XmlModels\OpeningHours.cs" />
+    <Compile Include="Services\XmlServices\XmlModels\ShopContact.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UnitOfWork\HomeUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\MenuUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\CmsDb.mdf" />
-    <Content Include="App_Data\CmsDb_log.ldf" />
-    <Content Include="App_Data\OpeningHours.xml" />
+    <Content Include="App_Data\CmsDb_log.ldf">
+      <DependentUpon>CmsDb.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\PizzaShopDb.mdf" />
     <Content Include="App_Data\PizzaShopDb_log.ldf">
       <DependentUpon>PizzaShopDb.mdf</DependentUpon>
@@ -1107,7 +1114,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Home\Gallery.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Shared\_SiteMenuPartial.cshtml" />
@@ -1115,6 +1121,14 @@
     <Content Include="Views\Shared\_InformationPartial.cshtml" />
     <Content Include="Views\Shared\_EventPartial.cshtml" />
     <Content Include="Views\Shared\_NewPartial.cshtml" />
+    <Content Include="Views\Menu\_MenuCategoryPartial.cshtml" />
+    <Content Include="Views\Menu\_MenuLayout.cshtml" />
+    <Content Include="Views\Menu\Pizza.cshtml" />
+    <Content Include="Views\Menu\Salad.cshtml" />
+    <Content Include="Views\Menu\Sauce.cshtml" />
+    <Content Include="Views\Menu\Drink.cshtml" />
+    <Content Include="Views\Shared\_ShopContactPartial.cshtml" />
+    <Content Include="Views\Shared\_OpeningHoursPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
@@ -1131,11 +1145,11 @@
     <EmbeddedResource Include="Migrations\Cms\201702121811434_Initial.resx">
       <DependentUpon>201702121811434_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\MovieStore\201702121150019_Initial.resx">
-      <DependentUpon>201702121150019_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\Cms\201702131534148_Add property ControllerName.resx">
+      <DependentUpon>201702131534148_Add property ControllerName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\MovieStore\201702121358440_Version_1.1.resx">
-      <DependentUpon>201702121358440_Version_1.1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\PizzaShopMigration\201702132023000_Salad price change precision.resx">
+      <DependentUpon>201702132023000_Salad price change precision.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
