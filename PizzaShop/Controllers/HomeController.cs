@@ -82,5 +82,12 @@ namespace PizzaShop.Controllers
             var model = _xmlManager.GetXmlModel<OpeningHours>("OpeningHours");
             return PartialView("_OpeningHoursPartial", model);
         }
+
+        public ActionResult DeliveryContact()
+        {
+            var model = _xmlManager.GetXmlModel<ShopContact>("ShopContact");
+            string phone = model.Address.DeliveryContact;
+            return Content(phone);
+        }
     }
 }

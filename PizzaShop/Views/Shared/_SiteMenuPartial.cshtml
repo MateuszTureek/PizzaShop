@@ -1,8 +1,11 @@
-﻿@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.MenuItem>
+﻿
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.MenuItem>
 
-<ul class="nav navbar-nav">
+<ul id="MainNav" class="nav navbar-nav">
     @foreach(var menuItem in Model)
     {
-        <li>@Html.ActionLink(menuItem.Title,menuItem.ActionName,menuItem.ControllerName)</li>
+        <li>
+            @Html.ActionLink(menuItem.Title,menuItem.ActionName,menuItem.ControllerName)
+        </li>
     }
 </ul>

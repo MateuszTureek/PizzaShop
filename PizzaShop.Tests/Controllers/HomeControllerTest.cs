@@ -280,5 +280,26 @@ namespace PizzaShop.Tests.Controllers
             Assert.AreEqual("_OpeningHoursPartial", viewName);
             Assert.NotNull(model);
         }
+
+        [Test]
+        public void DeliveryContact()
+        {
+            DbContext context = Substitute.For<DbContext>();
+            HomeUnitOfWork unityOfWork = Substitute.For<HomeUnitOfWork>(context);
+            IXmlManager xmlManager = Substitute.For<IXmlManager>();
+            xmlManager.GetXmlModel<ShopContact>("ShopContact").Returns(new ShopContact()
+            {
+                Address = new Address() { DeliveryContact = "111 111 111", Email = "fakeEmail@gmail.com", InformationContact = "000 000 000" },
+                Contact = new Contact() { City = "FakeCisty", PostalCode = "22-333", Street = "ul. fake 111" }
+            });
+            HomeController controller = new HomeController(unityOfWork, xmlManager);
+
+            //Act
+            ContentResult result = controller.DeliveryContact() as ContentResult;
+            
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("111 111 111", result.Content);
+        }
     }
 }

@@ -15,7 +15,6 @@
         {
             <th>@pizzaSize.PizzaSize.Size</th>
         }
-        <th></th>
     </tr>
 
     @using PizzaShop.Models.PizzaShopModels.Entities;
@@ -39,7 +38,6 @@
             {
                 <td>@string.Format("{0:C}", price.Price)</td>
             }
-            <td>@Html.ActionLink("Szczegóły", "", "", null)</td>
         </tr>
     }
 </table>

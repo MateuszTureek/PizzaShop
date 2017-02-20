@@ -4,6 +4,7 @@
     background-color: #b1adcf;
 }
 #Container{
+    display: none;
 }
 header{
 
@@ -28,7 +29,8 @@ nav>ul.navbar-nav{
 #OrderPhoneNumber span{
     color: #23b621;
 }
-nav>ul.navbar-nav a:hover{
+nav>ul.navbar-nav a:hover,
+nav>ul.navbar-nav a:focus{
     background: white;
     color: #221D46;
 }
@@ -75,6 +77,7 @@ main{
     padding: 0;
     margin-bottom: 10px;
     letter-spacing: 1px;
+    display: none;
 }
 #News{
     background: #312D51;
@@ -116,7 +119,7 @@ footer{
 #MenuItems a{
     color: white;
 }
-#MenuItems a:hover{
+#MenuItems a:hover,#MenuItems a:focus{
     background: #221D46;
 }
 #PizzaPrezentation{
@@ -148,5 +151,11 @@ footer{
     background: #312D51;
     padding-bottom: 30px;
     font-size: 1.3em;
+    color: white;
+}
+.active{
+    background: #221D46;
+}
+.active a{
     color: white;
 }
