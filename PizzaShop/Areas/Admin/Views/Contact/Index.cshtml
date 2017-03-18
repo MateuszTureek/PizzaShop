@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model PizzaShop.XML.Services.XmlServices.XmlModels.ShopContact
+
+<div class="col-md-12">
+    <h3 class="pull-left">Kontakt sklepu z pizzą.</h3>
+    <div class="pull-right" style="margin-top: 20px;">
+        <button type="button" role="button" class="btn btn-warning btnEdit"
+                data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("Edit","Contact",new { area="admin" })">
+            <span>Edytuj</span>
+        </button>
+    </div>
+    <div class="clearfix"></div>
+    <div id="Contact">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="col-md-5">
+                    @Html.LabelFor(l => l.Contact.City) :
+                </div>
+                <div class="col-md-7">
+                    @Model.Contact.City
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-8">
+                <div class="col-md-5">
+                    @Html.LabelFor(l => l.Contact.PostalCode) :
+                </div>
+                <div class="col-md-7">
+                    @Model.Contact.PostalCode
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-8">
+                <div class="col-md-5">
+                    @Html.LabelFor(l => l.Contact.Street) :
+                </div>
+                <div class="col-md-7">
+                    @Model.Contact.Street
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div id="Address">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="col-md-5">
+                    @Html.LabelFor(l => l.Address.Email) :
+                </div>
+                <div class="col-md-7">
+                    @Model.Address.Email
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-8">
+                <div class="col-md-5">
+                    @Html.LabelFor(l => l.Address.InformationContact) :
+                </div>
+                <div class="col-md-7">
+                    @Model.Address.InformationContact
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-8">
+                <div class="col-md-5">
+                    @Html.LabelFor(l => l.Address.DeliveryContact) :
+                </div>
+                <div class="col-md-7">
+                    @Model.Address.DeliveryContact
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div id="ModalBox" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+    <!-- tutaj ajaxem laduje partial view z okienkiem modal -->
+    <!-- okienka edit i create -->
+</div>

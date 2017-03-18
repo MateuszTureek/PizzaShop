@@ -1,4 +1,6 @@
-﻿using PizzaShop.Models.PizzaShopModels;
+﻿using PizzaShop.CustomModelBinders;
+using PizzaShop.Mappers;
+using PizzaShop.Models.PizzaShopModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,8 +20,15 @@ namespace PizzaShop
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //inititial databases
             Database.SetInitializer<PizzaShopDbContext>(new PizzaShopSampleData());
             Database.SetInitializer<CmsDbContext>(new CmsSampleData());
+            //mapowanie objektów
+            AutoMapperConfig.RegisterMappings();
+            //własny modelbinder służący do wlasnej walidacji pola decimal z ceną
+            //należy jescze obsłużyc javascipt
+            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBilder());
+            ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBilder());
         }
     }
 }

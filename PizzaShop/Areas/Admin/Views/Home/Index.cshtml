@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model PizzaShop.Areas.Admin.Models.ViewModels.MenuCardViewModel
+
+<div id="MenuCard" class="col-md-12">
+    <h3>
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+        Bieżąca oferta na stronie
+    </h3>
+    <div class="panel panel-menuCart">
+        <div class="panel-heading">
+            <h4>Pizza: </h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-responsive table-hover">
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Składniki</th>
+                    @foreach (var pizzaSize in Model.Pizzas.Select(s => s.PizzaSizePrices).First())
+                    {
+                        <th style="min-width: 110px;">@pizzaSize.PizzaSize.Size</th>
+                    }
+                </tr>
+                @foreach (var pizza in Model.Pizzas)
+                {
+                    <tr>
+                        <td>@pizza.Name</td>
+                        <td>
+                            @if (pizza.Components != null && pizza.Components.Count != 0)
+                            {
+                                @Html.Partial("~/Areas/Admin/Views/Component/_ComponentPartial.cshtml", pizza.Components)
+                            }
+                            else
+                            {
+                                <strong class="component">Brak składników.</strong>
+                            }
+                        </td>
+                        @foreach (var price in pizza.PizzaSizePrices)
+                        {
+                            <td>@string.Format("{0:C}", price.Price)</td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-menuCart">
+        <div class="panel-heading">
+            <h4>Sosy:</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-responsive table-hover">
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Cena</th>
+                </tr>
+                @foreach (var sauce in Model.Sauces)
+                {
+                    <tr>
+                        <td>@sauce.Name</td>
+                        <td>@string.Format("{0:C}", sauce.Price)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-menuCart">
+        <div class="panel-heading">
+            <h4>Sałatki:</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-responsive table-hover">
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Cena</th>
+                    <th>Składniki</th>
+                </tr>
+                @foreach (var salad in Model.Salads)
+                {
+                    <tr>
+                        <td>@salad.Name</td>
+                        <td>
+                            @if (salad.Components != null && salad.Components.Count != 0)
+                            {
+                                @Html.Partial("~/Areas/Admin/Views/Component/_ComponentPartial.cshtml", salad.Components)
+                            }
+                            else
+                            {
+                                <stong class="component">Brak składników.</stong>
+                            }
+                        </td>
+                        <td>@string.Format("{0:C}", salad.Price)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-menuCart">
+        <div class="panel-heading">
+            <h4>Napoje:</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-responsive table-hover">
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Cena</th>
+                    <th>Pojemność</th>
+                </tr>
+                @foreach (var drink in Model.Drinks)
+                {
+                    <tr>
+                        <td>@drink.Name</td>
+                        <td>@drink.Capacity l</td>
+                        <td>@string.Format("{0:C}", drink.Price)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

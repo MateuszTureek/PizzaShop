@@ -10,31 +10,34 @@ namespace PizzaShop.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using Repositories.PizzaShopRepositories.Interfaces;
-    using Repositories.PizzaShopRepositories.Classes;
     using System.Data.Entity;
     using Models.PizzaShopModels;
-    using Models;
-    using Models.PizzaShopModels.CMS;
-    using Repositories;
+    using Repositories.CMS.Interfaces;
+    using Repositories.CMS.Classes;
+    using Services.Cms.Interfaces;
+    using Services.Cms.Classes;
+    using Repositories.Shop.Interfaces;
+    using Repositories.Shop.Classes;
     using UnitOfWork;
-    using Models.PizzaShopModels.Entities;
-    using Services.XmlServices;
+    using Services.shop.Classes;
+    using Services.shop.Interfaces;
+    using XML.XmlServices;
+    using XML.Services.XmlServices;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -42,7 +45,7 @@ namespace PizzaShop.App_Start
         {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -71,24 +74,36 @@ namespace PizzaShop.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<DbContext>().To<PizzaShopDbContext>().Named("pizzaShop");
-            kernel.Bind<DbContext>().To<CmsDbContext>().Named("cms");
-
-            kernel.Bind<IMenuItemRepository>().To<MenuItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
-            kernel.Bind<IGetRepository<InformationItem>>().To<InformationItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
-            kernel.Bind<IGetRepository<SliderItem>>().To<SliderItemRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
-            kernel.Bind<IGetRepository<Event>>().To<EventRepository>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
-            kernel.Bind<IGetRepository<New>>().To<Repository<New>>().WithConstructorArgument(kernel.Get<DbContext>("cms")); ;
-            kernel.Bind<IGetRepository<GalleryItem>>().To<Repository<GalleryItem>>().WithConstructorArgument(kernel.Get<DbContext>("cms"));
-            kernel.Bind<HomeUnitOfWork>().ToSelf().WithConstructorArgument(kernel.Get<DbContext>("cms"));
-
-            kernel.Bind<IGetRepository<Pizza>>().To<PizzaRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
-            kernel.Bind<IGetRepository<Salad>>().To<SaladRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
-            kernel.Bind<IGetRepository<Sauce>>().To<SauceRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
-            kernel.Bind<IGetRepository<Drink>>().To<DrinkRepository>().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
-            kernel.Bind<MenuUnitOfWork>().ToSelf().WithConstructorArgument(kernel.Get<DbContext>("pizzaShop"));
-
+            //XML
             kernel.Bind<IXmlManager>().To<XmlManager>();
+            //CONTEXTS
+            kernel.Bind(typeof(DbContext)).To(typeof(CmsDbContext)).Named("cms");
+            kernel.Bind(typeof(DbContext)).To(typeof(PizzaShopDbContext)).Named("shop");
+            var cmsDbContext = kernel.Get<DbContext>("cms");
+            var pizzaShopDbContext = kernel.Get<DbContext>("shop");
+            //UNIT OF WORK
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>().Named("cmsUnit").WithConstructorArgument(cmsDbContext);
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>().Named("shopUnit").WithConstructorArgument(pizzaShopDbContext);
+            //SERVICES
+            kernel.Bind<IHomePresentationService>().To<HomePresentationService>().WithConstructorArgument(cmsDbContext);
+            kernel.Bind<IMenuCardService>().To<MenuCardService>();
+            kernel.Bind<IPizzaService>().To<PizzaService>();
+            //REPOSITORIES
+            //cms
+            kernel.Bind<ISliderItemRepository>().To<SliderItemRepository>().WithConstructorArgument(cmsDbContext);
+            kernel.Bind<IGalleryItemRepository>().To<GalleryItemRepository>().WithConstructorArgument(cmsDbContext);
+            kernel.Bind<IMenuItemRepository>().To<MenuItemRepository>().WithConstructorArgument(cmsDbContext);
+            kernel.Bind<IInformationItemRepository>().To<InformationItemRepository>().WithConstructorArgument(cmsDbContext);
+            kernel.Bind<INewsRepository>().To<NewsRepository>().WithConstructorArgument(cmsDbContext);
+            kernel.Bind<IEventRepository>().To<EventRepository>().WithConstructorArgument(cmsDbContext);
+            //shop
+            kernel.Bind<IDrinkRepository>().To<DrinkRepository>().WithConstructorArgument(pizzaShopDbContext);
+            kernel.Bind<IPizzaRepository>().To<PizzaRepository>().WithConstructorArgument(pizzaShopDbContext);
+            kernel.Bind<ISaladRepository>().To<SaladRepository>().WithConstructorArgument(pizzaShopDbContext);
+            kernel.Bind<ISauceRepository>().To<SauceRepository>().WithConstructorArgument(pizzaShopDbContext);
+            kernel.Bind<IPizzaSizeRepository>().To<PizzaSizeRepository>().WithConstructorArgument(pizzaShopDbContext);
+            kernel.Bind<IPizzaSizePriceRepository>().To<PizzaSizePriceRepository>().WithConstructorArgument(pizzaShopDbContext);
+            kernel.Bind<IComponentRepository>().To<ComponentRepository>().WithConstructorArgument(pizzaShopDbContext);
         }
     }
 }

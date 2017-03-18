@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/adminCss")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <div id="Container" class="container-fluid">
+            <header class="navbar navbar-admin">
+                <div id="Logo">
+                    @Html.ActionLink("Admin Panel","Index","Home",new { area = "admin" },new { @class = "navbar-brand" })
+                </div>
+                <ul id="SettingMenu" class="navbar-right nav navbar-nav">
+                    <li>
+                        @*Html.ActionLink(User.Identity.Name,"","")*@
+                        <a href="#">
+                            Witaj:
+                            <span style="letter-spacing: 1px;">matiaz17@gmail.com</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-log-out"></span>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+            <main>
+                <nav class="col-md-2">
+                    <ul id="AdminMenuCategories" class="nav nav-stacked">
+                        <li class="navHeading">
+                            <img src="~/Content/Images/pizzaSlide_3.jpg" />
+                        </li>
+                        <li>@Html.ActionLink("Pizza Shop", "Index", "Home", new { area = "" },new { @class= "homeLink" })</li>
+                        <li>@Html.ActionLink("Główna", "Index", "Home", new { area = "admin" }, null)</li>
+                        <li>@Html.ActionLink("Nawigacja główna", "Index", "MenuItem", new { area = "admin" }, null)</li>
+                        <li>@Html.ActionLink("Slider", "Index", "SliderItem", new { area = "admin" }, null)</li>
+                        <li>@Html.ActionLink("Informacje główne", "Index", "InformationItem", new { area = "admin" }, null)</li>
+                        <li>@Html.ActionLink("Wydarzenia", "Index", "Event", new { area = "admin" }, null)</li>
+                        <li>@Html.ActionLink("Nowości", "Index", "News", new { area = "admin" }, null)</li>
+                        <li class="dropdown">
+                                <a href="#" type="button" role="button">
+                                    Menu
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="nav list-unstyled sublist hide">
+                                    <li>@Html.ActionLink("Pizza", "Index", "Pizza", new { area = "admin" }, null)</li>
+                                    <li>@Html.ActionLink("Sosy", "Index", "Sauce", new { area = "admin" }, null)</li>
+                                    <li>@Html.ActionLink("Sałatki", "Index", "Salad", new { area = "admin" }, null)</li>
+                                    <li>@Html.ActionLink("Napoje", "Index", "Drink", new { area = "admin" }, null)</li>
+                                </ul>
+                        </li>
+                        <li>@Html.ActionLink("Kontakt", "Index", "Contact", new { area = "admin" }, null)</li>
+                    </ul>
+                </nav>
+                <section id="MainSection" class="col-md-10">
+                    <div class="row">
+                        @RenderBody()
+                    </div>
+                </section>
+            </main>
+        </div>
+    </body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryUI")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/admin")
+</html>

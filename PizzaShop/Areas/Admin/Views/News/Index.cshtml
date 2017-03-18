@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.News>
+
+<div class="col-md-12">
+    <div class="col-md-12">
+        <h3 class="h3Title pull-left">Nowości</h3>
+        <button data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("CreatePartial","News",new { area = "admin" })"
+                type="button" class="btnCreate pull-right col-md-1 btn btn-success">
+            <span>Nowe</span>
+        </button>
+    </div>
+    <div id="News" class="row">
+        <div class="col-md-12">
+            @foreach (var newItem in Model)
+            {
+                <div class="col-md-4">
+                    <div class="panel panel-menuCart">
+                        <div class="panel-heading">
+                            <div class="panel-title pull-left">
+                                <h4>@newItem.Title</h4>
+                                <span style="font-size: 0.8em;">Pozycja: @newItem.Position</span>
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" role="button" data-id="@newItem.ID" class="btnEdit btn btn-warning btn-sm"
+                                        data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("Edit","News",new { area = "admin" })">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="button" role="button" data-id="@newItem.ID" class="btnDelete btn btn-danger btn-sm"
+                                        data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("Delete","News",new { area = "admin" })">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body">
+                            <p class="newsContent">
+                                @newItem.Content
+                            </p>
+                        </div>
+                        <div class="panel-footer">
+                            <p><strong>Godz.:</strong> @newItem.AddedDate.ToShortTimeString()</p>
+                            <p><strong>Data.:</strong> @newItem.AddedDate.ToShortDateString()</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="ModalBox" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+    <!-- tutaj ajaxem laduje partial view z okienkiem modal -->
+    <!-- okienka edit i create -->
+</div>

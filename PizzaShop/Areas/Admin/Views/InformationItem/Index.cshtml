@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.InformationItem>
+
+<div class="col-md-12">
+    <div class="col-md-12">    
+        <h3 class="h3Title pull-left">Informacje główne</h3>
+        <button data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("CreatePartial","InformationItem",new { area="admin" })"
+                type="button" class="btnCreate pull-right col-md-1 btn btn-success">
+            <span>Nowy</span>
+        </button>
+    </div>
+    <div id="Information">
+        <ul class="list-inline">
+            @foreach (var infoItem in Model)
+            {
+                <li>
+                    <div class="col-md-4">
+                        <img src="@infoItem.PictureUrl" class="img-responsive" />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="pull-left">
+                            <h3 style="margin-top: 0;">@infoItem.Title</h3>
+                            <h4>Pozycja: @infoItem.Position</h4>
+                        </div>
+                        <div class="pull-right col-md-1">
+                            <button class="btn btn-danger btnDelete" type="button" role="button" data-toggle="modal" data-target="#ModalBox"
+                                    data-ajax-url="@Url.Action("Delete","InformationItem",new { area = "admin" })" data-id="@infoItem.ID">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                        <div class="pull-right col-md-1">
+                            <button class="btn btn-default btnEdit" type="button" role="button" data-toggle="modal" data-target="#ModalBox"
+                                    data-ajax-url="@Url.Action("Edit","InformationItem",new { area = "admin" })" data-id="@infoItem.ID">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <p>@infoItem.Content</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div id="ModalBox" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+    <!-- tutaj ajaxem laduje partial view z okienkiem modal -->
+    <!-- okienka edit i create -->
+</div>

@@ -1,47 +1,67 @@
-﻿
+﻿/* READY */
 $(document).ready(function () {
-    siteModule.init();
+    $('#Container').toggle('fade', '500');
+    carouselHandling.init();
+    //naviagtion.js
+    //=============
+    var navHandlingMainNav = { navHandling: navigationHandling };
+    var navHandlingMenuNav = { navHandling: navigationHandling };
+    navHandlingMainNav.navHandling.init({
+        $navItem: $('#MainNav').children('li')
+    });
+    navHandlingMenuNav.navHandling.init({
+        $navItem: $('#MenuItems').find('li')
+    });
+    //============
+    var announcementBox = {
+        showBox: showBox
+    };
+    announcementBox.showBox.init({
+        box: $('#Announcement'),
+        animType: 'drop',
+        duration: '500',
+        scrollTop: '230'
+    });
 });
 
-var siteModule = (function () {
-    //var
-    var $CarouselSection = $('#Carousel').find('div').filter('.item');
-    var $MainNavLi = $("#MainNav").children('li');
-    var $MenuLi = $('#MenuItems').find('li');
-    var $LiList = $($MainNavLi).add($MenuLi);
-    //func
-    var init = function ()   {
-        //efekt pojawienia się strony
-        $('#Container').toggle('fade', 500);
-        //ustawienie pierwszej pozycji karuzeli na aktuktywną (class='active')
-        $($CarouselSection).first().addClass('active');
-        //obsługa oznaczania linków jako aktywnych (class='active')
-        setActiveLink($LiList);
-        $(window).on('scroll.my', function (e) {
-            if ($(document).scrollTop() > 250) { showNews(); $(window).off('scroll.my'); }
-        });
-    };
-    //dodanie klasy active do podanego elementu z listy
-    var setActiveLink = function ($liList) {
-        var currentHref = window.location.href;
-        $($liList).each(function (index, $li) {
-            var linkHref = $($li).children('a').attr('href');
-            if (currentHref.indexOf(linkHref) !== -1 && linkHref !== '/') {
-                $($li).siblings().removeClass('active');
-                $($li).addClass('active');
-                return;
-            }
-            if (currentHref.lastIndexOf(linkHref) === currentHref.length - 1) {
-                $($LiList).first().addClass('active');
-            }
-        });
-    };
-    var showNews = function () {
-        var $Announcement = $("#Announcement");
-        $($Announcement).toggle('drop', 1000);
-    };
-    //public
-    return {
-        init: init
-    };
-})();
+//obsługa karuzeli
+var carouselHandling = {
+    init: function (settings) {
+        carouselHandling.config = {
+            $carousel: $('#Carousel'),
+            $items: $('#Carousel').find('div').filter('.item'),
+            activeClass: 'active'
+        };
+        $.extend(carouselHandling.config, settings);
+        carouselHandling.activeFirstItem();
+    },
+    //ustawienie pierwszego elementu jako aktywny
+    activeFirstItem: function () {
+        carouselHandling.config.$items.first().addClass(carouselHandling.config.activeClass);
+    }
+};
+
+//wymagana biblioteka jquery ui
+//pokazywanie box o określonym id, wzgledem scroll top
+var showBox = {
+    init: function (settings) {
+        showBox.config = {
+            box: $('#Box'),
+            animType: 'fade',
+            duration: '500',
+            scrollTop: '0'
+        };
+        $.extend(showBox.config, settings);
+        //register events
+        $(window).on('scroll.myScrollEvent', showBox.onScroll);
+    },
+    show: function () {
+        showBox.config.box.toggle(showBox.config.animType, showBox.config.duration);
+    },
+    onScroll: function (e) {
+        if ($(document).scrollTop() > showBox.config.scrollTop) {
+            showBox.show();
+            $(window).off('scroll.myScrollEvent');
+        }
+    }
+};

@@ -1,0 +1,191 @@
+﻿body {
+    font-size: 12px;
+    font-family: 'DejaVu Sans';
+    background: #e2e2e2;
+}
+.navbar{
+    border-radius: 0 0 0 0;
+}
+.navbar-inverse{
+    margin:0;
+}
+.navbar-brand{
+    font-size: 2em;
+    margin-left: 10px;
+}
+.navbar-admin{
+    background: #160941;
+    margin:0;
+}
+.navbar-admin a{
+    color: #e2e2e2;
+}
+nav{
+    line-height: 20px;
+    font-size: 1.2em;
+    padding: 0;
+    background: white;
+}
+.navHeading>img{
+    margin-top: 5px;
+    width: 100%;
+    height: 100px;
+}
+nav a{
+    color: #222;
+    font-weight: 500;
+}
+#SettingMenu{
+    font-size: 1.3em;
+    margin-right: 20px;
+}
+#SettingMenu a:hover{
+    background: #2a1863;
+}
+#MainSection{
+    background: #e2e2e2;
+}
+#MainSection>div:first-child{
+    background: white;
+    margin-left: 1px;
+}
+#MenuCard{
+    font-size: 1.3em;
+    letter-spacing: 1px;
+}
+#MenuCard td{
+    line-height: 20px;
+}
+.panel-menuCart{
+    border-color: #2a1863;
+}
+.panel-menuCart .panel-footer{
+    font-size: 0.9em;
+}
+.panel-menuCart .panel-heading{
+    color: white;
+    background:#2a1863;
+}
+#MenuCard>h3:first-child{
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+.h3Title{
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+#Table tr{
+    font-size: 1.4em;
+    margin-bottom: 20px;
+}
+#Table td{
+    line-height: 25px;
+}
+#Table.table tr:first-child{
+    background: #160941;
+    color: white;
+}
+.sliderImg{
+    height: 120px;
+    width: 70%;
+}
+#Information{
+    font-size: 1.3em;
+    line-height: 25px;
+}
+#News{
+    font-size: 1.2em;
+    letter-spacing: 1px;
+}
+#Events, .newsContent, .eventsContent {
+    font-size: 1.2em;
+    letter-spacing: 0;
+}
+.eventsContent{
+    margin-top: 10px;
+}
+#Contact,#Address{
+    font-size: 1.2em;
+    letter-spacing: 1px;
+    line-height: 30px;
+    margin: 20px 0 20px 0;
+    padding: 30px 20px 20px 20px;
+    display: block;
+    border: 1px solid #2a1863;
+}
+.active{
+    background: #2a1863;
+}
+.active a{
+    color: white;
+}
+.btn-admin{
+    background: #160941;
+    color: white;
+}
+.btn-admin:hover{
+    color: #cac9c9;
+}
+#ModalBox{
+    font-size: 1.1em;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+}
+.form-group div{
+    margin-bottom: 10px;
+}
+.btnCreate{
+    margin-top: 20px;
+    font-size: 1.3em;
+}
+.sublist{
+    margin-left: 5px;
+    font-size: 0.9em;
+    box-shadow: 0 0 0 0 5px black;
+}
+#AdminMenuCategories a:focus {
+    background: white;
+    color: #222;
+}
+#AdminMenuCategories a:hover{
+    background: #2a1863;
+    color: white;
+}
+.homeLink{
+    font-weight: 700;
+    color:#312D51;
+}
+.modal-menu,.modal-shopContact{
+    width: 800px;
+}
+.component{
+    font-size: 0.85em;
+}
+.draggable{
+    font-size: 0.9em;
+    z-index: 1;
+    margin-left: 5px;
+}
+#Droppable{
+    min-height: 100px;
+    padding: 10px;
+}
+.droppable{
+    background: #d3caee;
+    border: 1px dotted black;
+}
+.onDrag{
+    border: 1px dotted black;
+}
+.droped{
+    padding: 5px;
+    display: block;
+    font-size: 1.1em;
+    color: #222;
+    border-bottom: 1px solid grey;
+}
+.shopContact{
+    margin-bottom: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}

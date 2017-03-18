@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.SliderItem>
+
+<div class="col-md-12">
+    <h3 class="h3Title pull-left">Elementy slider'a</h3>
+    <button data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("CreatePartial","SliderItem",new { area="admin" })"
+            type="button" class="btnCreate pull-right col-md-1 btn btn-success">
+        <span>Nowy</span>
+    </button>
+    <table id="Table" class="table table-responsive table-hover">
+        <tr>
+            <th>Zdjęcie</th>
+            <th>Pozycja</th>
+            <th>Opis zdjęcia</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var sliderItem in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@sliderItem.PictureUrl" class="img-responsive sliderImg" />
+                </td>
+                <td>@sliderItem.Position</td>
+                <td>@sliderItem.ShortDescription</td>
+                <td>
+                    <button data-ajax-url="@Url.Action("Edit","SliderItem",new { area = "admin" })" data-id="@sliderItem.ID"
+                            data-toggle="modal" data-target="#ModalBox" type="button" role="button" class="btnEdit btn btn-warning">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </td>
+                <td>
+                    <button data-id="@sliderItem.ID" data-ajax-url="@Url.Action("Delete","SliderItem",new { area="admin" })"
+                            data-toggle="modal" data-target="#ModalBox" type="button" role="button" class="btnDelete btn btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div id="ModalBox" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+    <!-- tutaj ajaxem laduje partial view z okienkiem modal -->
+    <!-- okienka edit i create -->
+</div>

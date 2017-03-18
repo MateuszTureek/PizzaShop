@@ -11,5 +11,6 @@ namespace PizzaShop.Models.PizzaShopModels.CMS
         public string Title { get; set; }
         public string PictureUrl { get; set; }
         public string Content { get; set; }
+        public int Position { get; set; }
     }
 }

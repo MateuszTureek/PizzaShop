@@ -1,4 +1,4 @@
-﻿using PizzaShop.UnitOfWork;
+﻿using PizzaShop.Services.shop.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +9,34 @@ namespace PizzaShop.Controllers
 {
     public class MenuController : Controller
     {
-        readonly MenuUnitOfWork _unitOfWork;
+        readonly IMenuCardService _service;
 
-        public MenuController(MenuUnitOfWork unitOfWork)
+        public MenuController(IMenuCardService service)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
         public ActionResult Pizza()
         {
-            var model = _unitOfWork.PizzaRepository.All();
+            var model = _service.GetAllPizzas();
             return View("Pizza", model);
         }
 
         public ActionResult Salad()
         {
-            var model = _unitOfWork.SaladRepository.All();
+            var model = _service.GetAllSalads();
             return View("Salad", model);
         }
 
         public ActionResult Sauce()
         {
-            var model = _unitOfWork.SauceRepository.All();
+            var model = _service.GetAllSauces();
             return View("Sauce", model);
         }
 
         public ActionResult Drink()
         {
-            var model = _unitOfWork.DrinkRepository.All();
+            var model = _service.GetAllDrinks();
             return View("Drink", model);
         }
     }

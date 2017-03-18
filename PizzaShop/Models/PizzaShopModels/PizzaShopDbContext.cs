@@ -56,6 +56,5 @@ namespace PizzaShop.Models.PizzaShopModels
 
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

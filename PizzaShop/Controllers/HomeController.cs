@@ -1,6 +1,6 @@
-﻿using PizzaShop.Services.XmlServices;
-using PizzaShop.Services.XmlServices.XmlModels;
-using PizzaShop.UnitOfWork;
+﻿using PizzaShop.Services.Cms.Interfaces;
+using PizzaShop.XML.Services.XmlServices;
+using PizzaShop.XML.Services.XmlServices.XmlModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +11,12 @@ namespace PizzaShop.Controllers
 {
     public class HomeController : Controller
     {
-        HomeUnitOfWork _unitOfWork;
-        IXmlManager _xmlManager;
+        readonly IHomePresentationService _service;
+        readonly IXmlManager _xmlManager;
 
-        public HomeController(HomeUnitOfWork unitOfWork, IXmlManager xmlManager)
+        public HomeController(IHomePresentationService service, IXmlManager xmlManager)
         {
-            _unitOfWork = unitOfWork;
+            _service = service;
             _xmlManager = xmlManager;
         }
 
@@ -27,7 +27,7 @@ namespace PizzaShop.Controllers
 
         public ActionResult Gallery()
         {
-            var model = _unitOfWork.GalleryRepository.All();
+            var model = _service.GetAllGalleryItems();
             return View("Gallery", model);
         }
 
@@ -39,35 +39,35 @@ namespace PizzaShop.Controllers
         [ChildActionOnly]
         public ActionResult SiteMenuPartial()
         {
-            var model = _unitOfWork.MenuItemRepository.All();
+            var model = _service.GetAllMenuItems();
             return PartialView("_SiteMenuPartial", model);
         }
 
         [ChildActionOnly]
         public ActionResult SliderPartial()
         {
-            var model = _unitOfWork.SliderItemRepository.All();
+            var model = _service.GetAllSliderItems();
             return PartialView("_SliderPartial", model);
         }
 
         [ChildActionOnly]
         public ActionResult InformationPartial()
         {
-            var model = _unitOfWork.InformationItemRepository.All();
+            var model = _service.GetAllInformationItems();
             return PartialView("_InformationPartial", model);
         }
 
         [ChildActionOnly]
         public ActionResult EventPartial()
         {
-            var model = _unitOfWork.EventRepository.All();
+            var model = _service.GetAllEvents();
             return PartialView("_EventPartial", model);
         }
 
         [ChildActionOnly]
         public ActionResult NewPartial()
         {
-            var model = _unitOfWork.NewRepository.All();
+            var model = _service.GetAllNews();
             return PartialView("_NewPartial", model);
         }
 

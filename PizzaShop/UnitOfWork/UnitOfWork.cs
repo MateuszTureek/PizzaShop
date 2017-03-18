@@ -1,24 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 
 namespace PizzaShop.UnitOfWork
 {
-    public abstract class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
-        readonly protected DbContext _context;
+        readonly DbContext _context;
 
-        public UnitOfWork(DbContext conetxt)
+        public UnitOfWork(DbContext context)
         {
-            _context = conetxt;
+            _context = context;
         }
 
-        public void Save()
+        public void Commit()
         {
             _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            if (_context != null)
+                _context.Dispose();
+        }
+        
+        public void Rollback()
+        {
+            _context.ChangeTracker.Entries().ToList().ForEach(r => r.Reload());
         }
     }
 }

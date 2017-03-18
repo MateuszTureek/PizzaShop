@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.MenuItem>
+
+<div class="col-md-12">
+    <div class="col-md-12">
+        <h3 class="h3Title pull-left">Nawigacja główna</h3>
+        <button data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("CreatePartial","MenuItem",new { area="admin" })")
+                type="button" class="btnCreate pull-right col-md-1 btn btn-success">
+            <span>Nowy</span>
+        </button>
+    </div>
+    <div class="col-md-12">
+        <table id="Table" class="table table-responsive table-hover">
+            <tr>
+                <th>Tytuł linku</th>
+                <th>Pozycja linku</th>
+                <th>Nazwa akcji kontrolera</th>
+                <th>Nazwa kontrolera</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var menuItem in Model)
+            {
+                <tr>
+                    <td>@menuItem.Title</td>
+                    <td>@menuItem.Position</td>
+                    <td>@menuItem.ActionName</td>
+                    <td>@menuItem.ControllerName</td>
+                    <td>
+                        <button type="button" role="button" class="btn btn-warning btnEdit" data-id="@menuItem.ID" 
+                                data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("Edit","MenuItem",new { area="admin" })">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <button data-id="@menuItem.ID" type="submit" role="button" class="btn btn-danger btnDelete"
+                                data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("Delete","MenuItem",new { area="admin" })">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div id="ModalBox" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+    <!-- tutaj ajaxem laduje partial view z okienkiem modal -->
+    <!-- okienka edit i create -->
+</div>

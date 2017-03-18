@@ -1,0 +1,13 @@
+﻿
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.Entities.Component>
+
+@{
+    string pom = "";
+    var components = Model.ToList();
+    for (var i = 0; i < components.Count; ++i)
+    {
+        pom += components[i].Name + ", ";
+    }
+    pom = pom.Remove(pom.Length - 2);
+    <p class="component">@pom</p>
+}

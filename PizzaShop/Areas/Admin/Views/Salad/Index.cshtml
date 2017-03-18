@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<PizzaShop.Models.PizzaShopModels.Entities.Salad>
+
+<div class="col-md-12">
+    <h3 class="h3Title pull-left">Sosy</h3>
+    <button data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("CreatePartial","Salad",new { area="admin" })" )
+            type="button" class="btnCreate pull-right col-md-1 btn btn-success">
+        <span>Nowy</span>
+    </button>
+    <table id="Table" class="table table-responsive">
+        <tr>
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var salad in Model)
+            {
+            <tr>
+                <td>@salad.Name</td>
+                <td>@string.Format("{0:C}", salad.Price)</td>
+                <td>
+                    <button type="button" role="button" class="btn btn-warning btnEdit" data-id="@salad.ID"
+                            data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("Edit","Salad",new { area="admin" })">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </td>
+                <td>
+                    <button data-id="@salad.ID" type="submit" role="button" class="btn btn-danger btnDelete"
+                            data-toggle="modal" data-target="#ModalBox" data-ajax-url="@Url.Action("Delete","Salad",new { area="admin" })">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+
+<div id="ModalBox" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+    <!-- tutaj ajaxem laduje partial view z okienkiem modal -->
+    <!-- okienka edit i create -->
+</div>

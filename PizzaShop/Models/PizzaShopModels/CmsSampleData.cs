@@ -35,9 +35,9 @@ namespace PizzaShop.Models.PizzaShopModels
             AddToContext<Event>(events, context);
             List<InformationItem> informationItems = new List<InformationItem>()
             {
-                new InformationItem() { PictureUrl="/Content/Images/pizza_1.jpg", Title="Menu",Content="Ut at viverra arcu. Donec sed interdum nulla, eu porttitor lorem. Morbi efficitur sapien ullamcorper lorem vestibulum, ut aliquet turpis consequat. Suspendisse ac nibh non velit scelerisque bibendum. " },
-                new InformationItem() { PictureUrl="/Content/Images/pizza_2.jpg", Title="Promocja", Content="Praesent in placerat risus, et ornare lectus. Praesent turpis tortor, consectetur quis enim id, consequat pharetra velit. Nullam tempor convallis ante at finibus. " },
-                new InformationItem() { PictureUrl="/Content/Images/pizza_3.jpeg", Title="O nas", Content="Suspendisse sed enim porttitor, auctor urna et, bibendum enim. In imperdiet tellus ex, sed efficitur odio dignissim eget. Ut fermentum ipsum eget lorem ornare condimentum. " }
+                new InformationItem() { Position=1, PictureUrl="/Content/Images/pizza_1.jpg", Title="Menu",Content="Ut at viverra arcu. Donec sed interdum nulla, eu porttitor lorem. Morbi efficitur sapien ullamcorper lorem vestibulum, ut aliquet turpis consequat. Suspendisse ac nibh non velit scelerisque bibendum. " },
+                new InformationItem() { Position=2, PictureUrl="/Content/Images/pizza_2.jpg", Title="Promocja", Content="Praesent in placerat risus, et ornare lectus. Praesent turpis tortor, consectetur quis enim id, consequat pharetra velit. Nullam tempor convallis ante at finibus. " },
+                new InformationItem() { Position=3, PictureUrl="/Content/Images/pizza_3.jpeg", Title="O nas", Content="Suspendisse sed enim porttitor, auctor urna et, bibendum enim. In imperdiet tellus ex, sed efficitur odio dignissim eget. Ut fermentum ipsum eget lorem ornare condimentum. " }
             };
             AddToContext<InformationItem>(informationItems, context);
             List<SliderItem> sliderItems = new List<SliderItem>()
@@ -47,13 +47,13 @@ namespace PizzaShop.Models.PizzaShopModels
                 new SliderItem() { Position=3,ShortDescription="Slider description 3",PictureUrl="/Content/Images/pizzaSlide_3.jpg" }
             };
             AddToContext<SliderItem>(sliderItems, context);
-            List<New> news = new List<New>()
+            List<News> news = new List<News>()
             {
-                new New() { AddedDate=DateTime.Now, Position=1, Title="New 1",Content="Quisque nulla nunc, tempor eu lorem non, pharetra laoreet massa." },
-                new New() { AddedDate=DateTime.Now, Position=1, Title="New 1",Content="Nunc iaculis, elit eu aliquam placerat, diam est feugiat urna, et lacinia tellus lectus a sem. " },
-                new New() { AddedDate=DateTime.Now, Position=1, Title="New 1",Content="In imperdiet tellus ex, sed efficitur odio dignissim eget." }
+                new News() { AddedDate=DateTime.Now, Position=1, Title="New 1",Content="Quisque nulla nunc, tempor eu lorem non, pharetra laoreet massa." },
+                new News() { AddedDate=DateTime.Now, Position=2, Title="New 2",Content="Nunc iaculis, elit eu aliquam placerat, diam est feugiat urna, et lacinia tellus lectus a sem. " },
+                new News() { AddedDate=DateTime.Now, Position=3, Title="New 3",Content="In imperdiet tellus ex, sed efficitur odio dignissim eget." }
             };
-            AddToContext<New>(news, context);
+            AddToContext<News>(news, context);
             List<GalleryItem> galleryItems = new List<GalleryItem>()
             {
                 new GalleryItem() { Position=1, PictureUrl="/Content/Images/pizza_1.jpg" },

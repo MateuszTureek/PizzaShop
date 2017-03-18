@@ -1,0 +1,78 @@
+﻿
+@model PizzaShop.XML.Services.XmlServices.XmlModels.ShopContact
+
+<div class="modal-dialog modal-shopContact" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+            </button>
+            <h4>Edytuj kontakt</h4>
+        </div>
+        @using (Html.BeginForm("Edit", "Contact", new { area = "admin" }, FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row modal-body">
+                <div class="col-md-12">
+                    <h4 class="col-md-12 shopContact">Kontakt:</h4>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Contact.City, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Contact.City, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Contact.City, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Contact.Street, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Contact.Street, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Contact.Street, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Contact.PostalCode, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Contact.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Contact.PostalCode, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h4 class="col-md-12 shopContact">Adres:</h4>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address.Email, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Address.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Address.Email, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address.InformationContact, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Address.InformationContact, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Address.InformationContact, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address.DeliveryContact, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Address.DeliveryContact, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Address.DeliveryContact, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-admin">Zapisz zmiany</button>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="ModalBox" class="modal fade" tabindex="-1" role="dialog" data-backdrop="false">
+    <!-- tutaj ajaxem laduje partial view z okienkiem modal -->
+    <!-- okienka edit i create -->
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

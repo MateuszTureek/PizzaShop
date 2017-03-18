@@ -2,51 +2,57 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
-namespace PizzaShop.Repositories
+namespace PizzaShop.Repository
 {
-    public class Repository<T>: IGetRepository<T>, IChangeRepository<T> where T : class
+    public class Repository<PKey, TEntity> : IRepository<PKey, TEntity> where TEntity :class
     {
-        protected DbContext _context;
-        protected DbSet<T> _dbSet;
+        readonly protected DbContext _dbContext;
+        readonly protected DbSet<TEntity> _dbSet;
 
-        public Repository(DbContext context)
+        public Repository(DbContext dbContext)
         {
-            _context = context;
-            _dbSet = _context.Set<T>();
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
-        public void Add(T entity)
+        public void Delete(TEntity entity)
         {
-            _dbSet.Add(entity);
+            _dbSet.Remove(entity);
         }
 
-        public List<T> All()
-        {
-            var result = _dbSet.ToList();
-            return result;
-        }
-
-        public T GetByID(int? id)
+        public TEntity Get(PKey id)
         {
             var result = _dbSet.Find(id);
             return result;
         }
 
-        public void Remove(T entity)
+        public IEnumerable<TEntity> GetAll()
         {
-            _dbSet.Remove(entity);
+            var result = _dbSet;
+            return result;
+        }
+
+        public void Insert(IEnumerable<TEntity> entities)
+        {
+            _dbSet.AddRange(entities);
+        }
+
+        public void Insert(TEntity entity)
+        {
+            _dbSet.Add(entity);
         }
 
         public void Save()
         {
-            _context.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
-        public void Update(T entity)
+        public void Update(TEntity entity)
         {
-            _context.Entry<T>(entity).State = EntityState.Modified;
+            _dbContext.Entry(entity).State = EntityState.Modified;
         }
     }
 }
