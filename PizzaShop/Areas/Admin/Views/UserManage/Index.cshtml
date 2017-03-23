@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Zarządzanie uzytkownikami";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="col-md-12">
+    <h3 class="col-md-12 h3Title">@ViewBag.Title.</h3>
+    <section class="col-md-4">
+        @Html.Action("ListRoles", "RoleManage", new { area = "admin" })
+    </section>
+    <section class="col-md-8">
+        @Html.Action("ListUsers", "UserManage", new { area = "admin" })
+    </section>
+</div>

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class PizzaController : Controller
     {
         readonly IPizzaService _service;

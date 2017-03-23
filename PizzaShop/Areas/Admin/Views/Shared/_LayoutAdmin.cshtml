@@ -8,30 +8,40 @@
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body>
+        @using MvcSiteMapProvider.Web.Html;
+        @using MvcSiteMapProvider.Web.Html.Models;
+
         <div id="Container" class="container-fluid">
             <header class="navbar navbar-admin">
                 <div id="Logo">
                     @Html.ActionLink("Admin Panel","Index","Home",new { area = "admin" },new { @class = "navbar-brand" })
                 </div>
-                <ul id="SettingMenu" class="navbar-right nav navbar-nav">
-                    <li>
-                        @*Html.ActionLink(User.Identity.Name,"","")*@
-                        <a href="#">
-                            Witaj:
-                            <span style="letter-spacing: 1px;">matiaz17@gmail.com</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-cog"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-log-out"></span>
-                        </a>
-                    </li>
-                </ul>
+                @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <ul id="SettingMenu" class="navbar-right nav navbar-nav">
+                        <li>
+                            <a href="@Url.Action("Index", "Manage", new { area = "" })">
+                                <span class="glyphicon glyphicon-user"></span> Witaj:
+                                <span style="letter-spacing: 1px;">@User.Identity.Name</span>
+                            </a>
+                        </li>
+                        @if (User.IsInRole("superAdmin"))
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "UserManage", new { area = "admin" })">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                    Zarządzanie użytkownikami
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()">
+                                <span class="glyphicon glyphicon-log-out"></span>
+                            </a>
+                        </li>
+                    </ul>
+                }
             </header>
             <main>
                 <nav class="col-md-2">
@@ -63,6 +73,9 @@
                 </nav>
                 <section id="MainSection" class="col-md-10">
                     <div class="row">
+                        <div id="SideMap" class="col-md-12">
+                            @Html.MvcSiteMap().SiteMapPath()
+                        </div>
                         @RenderBody()
                     </div>
                 </section>

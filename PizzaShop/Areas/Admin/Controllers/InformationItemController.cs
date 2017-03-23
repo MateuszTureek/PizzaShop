@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class InformationItemController : Controller
     {
         readonly IInformationItemRepository _repository;

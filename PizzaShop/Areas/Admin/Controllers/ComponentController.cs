@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ComponentController : Controller
     {
         IComponentRepository _repository;

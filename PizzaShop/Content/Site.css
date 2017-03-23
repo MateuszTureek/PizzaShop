@@ -21,13 +21,21 @@ nav>ul.navbar-nav{
 #OrderPhoneNumber{
     color: white;
     position: relative;
-    right: 60px;
-    top: 20px;
     letter-spacing: 1px;
-
+    right: 20px;
+    top: 10px;
 }
-#OrderPhoneNumber span{
-    color: #23b621;
+#loginLink, #logedLink, #logoutForm a{
+    padding: 5px;
+    font-size: 1.1em;
+    position: relative;
+    right: 30px;
+}
+#loginLink:hover,
+#logoutForm a:hover,
+#loginLink:focus{
+    background: white;
+    color: #221D46;
 }
 nav>ul.navbar-nav a:hover,
 nav>ul.navbar-nav a:focus{
@@ -158,4 +166,10 @@ footer{
 }
 .active a{
     color: white;
+}
+#Login{
+    background: white;
+    padding-top: 60px;
+    padding-bottom: 80px;
+    font-size: 1.2em;
 }

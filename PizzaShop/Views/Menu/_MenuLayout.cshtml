@@ -14,9 +14,12 @@
                 <div id="Logo" class="pull-left">
                     @Html.ActionLink("Pizza Shop", "", "", null, new { @class = "navbar-logo" })
                 </div>
-                <div id="OrderPhoneNumber" class="navbar-right">
-                    <p>Zamówienia telefoniczne: <span>Dostępne</span></p> <!-- tutaj status z bazy -->
-                    <p>Pod numerem: @Html.Action("DeliveryContact","Home")</p>
+                <div class="navbar-right">
+                    @Html.Partial("_LoginPartial")
+                    <br />
+                    <div id="OrderPhoneNumber" class="navbar-right">
+                        <p>Zamówienia : @Html.Action("DeliveryContact", "Home")</p>
+                    </div>
                 </div>
                 <div class="clearfix"></div>
                 <nav class="navbar-right">

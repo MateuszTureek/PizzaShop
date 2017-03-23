@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Strona główna" controller="Home" action="Index" area="admin">
+    <mvcSiteMapNode title="Zarządzanie kontem" controller="Manage" action="Index" area="">
+      <mvcSiteMapNode title="Zmień email" controller="Manage" action="ChangeEmail" area=""/>
+      <mvcSiteMapNode title="Zmień hasło" controller="Manage" action="ChangePassword" area=""/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Zarządzanie użytkownikami" controller="UserManage" action="Index" area="admin">
+      <mvcSiteMapNode title="Dodaj użytkownika" controller="Account" action="Register" area=""/>
+      <mvcSiteMapNode title="Dodaj role" controller="RoleManage" action="Create" area="admin"/>
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Nawigacja główna" controller="MenuItem" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Slider" controller="SliderItem" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Informacje główne" controller="InformationItem" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Wydarzenia" controller="Event" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Nowości" controller="News" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Pizza" controller="Pizza" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Sosy" controller="Sauce" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Sałatki" controller="Salad" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Napoje" controller="Drink" action="Index" area="admin"/>
+    <mvcSiteMapNode title="Kontakt" controller="Contact" action="Index" area="admin"/>
+  </mvcSiteMapNode>
+</mvcSiteMap>

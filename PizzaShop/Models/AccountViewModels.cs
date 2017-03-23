@@ -55,10 +55,10 @@ namespace PizzaShop.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Zapamietaj mnie?")]
         public bool RememberMe { get; set; }
     }
 
@@ -70,15 +70,19 @@ namespace PizzaShop.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Pole {0} powinno składać się conajmniej z {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Powtórz hasło")]
+        [Compare("Password", ErrorMessage = "Hasło i powtórzone hasło są różne.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name ="Rola")]
+        public string RoleName { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -89,14 +93,14 @@ namespace PizzaShop.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Pole {0} powinno składać się conajmniej z {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Hasłó")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Powtórz hasło")]
+        [Compare("Password", ErrorMessage = "Hasłó i powtórzone hasło są różne.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

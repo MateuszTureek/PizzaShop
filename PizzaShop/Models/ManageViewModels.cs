@@ -14,6 +14,20 @@ namespace PizzaShop.Models
         public bool BrowserRemembered { get; set; }
     }
 
+    public class ChangeEmailViewModel
+    {
+        [Required]
+        [Display(Name ="Nowy email")]
+        [EmailAddress]
+        public string NewEmail { get; set; }
+
+        [Required]
+        [Display(Name ="Powtórz email")]
+        [Compare("NewEmail", ErrorMessage = "Emai i powtórzony email różnią się.")]
+        [EmailAddress]
+        public string ConfirmEmail { get; set; }
+    }
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
@@ -28,14 +42,14 @@ namespace PizzaShop.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Pole {0} powinno zawierać min. {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("NewPassword", ErrorMessage = "Obecne hasło i nowe hasło różnią sie.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -43,18 +57,18 @@ namespace PizzaShop.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Bieżące hasło")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Pole {0} powinno zawierać min. {2} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nowe hasło")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Powtórz nowe hasło")]
+        [Compare("NewPassword", ErrorMessage = "Obecne hasło i nowe hasło różnią sie.")]
         public string ConfirmPassword { get; set; }
     }
 

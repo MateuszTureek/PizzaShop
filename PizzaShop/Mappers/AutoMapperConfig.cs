@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PizzaShop.Areas.Admin.Models.ViewModels;
 using PizzaShop.Models.PizzaShopModels.CMS;
 using PizzaShop.Models.PizzaShopModels.Entities;

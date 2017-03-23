@@ -1,6 +1,7 @@
 ﻿using PizzaShop.Services.Cms.Interfaces;
 using PizzaShop.XML.Services.XmlServices;
 using PizzaShop.XML.Services.XmlServices.XmlModels;
+using PizzaShop.XML.XmlServices.XmlModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,15 @@ namespace PizzaShop.Controllers
 
         public ActionResult Contact()
         {
-            return View("Contact");
+            var shopContact = _xmlManager.GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName);
+            var openingHours= _xmlManager.GetXmlModel<OpeningHours>(GlobalXmlManager.OpeningHoursFileName);
+            ContactAndHoursViewModel model = new ContactAndHoursViewModel()
+            {
+                Address = shopContact.Address,
+                Contact = shopContact.Contact,
+                WorksDays = openingHours.WorksDays
+            };
+            return View("Contact", model);
         }
 
         [ChildActionOnly]

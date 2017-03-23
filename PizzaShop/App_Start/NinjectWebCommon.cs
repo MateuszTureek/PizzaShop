@@ -23,6 +23,11 @@ namespace PizzaShop.App_Start
     using Services.shop.Interfaces;
     using XML.XmlServices;
     using XML.Services.XmlServices;
+    using Microsoft.AspNet.Identity;
+    using Models;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     public static class NinjectWebCommon
     {
@@ -79,8 +84,10 @@ namespace PizzaShop.App_Start
             //CONTEXTS
             kernel.Bind(typeof(DbContext)).To(typeof(CmsDbContext)).Named("cms");
             kernel.Bind(typeof(DbContext)).To(typeof(PizzaShopDbContext)).Named("shop");
+            kernel.Bind(typeof(DbContext)).To(typeof(ApplicationDbContext)).Named("identity");
             var cmsDbContext = kernel.Get<DbContext>("cms");
             var pizzaShopDbContext = kernel.Get<DbContext>("shop");
+            var identity = kernel.Get<DbContext>("identity");
             //UNIT OF WORK
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>().Named("cmsUnit").WithConstructorArgument(cmsDbContext);
             kernel.Bind<IUnitOfWork>().To<UnitOfWork>().Named("shopUnit").WithConstructorArgument(pizzaShopDbContext);
@@ -104,6 +111,8 @@ namespace PizzaShop.App_Start
             kernel.Bind<IPizzaSizeRepository>().To<PizzaSizeRepository>().WithConstructorArgument(pizzaShopDbContext);
             kernel.Bind<IPizzaSizePriceRepository>().To<PizzaSizePriceRepository>().WithConstructorArgument(pizzaShopDbContext);
             kernel.Bind<IComponentRepository>().To<ComponentRepository>().WithConstructorArgument(pizzaShopDbContext);
+
+            kernel.Bind<RoleStore<IdentityRole>>().ToSelf().WithConstructorArgument(identity);
         }
     }
 }

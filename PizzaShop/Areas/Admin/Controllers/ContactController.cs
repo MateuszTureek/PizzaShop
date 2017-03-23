@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ContactController : Controller
     {
         readonly IXmlManager _xmlManager;

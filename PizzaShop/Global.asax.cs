@@ -1,5 +1,6 @@
 ﻿using PizzaShop.CustomModelBinders;
 using PizzaShop.Mappers;
+using PizzaShop.Models;
 using PizzaShop.Models.PizzaShopModels;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace PizzaShop
             //inititial databases
             Database.SetInitializer<PizzaShopDbContext>(new PizzaShopSampleData());
             Database.SetInitializer<CmsDbContext>(new CmsSampleData());
+            Database.SetInitializer<ApplicationDbContext>(new IdentitySampleData());
             //mapowanie objektów
             AutoMapperConfig.RegisterMappings();
             //własny modelbinder służący do wlasnej walidacji pola decimal z ceną

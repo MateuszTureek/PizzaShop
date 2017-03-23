@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Zmień email";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model PizzaShop.Models.ChangeEmailViewModel
+
+<div class="col-md-8 col-md-offset-2">
+    <h4>@ViewBag.Title.</h4>
+    @using (Html.BeginForm("ChangeEmail", "Manage", new { area = "" }, FormMethod.Post, new { @id = "changeEmailForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.NewEmail, new { @class = "col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.NewEmail, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.ConfirmEmail, new { @class="form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-9 col-md-3">
+                <input type="submit" value="Zmień email" class="btn-block btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")

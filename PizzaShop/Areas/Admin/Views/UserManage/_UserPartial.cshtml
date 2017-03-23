@@ -1,0 +1,42 @@
+﻿
+@model IEnumerable<PizzaShop.Areas.Admin.Models.ViewModels.UserViewModel>
+
+<div class="panel panel-menuCart">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h5 class="pull-left">Użytkownicy w systemie:</h5>
+            <div class="pull-right">
+                <a href="@Url.Action("Register","Account", new { area="" })">
+                    <input type="button" class="btn btn-success btn-sm" value="Dodaj użytkownika" />
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Nazwa użytkownika</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>
+                        @foreach(var role in user.Roles)
+                        {
+                            <span>@role;</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.Partial("_DeletePartial", user.Id)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

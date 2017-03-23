@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         readonly IMenuCardService _service;

@@ -9,23 +9,28 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PizzaShop.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace PizzaShop.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "superAdmin")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-        public AccountController()
+        private RoleStore<IdentityRole> _roleManager;
+        
+        public AccountController(RoleStore<IdentityRole> roleManger)
         {
+            _roleManager = roleManger;
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, RoleStore<IdentityRole> roleManger )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _roleManager = roleManger;
         }
 
         public ApplicationSignInManager SignInManager
@@ -79,7 +84,8 @@ namespace PizzaShop.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Home", new { area="admin" });
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -136,16 +142,25 @@ namespace PizzaShop.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
+            var roles = _roleManager.Roles.ToList();
+            List<SelectListItem> roleSelectListItems = new List<SelectListItem>();
+            for(var i=0;i<roles.Count;++i)
+            {
+                roleSelectListItems.Add(new SelectListItem()
+                {
+                    Value = roles[i].Name,
+                    Text = roles[i].Name
+                });
+            }
+            ViewBag.Roles = roleSelectListItems;
             return View();
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -155,7 +170,8 @@ namespace PizzaShop.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await UserManager.AddToRoleAsync(user.Id, model.RoleName);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -163,7 +179,7 @@ namespace PizzaShop.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "UserManage", new { area="admin" });
                 }
                 AddErrors(result);
             }
@@ -481,5 +497,6 @@ namespace PizzaShop.Controllers
             }
         }
         #endregion
+        
     }
 }

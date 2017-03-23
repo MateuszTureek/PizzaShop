@@ -50,10 +50,28 @@ namespace PizzaShop.Controllers
             }
         }
 
+        public async Task<ActionResult> DeleteAccount()
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                var result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return RedirectToAction("Index", "Home", new { area = "" });
+                }
+                AddErrors(new IdentityResult("User is not deletesd."));
+                return RedirectToAction("Index", "Manage", new { area = "admin" });
+            }
+            return RedirectToAction("Index", "Manage", new { area = "admin" });
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            ViewBag.Result = TempData["result"];
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -73,6 +91,34 @@ namespace PizzaShop.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+        public ActionResult ChangeEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeEmail(ChangeEmailViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await UserManager.FindByNameAsync(User.Identity.Name);
+            if (user.Email != model.NewEmail)
+            {
+                TempData["result"] = "Adres email został zmieniony.";
+                user.UserName = model.NewEmail;
+                user.Email = model.NewEmail;
+                await UserManager.UpdateAsync(user);
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                SignInManager.SignIn(user, false, false);
+                return RedirectToAction("Index", "Manage", new { area = "" });
+            }
+            TempData["result"] = "Podałeś taki sam adres email.";
+            return RedirectToAction("Index", "Manage", new { area = "" });
         }
 
         //
@@ -332,7 +378,6 @@ namespace PizzaShop.Controllers
 
             base.Dispose(disposing);
         }
-
 #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

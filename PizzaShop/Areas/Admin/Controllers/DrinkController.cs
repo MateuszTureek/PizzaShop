@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class DrinkController : Controller
     {
         readonly IDrinkRepository _repository;

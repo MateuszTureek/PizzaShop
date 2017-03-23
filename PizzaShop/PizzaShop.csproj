@@ -65,6 +65,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.22\lib\net45\MvcSiteMapProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.22\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -207,9 +215,11 @@
     <Compile Include="Areas\Admin\Controllers\MenuItemController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PizzaController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\SaladController.cs" />
     <Compile Include="Areas\Admin\Controllers\SauceController.cs" />
     <Compile Include="Areas\Admin\Controllers\SliderItemController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\DrinkViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\EventViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\InformationItemViewModel.cs" />
@@ -217,9 +227,11 @@
     <Compile Include="Areas\Admin\Models\ViewModels\MenuItemViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\NewViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\PizzaViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\RoleViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\SaladViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\SauceViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\SliderItemViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -252,6 +264,7 @@
     <Compile Include="Migrations\PizzaShopMigration\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IdentitySampleData.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PizzaShopModels\CmsDbContext.cs" />
     <Compile Include="Models\PizzaShopModels\CmsSampleData.cs" />
@@ -300,8 +313,8 @@
     <Compile Include="Repositories\Shop\Interfaces\IPizzaSizeRepository.cs" />
     <Compile Include="Repositories\Shop\Interfaces\ISaladRepository.cs" />
     <Compile Include="Repositories\Shop\Interfaces\ISauceRepository.cs" />
-    <Compile Include="Services\Cms\Classes\HomePresentationService.cs" />
-    <Compile Include="Services\Cms\Interfaces\IHomePresentationService.cs" />
+    <Compile Include="Services\cms\Classes\HomePresentationService.cs" />
+    <Compile Include="Services\cms\Interfaces\IHomePresentationService.cs" />
     <Compile Include="Services\shop\Classes\MenuCardService.cs" />
     <Compile Include="Services\shop\Classes\PizzaServices.cs" />
     <Compile Include="Services\shop\Interfaces\IMenuCardService.cs" />
@@ -312,6 +325,7 @@
     <Compile Include="XML\XmlServices\GlobalXmlManager.cs" />
     <Compile Include="XML\XmlServices\IXmlManager.cs" />
     <Compile Include="XML\XmlServices\XmlManager.cs" />
+    <Compile Include="XML\XmlServices\XmlModels\ContactAndHoursViewModel.cs" />
     <Compile Include="XML\XmlServices\XmlModels\OpeningHours.cs" />
     <Compile Include="XML\XmlServices\XmlModels\ShopContact.cs" />
   </ItemGroup>
@@ -428,6 +442,17 @@
     <Content Include="Areas\Admin\Views\Drink\_CreatePartial.cshtml" />
     <Content Include="Areas\Admin\Views\Drink\_EditPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\_EditPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManage\_UserPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\RoleManage\_RolePartial.cshtml" />
+    <Content Include="Areas\Admin\Views\RoleManage\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManage\_DeletePartial.cshtml" />
+    <Content Include="Mvc.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -501,6 +526,15 @@
     <Content Include="Views\Menu\Drink.cshtml" />
     <Content Include="Views\Shared\_ShopContactPartial.cshtml" />
     <Content Include="Views\Shared\_OpeningHoursPartial.cshtml" />
+    <Content Include="Views\Manage\ChangeEmail.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

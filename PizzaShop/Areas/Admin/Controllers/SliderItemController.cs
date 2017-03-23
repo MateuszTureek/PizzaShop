@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
 {
+    [Authorize]
     public class SliderItemController : Controller
     {
         ISliderItemRepository _repository;

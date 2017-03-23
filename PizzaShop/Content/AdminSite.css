@@ -189,3 +189,36 @@ nav a{
     font-weight: bold;
     letter-spacing: 2px;
 }
+#Manage{
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+#Manage dd{
+    margin-bottom: 10px;
+}
+.breadcrumb{
+    font-size: 1.1em;
+}
+.breadcrumb li.active{
+    background: none;
+}
+.breadcrumb li.active a{
+    color: gray;
+}
+#SideMap{
+    font-size: 1.2em;
+    padding: 0;
+}
+#SideMap>ul{
+    background: #2a1863;
+    color: white;
+    border-radius: 0 0;
+    margin-bottom: 0;
+}
+#SideMap>ul a{
+    color: #b1adcf;
+}
+#SettingMenu a:focus{
+    background: white;
+    color: #221D46;
+}

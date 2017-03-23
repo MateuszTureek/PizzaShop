@@ -1,0 +1,35 @@
+﻿
+@model IEnumerable<PizzaShop.Areas.Admin.Models.ViewModels.RoleViewModel>
+
+<div class="panel panel-menuCart">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h5 class="pull-left">Role:</h5>
+            <div class="pull-right">
+                <a href="@Url.Action("Create","RoleManage", new { area="admin" })">
+                    <input type="button" class="btn btn-success btn-sm" value="Dodaj role" />
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Nazwa</th>
+                <th></th>
+            </tr>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.Name</td>
+                    <td>
+                        <a href="@Url.Action("Delete", "RoleManage", new { area = "admin", id = role.Id })">
+                            <input type="button" class="btn btn-danger btn-sm" value="Usuń" />
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

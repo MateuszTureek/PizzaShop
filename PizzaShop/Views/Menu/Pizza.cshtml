@@ -10,10 +10,10 @@
 
 <table class="table table-responsive">
     <tr>
-        <th></th>
+        <th>Nazwa</th>
         @foreach (var pizzaSize in Model.Select(s=>s.PizzaSizePrices).First())
         {
-            <th>@pizzaSize.PizzaSize.Size</th>
+            <th style="min-width: 110px;">@pizzaSize.PizzaSize.Size</th>
         }
     </tr>
 
@@ -36,7 +36,7 @@
             </td>
             @foreach(var price in pizza.PizzaSizePrices)
             {
-                <td>@string.Format("{0:C}", price.Price)</td>
+                <td class="">@string.Format("{0:C}", price.Price)</td>
             }
         </tr>
     }
