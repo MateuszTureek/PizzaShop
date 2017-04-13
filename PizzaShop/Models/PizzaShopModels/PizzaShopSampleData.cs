@@ -75,12 +75,9 @@ namespace PizzaShop.Models.PizzaShopModels
             AddToContext<PizzaSizePrice>(pizzaSizePrices, context);
             List<Salad> salads = new List<Salad>()
             {
-                new Salad() { Name="Greco",Price=14.00M,Components=new List<Component>()
-                { components[8],components[9],components[10],components[11],components[12],components[0] } },
-                new Salad() { Name="Pollo",Price=16.00M, Components=new List<Component>()
-                { components[8],components[9],components[10],components[11], components[2],components[5],components[12] } },
-                new Salad() { Name="Mexico",Price=16.00M,Components=new List<Component>()
-                { components[8],components[9],components[2],components[14],components[12],components[6] } }
+                new Salad() { Name="Greco",Price=14.00M },
+                new Salad() { Name="Pollo",Price=16.00M },
+                new Salad() { Name="Mexico",Price=16.00M }
             };
             AddToContext<Salad>(salads, context);
             List<Sauce> sauces = new List<Sauce>()

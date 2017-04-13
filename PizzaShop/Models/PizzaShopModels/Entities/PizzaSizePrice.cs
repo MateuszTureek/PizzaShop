@@ -13,6 +13,6 @@ namespace PizzaShop.Models.PizzaShopModels.Entities
         public int PizzaSizeID { get; set; }
         public virtual PizzaSize PizzaSize { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
     }
 }

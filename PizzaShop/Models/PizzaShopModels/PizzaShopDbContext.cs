@@ -48,11 +48,6 @@ namespace PizzaShop.Models.PizzaShopModels
                 m.MapLeftKey("PizzaIDRef");
                 m.MapRightKey("CompIDRef");
             });
-            modelBuilder.Entity<Salad>().HasMany(h => h.Components).WithMany(w => w.Salads).Map(m =>
-            {
-                m.MapLeftKey("SaladIDRef");
-                m.MapRightKey("CompRefID");
-            });
 
             base.OnModelCreating(modelBuilder);
         }

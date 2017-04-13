@@ -23,7 +23,7 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
         [MaxLength(250,ErrorMessage ="Max. liczba znaków {1}")]
         public string Content { get; set; }
 
-        [Required]
+        [Range(1,1000)]
         [Display(Name ="Pozycja")]
         public int Position { get; set; }
     }

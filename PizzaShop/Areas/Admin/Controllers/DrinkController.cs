@@ -15,15 +15,17 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class DrinkController : Controller
     {
         readonly IDrinkRepository _repository;
+        readonly IMapper _mapper;
 
-        public DrinkController(IDrinkRepository service)
+        public DrinkController(IDrinkRepository repository, IMapper mapper)
         {
-            _repository = service;
+            _repository = repository;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
-            var model = _repository.GetAll();
+            var model = _repository.GetAll().ToList();
             return View("Index", model);
         }
 
@@ -38,7 +40,7 @@ namespace PizzaShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = Mapper.Map<DrinkViewModel, Drink>(model);
+                var result = _mapper.Map<DrinkViewModel, Drink>(model);
                 _repository.Insert(result);
                 _repository.Save();
                 return RedirectToAction("Index");
@@ -67,8 +69,7 @@ namespace PizzaShop.Areas.Admin.Controllers
             var model = _repository.Get((int)id);
             if (model != null)
             {
-                DrinkViewModel viewModel = null;
-                viewModel = Mapper.Map<Drink, DrinkViewModel>(model, viewModel);
+                var viewModel = _mapper.Map<Drink, DrinkViewModel>(model);
                 if (Request.IsAjaxRequest())
                     return PartialView("_EditPartial", viewModel);
             }
@@ -84,7 +85,7 @@ namespace PizzaShop.Areas.Admin.Controllers
                 var currentModel = _repository.Get(model.ID);
                 if (currentModel != null)
                 {
-                    var result = currentModel = Mapper.Map<DrinkViewModel, Drink>(model, currentModel);
+                    var result = _mapper.Map<DrinkViewModel, Drink>(model, currentModel);
                     _repository.Update(result);
                     _repository.Save();
                     return RedirectToAction("Index");

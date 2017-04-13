@@ -15,10 +15,12 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class EventController : Controller
     {
         readonly IEventRepository _repository;
-        
-        public EventController(IEventRepository repository)
+        readonly IMapper _mapper;
+
+        public EventController(IEventRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
@@ -38,7 +40,7 @@ namespace PizzaShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = Mapper.Map<EventViewModel, Event>(model);
+                var result = _mapper.Map<EventViewModel, Event>(model);
                 result.AddedDate = DateTime.Now;
                 _repository.Insert(result);
                 _repository.Save();
@@ -49,7 +51,7 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Delete(int? id)
         {
-            var model = _repository.Get((Int32)id);
+            var model = _repository.Get((int)id);
             if (model != null)
             {
                 if (Request.IsAjaxRequest())
@@ -68,8 +70,7 @@ namespace PizzaShop.Areas.Admin.Controllers
             var model = _repository.Get((int)id);
             if (model != null)
             {
-                EventViewModel viewModel = null;
-                viewModel = Mapper.Map<Event, EventViewModel>(model, viewModel);
+                var viewModel = _mapper.Map<Event, EventViewModel>(model);
                 if (Request.IsAjaxRequest())
                     return PartialView("_EditPartial", viewModel);
             }
@@ -78,14 +79,14 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EventViewModel model)
+        public ActionResult Edit([Bind(Exclude = "AddedDate")]EventViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var currentModel = _repository.Get(model.ID);
                 if (currentModel != null)
                 {
-                    var result = currentModel = Mapper.Map<EventViewModel, Event>(model, currentModel);
+                    var result = _mapper.Map<EventViewModel, Event>(model,currentModel);
                     result.AddedDate = DateTime.Now;
                     _repository.Update(result);
                     _repository.Save();

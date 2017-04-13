@@ -15,10 +15,12 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class NewsController : Controller
     {
         readonly INewsRepository _repository;
+        readonly IMapper _mapper;
 
-        public NewsController(INewsRepository repository)
+        public NewsController(INewsRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
@@ -34,11 +36,11 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "ID,AddedDate")]NewViewModel model)
+        public ActionResult Create([Bind(Exclude = "ID,AddedDate")]NewsViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = Mapper.Map<NewViewModel, News>(model);
+                var result = _mapper.Map<NewsViewModel, News>(model);
                 result.AddedDate = DateTime.Now;
                 _repository.Insert(result);
                 _repository.Save();
@@ -68,8 +70,7 @@ namespace PizzaShop.Areas.Admin.Controllers
             var model = _repository.Get((int)id);
             if (model != null)
             {
-                NewViewModel viewModel = null;
-                viewModel = Mapper.Map<News, NewViewModel>(model, viewModel);
+                var viewModel = _mapper.Map<News, NewsViewModel>(model);
                 if (Request.IsAjaxRequest())
                     return PartialView("_EditPartial", viewModel);
             }
@@ -78,14 +79,14 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(NewViewModel model)
+        public ActionResult Edit(NewsViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var currentModel = _repository.Get(model.ID);
                 if (currentModel != null)
                 {
-                    var result = currentModel = Mapper.Map<NewViewModel, News>(model, currentModel);
+                    var result = _mapper.Map<NewsViewModel, News>(model, currentModel);
                     result.AddedDate = DateTime.Now;
                     _repository.Update(result);
                     _repository.Save();

@@ -15,7 +15,7 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
         [RegularExpression(@"^[a-zA-Z0-9\s-]*$", ErrorMessage = "Niepoprawna nazwa.")]
         public string Name { get; set; }
 
-        [Required]
+        [Range(double.MinValue,double.MaxValue)]
         [Display(Name = "Cena")]
         [RegularExpression(@"\d+(\,\d{1,3})?", ErrorMessage = "Niewprawidłowa cena. Max. 3 znaki po przecinku.")]
         public decimal Price { get; set; }

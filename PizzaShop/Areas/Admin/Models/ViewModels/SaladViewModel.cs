@@ -18,6 +18,6 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
         [Required]
         [Display(Name = "Cena")]
         [RegularExpression(@"\d+(\,\d{1,3})?", ErrorMessage = "Niewprawidłowa cena. Max. 3 znaki po przecinku.")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
     }
 }

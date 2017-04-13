@@ -85,16 +85,6 @@
                 {
                     <tr>
                         <td>@salad.Name</td>
-                        <td>
-                            @if (salad.Components != null && salad.Components.Count != 0)
-                            {
-                                @Html.Partial("~/Areas/Admin/Views/Component/_ComponentPartial.cshtml", salad.Components)
-                            }
-                            else
-                            {
-                                <stong class="component">Brak składników.</stong>
-                            }
-                        </td>
                         <td>@string.Format("{0:C}", salad.Price)</td>
                     </tr>
                 }

@@ -1,10 +1,9 @@
-﻿using PizzaShop.XML.Services.XmlServices.XmlModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace PizzaShop.XML.XmlServices.XmlModels
+namespace PizzaShop.Services.Xml.XmlModels
 {
     public class ContactAndHoursViewModel
     {

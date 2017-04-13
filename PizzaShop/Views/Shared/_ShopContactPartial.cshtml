@@ -1,16 +1,19 @@
 ﻿
-@model PizzaShop.XML.Services.XmlServices.XmlModels.ShopContact
+@model PizzaShop.Services.Xml.XmlModels.ShopContact
 
-<div class="col-md-offset-1 col-md-5">
-    <h4 style="margin-left: 10px;">Kontakt</h4>
-    <hr />
-    <div class="col-md-6">
-        <p><strong>Pizza shop</strong></p>
-        <p>Adress: @Model.Contact.PostalCode @Model.Contact.City</p>
-        <p>@Model.Contact.Street</p>
+@if (Model != null)
+{
+    <div class="col-md-offset-1 col-md-5">
+        <h4 style="margin-left: 10px;">Kontakt</h4>
+        <hr />
+        <div class="col-md-6">
+            <p><strong>Pizza shop</strong></p>
+            <p>Adress: @Model.Contact.PostalCode @Model.Contact.City</p>
+            <p>@Model.Contact.Street</p>
+        </div>
+        <div class="col-md-6">
+            <p>E-mail: @Model.Address.Email</p>
+            <p>Telefon: @Model.Address.InformationContact</p>
+        </div>
     </div>
-    <div class="col-md-6">
-        <p>E-mail: @Model.Address.Email</p>
-        <p>Telefon: @Model.Address.InformationContact</p>
-    </div>
-</div>
+}

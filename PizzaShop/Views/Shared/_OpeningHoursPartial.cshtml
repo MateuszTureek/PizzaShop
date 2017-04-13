@@ -1,11 +1,14 @@
 ﻿
-@model PizzaShop.XML.Services.XmlServices.XmlModels.OpeningHours
+@model PizzaShop.Services.Xml.XmlModels.OpeningHours
 
-<div class="col-md-2">
-    <h4>Godziny otwarcia:</h4>
-    <hr />
-    @foreach (var item in Model.WorksDays)
-    {
-        <p>@item.Name : @item.WorkHours</p>
-    }
-</div>
+@if (Model != null)
+{
+    <div class="col-md-2">
+        <h4>Godziny otwarcia:</h4>
+        <hr />
+        @foreach (var item in Model.WorksDays)
+        {
+            <p>@item.Name : @item.WorkHours</p>
+        }
+    </div>
+}

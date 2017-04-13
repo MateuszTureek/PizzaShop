@@ -6,6 +6,8 @@
 
 @model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.GalleryItem>
 
+@if (Model != null)
+{
 <div class="row">
     <div id="Gallery" class="col-md-12">
         <div id="PizzaPrezentation" class="col-md-12">
@@ -13,7 +15,7 @@
         </div>
         <div id="GalleryItems" class="col-md-12">
             <h2 class="col-md-12">@ViewBag.Title</h2>
-            @foreach(var galleryItem in Model)
+            @foreach (var galleryItem in Model)
             {
                 <div class="col-md-3">
                     <img class="img-thumbnail" src="@galleryItem.PictureUrl" />
@@ -22,3 +24,4 @@
         </div>
     </div>
 </div>
+}

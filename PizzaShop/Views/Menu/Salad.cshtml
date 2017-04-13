@@ -8,12 +8,15 @@
 
 <h2>@ViewBag.Title</h2>
 
-<table class="table table-responsive">
-    @foreach(var salad in Model)
-    {
-        <tr>
-            <td>@salad.Name</td>
-            <td>@string.Format("{0:C}",salad.Price)</td>
-        </tr>
-    }
-</table>
+@if (Model != null)
+{
+    <table class="table table-responsive">
+        @foreach (var salad in Model)
+        {
+            <tr>
+                <td>@salad.Name</td>
+                <td>@string.Format("{0:C}", salad.Price)</td>
+            </tr>
+        }
+    </table>
+}

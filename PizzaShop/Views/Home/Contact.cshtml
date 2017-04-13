@@ -4,29 +4,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model PizzaShop.XML.XmlServices.XmlModels.ContactAndHoursViewModel
+@model PizzaShop.Services.Xml.XmlModels.ContactAndHoursViewModel
 
-<div class="row">
-    <div id="PizzaPrezentation" class="col-md-12">
-        <img src="~/Content/Images/pizzaSlide_1.jpg" />
+@if (Model != null)
+{
+    <div class="row">
+        <div id="PizzaPrezentation" class="col-md-12">
+            <img src="~/Content/Images/pizzaSlide_1.jpg" />
+        </div>
+        <div id="Contact" class="col-md-12">
+            <div class="col-md-offset-1 col-md-3">
+                <h3>Adres:</h3>
+                <p>@Model.Contact.PostalCode @Model.Contact.City</p>
+                <p>@Model.Contact.Street</p>
+            </div>
+            <div class="col-md-offset-3 col-md-3">
+                <h3>Godziny otwarcia: </h3>
+                @foreach (var day in Model.WorksDays)
+                {
+                    <p>@day.Name: @day.WorkHours</p>
+                }
+            </div>
+            <div class="col-md-offset-1 col-md-3">
+                <h3>Kontakt</h3>
+                <p>Email: @Model.Address.Email</p>
+                <p>Telefon: @Model.Address.InformationContact</p>
+            </div>
+        </div>
     </div>
-    <div id="Contact" class="col-md-12">
-        <div class="col-md-offset-1 col-md-3">
-            <h3>Adres:</h3>
-            <p>@Model.Contact.PostalCode @Model.Contact.City</p>
-            <p>@Model.Contact.Street</p>
-        </div>
-        <div class="col-md-offset-3 col-md-3">
-            <h3>Godziny otwarcia: </h3>
-            @foreach(var day in Model.WorksDays)
-            {
-                <p>@day.Name: @day.WorkHours</p>
-            }
-        </div>
-        <div class="col-md-offset-1 col-md-3">
-            <h3>Kontakt</h3>
-            <p>Email: @Model.Address.Email</p>
-            <p>Telefon: @Model.Address.InformationContact</p>
-        </div>
-    </div>
-</div>
+}

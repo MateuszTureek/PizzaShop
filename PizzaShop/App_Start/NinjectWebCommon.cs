@@ -21,13 +21,18 @@ namespace PizzaShop.App_Start
     using UnitOfWork;
     using Services.shop.Classes;
     using Services.shop.Interfaces;
-    using XML.XmlServices;
-    using XML.Services.XmlServices;
     using Microsoft.AspNet.Identity;
     using Models;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using AutoMapper;
+    using Mappers;
+    using Services.Image.Interfaces;
+    using Services.Image.Classes;
+    using Services.Identity.Interfaces;
+    using Services.Identity.Classes;
+    using Services.Xml;
 
     public static class NinjectWebCommon
     {
@@ -57,7 +62,8 @@ namespace PizzaShop.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            // here I can add new modules as constructor parametr
+            var kernel = new StandardKernel(new AutoMapperModule());
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
@@ -95,6 +101,10 @@ namespace PizzaShop.App_Start
             kernel.Bind<IHomePresentationService>().To<HomePresentationService>().WithConstructorArgument(cmsDbContext);
             kernel.Bind<IMenuCardService>().To<MenuCardService>();
             kernel.Bind<IPizzaService>().To<PizzaService>();
+            kernel.Bind<IInformationItemService>().To<InformationItemService>();
+            kernel.Bind<IImageService>().To<ImageService>();
+            kernel.Bind<ISliderItemService>().To<SliderItemService>();
+            kernel.Bind<IUserService>().To<UserService>();
             //REPOSITORIES
             //cms
             kernel.Bind<ISliderItemRepository>().To<SliderItemRepository>().WithConstructorArgument(cmsDbContext);
@@ -113,6 +123,7 @@ namespace PizzaShop.App_Start
             kernel.Bind<IComponentRepository>().To<ComponentRepository>().WithConstructorArgument(pizzaShopDbContext);
 
             kernel.Bind<RoleStore<IdentityRole>>().ToSelf().WithConstructorArgument(identity);
+            kernel.Bind<IRoleService>().To<RoleService>();
         }
     }
 }

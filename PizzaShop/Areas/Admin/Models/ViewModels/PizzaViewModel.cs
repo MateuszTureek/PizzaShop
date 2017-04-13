@@ -16,20 +16,20 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
         [StringLength(50, ErrorMessage = "Max. liczba znaków {1}.")]
         [RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Pole powinno składać się z liter lub cyfr.")]
         public string Name { get; set; }
-
+        
         [Required]
         [RegularExpression(@"\d+(\,\d{1,3})?", ErrorMessage = "Niewprawidłowa cena. Max. 3 znaki po przecinku.")]
-        public decimal PriceForSmall { get; set; }
+        public decimal? PriceForSmall { get; set; }
 
         [Required]
         [Display(Name = "Cena za średnią")]
         [RegularExpression(@"\d+(\,\d{1,3})?", ErrorMessage = "Niewprawidłowa cena. Max. 3 znaki po przecinku.")]
-        public decimal PriceForMedium { get; set; }
+        public decimal? PriceForMedium { get; set; }
 
         [Required]
         [Display(Name = "Cena za dużą")]
         [RegularExpression(@"\d+(\,\d{1,3})?", ErrorMessage = "Niewprawidłowa cena. Max. 3 znaki po przecinku.")]
-        public decimal PriceForLarge { get; set; }
+        public decimal? PriceForLarge { get; set; }
 
         [Display(Name = "Składniki")]
         public List<int> Components { get; set; }

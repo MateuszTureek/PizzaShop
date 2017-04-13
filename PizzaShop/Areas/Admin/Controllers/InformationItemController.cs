@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using PizzaShop.Areas.Admin.Models.ViewModels;
 using PizzaShop.Models.PizzaShopModels.CMS;
-using PizzaShop.Repositories.CMS.Interfaces;
+using PizzaShop.Services.Cms.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace PizzaShop.Areas.Admin.Controllers
@@ -16,19 +14,17 @@ namespace PizzaShop.Areas.Admin.Controllers
     [Authorize]
     public class InformationItemController : Controller
     {
-        readonly IInformationItemRepository _repository;
-        string _virtualPath = "/Content/Images";
-        string _physicalPath;
-
-        public InformationItemController(IInformationItemRepository repository)
+        readonly IInformationItemService _service;
+        readonly IMapper _mapper;
+        public InformationItemController(IInformationItemService service, IMapper mapper)
         {
-            _repository = repository;
-            _physicalPath = HostingEnvironment.MapPath(_virtualPath);
+            _service = service;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
-            var model = _repository.GetAll();
+            var model = _service.GetAllInformationItems();
             return View("Index", model);
         }
 
@@ -41,21 +37,12 @@ namespace PizzaShop.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Exclude = "ID, PictureUrl")]InformationItemViewModel model, HttpPostedFileBase PictureContent)
         {
-            if (ModelState.IsValid && PictureContent != null && PictureContent.ContentLength > 0)
+            if (ModelState.IsValid && PictureContent != null && PictureContent.ContentLength > 0 && PictureContent.ContentType.Contains("image"))
             {
-                string fileName = Path.GetFileName(PictureContent.FileName);
-                using (var bReader = new BinaryReader(PictureContent.InputStream))
-                {
-                    var binaryImg = bReader.ReadBytes(PictureContent.ContentLength);
-                    using (var bWriter = new BinaryWriter(new FileStream(_physicalPath + "\\" + fileName, FileMode.Create)))
-                    {
-                        bWriter.Write(binaryImg);
-                    }
-                }
-                var result = Mapper.Map<InformationItemViewModel, InformationItem>(model);
-                result.PictureUrl = _virtualPath + "/" + fileName;
-                _repository.Insert(result);
-                _repository.Save();
+                var result = _mapper.Map<InformationItemViewModel, InformationItem>(model);
+                result.PictureUrl = _service.AddInformationItemImage(PictureContent);
+                _service.CreateInformationItem(result);
+                _service.SaveInfomrationItem();
                 return RedirectToAction("Index");
             }
             return View("Index");
@@ -63,13 +50,13 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Delete(int? id)
         {
-            var model = _repository.Get((int)id);
+            var model = _service.GetInfomrationItem((int)id);
             if (model != null)
             {
                 if (Request.IsAjaxRequest())
                 {
-                    _repository.Delete(model);
-                    _repository.Save();
+                    _service.DeleteInfomationItem(model);
+                    _service.SaveInfomrationItem();
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
                 return RedirectToAction("Index");
@@ -79,11 +66,10 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Edit(int? id)
         {
-            var model = _repository.Get((Int32)id);
+            var model = _service.GetInfomrationItem((int)id);
             if (model != null)
             {
-                InformationItemViewModel viewModel = null;
-                viewModel = Mapper.Map<InformationItem, InformationItemViewModel>(model, viewModel);
+                var viewModel = _mapper.Map<InformationItem, InformationItemViewModel>(model);
                 if (Request.IsAjaxRequest())
                     return PartialView("_EditPartial", viewModel);
             }
@@ -96,12 +82,12 @@ namespace PizzaShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentModel = _repository.Get(model.ID);
+                var currentModel = _service.GetInfomrationItem(model.ID);
                 if (currentModel != null)
                 {
-                    var result = currentModel = Mapper.Map<InformationItemViewModel, InformationItem>(model, currentModel);
-                    _repository.Update(result);
-                    _repository.Save();
+                    var result = _mapper.Map<InformationItemViewModel, InformationItem>(model,currentModel);
+                    _service.UpdateInformationItem(result);
+                    _service.SaveInfomrationItem();
                     return RedirectToAction("Index");
                 }
                 return HttpNotFound();

@@ -52,8 +52,8 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
@@ -225,7 +225,7 @@
     <Compile Include="Areas\Admin\Models\ViewModels\InformationItemViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\MenuCardViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\MenuItemViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ViewModels\NewViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\NewsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\PizzaViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\RoleViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\SaladViewModel.cs" />
@@ -239,7 +239,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mappers\AutoMapperConfig.cs" />
+    <Compile Include="Mappers\AutoMapperModule.cs" />
+    <Compile Include="Mappers\CustomProfile.cs" />
     <Compile Include="Migrations\Cms\201702121811434_Initial.cs" />
     <Compile Include="Migrations\Cms\201702121811434_Initial.Designer.cs">
       <DependentUpon>201702121811434_Initial.cs</DependentUpon>
@@ -257,9 +258,9 @@
       <DependentUpon>201703022122220_Event change property.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Cms\Configuration.cs" />
-    <Compile Include="Migrations\PizzaShopMigration\201702132023000_Salad price change precision.cs" />
-    <Compile Include="Migrations\PizzaShopMigration\201702132023000_Salad price change precision.Designer.cs">
-      <DependentUpon>201702132023000_Salad price change precision.cs</DependentUpon>
+    <Compile Include="Migrations\PizzaShopMigration\201704122027122_Changes_1.cs" />
+    <Compile Include="Migrations\PizzaShopMigration\201704122027122_Changes_1.Designer.cs">
+      <DependentUpon>201704122027122_Changes_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PizzaShopMigration\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -313,21 +314,32 @@
     <Compile Include="Repositories\Shop\Interfaces\IPizzaSizeRepository.cs" />
     <Compile Include="Repositories\Shop\Interfaces\ISaladRepository.cs" />
     <Compile Include="Repositories\Shop\Interfaces\ISauceRepository.cs" />
-    <Compile Include="Services\cms\Classes\HomePresentationService.cs" />
-    <Compile Include="Services\cms\Interfaces\IHomePresentationService.cs" />
-    <Compile Include="Services\shop\Classes\MenuCardService.cs" />
-    <Compile Include="Services\shop\Classes\PizzaServices.cs" />
-    <Compile Include="Services\shop\Interfaces\IMenuCardService.cs" />
-    <Compile Include="Services\shop\Interfaces\IPizzaServices.cs" />
+    <Compile Include="Services\Cms\Classes\HomePresentationService.cs" />
+    <Compile Include="Services\Cms\Classes\InformationItemService.cs" />
+    <Compile Include="Services\Cms\Classes\SliderItemService.cs" />
+    <Compile Include="Services\Cms\Interfaces\IHomePresentationService.cs" />
+    <Compile Include="Services\Cms\Interfaces\IInformationItemService.cs" />
+    <Compile Include="Services\Cms\Interfaces\ISliderItemService.cs" />
+    <Compile Include="Services\Identity\Classes\RoleService.cs" />
+    <Compile Include="Services\Identity\Classes\UserService.cs" />
+    <Compile Include="Services\Identity\Interfaces\IRoleService.cs" />
+    <Compile Include="Services\Identity\Interfaces\IUserService.cs" />
+    <Compile Include="Services\Image\Classes\ImageService.cs" />
+    <Compile Include="Services\Image\Interfaces\IImageService.cs" />
+    <Compile Include="Services\Shop\Classes\MenuCardService.cs" />
+    <Compile Include="Services\Shop\Classes\PizzaServices.cs" />
+    <Compile Include="Services\Shop\Interfaces\IMenuCardService.cs" />
+    <Compile Include="Services\Shop\Interfaces\IPizzaServices.cs" />
+    <Compile Include="Services\Xml\GlobalXmlManager.cs" />
+    <Compile Include="Services\Xml\IXmlManager.cs" />
+    <Compile Include="Services\Xml\XmlManager.cs" />
+    <Compile Include="Services\Xml\XmlModels\ContactAndHoursViewModel.cs" />
+    <Compile Include="Services\Xml\XmlModels\OpeningHours.cs" />
+    <Compile Include="Services\Xml\XmlModels\ShopContact.cs" />
+    <Compile Include="Services\Xml\XmlModels\ShopContactViewModel.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
-    <Compile Include="XML\XmlServices\GlobalXmlManager.cs" />
-    <Compile Include="XML\XmlServices\IXmlManager.cs" />
-    <Compile Include="XML\XmlServices\XmlManager.cs" />
-    <Compile Include="XML\XmlServices\XmlModels\ContactAndHoursViewModel.cs" />
-    <Compile Include="XML\XmlServices\XmlModels\OpeningHours.cs" />
-    <Compile Include="XML\XmlServices\XmlModels\ShopContact.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\CmsDb.mdf" />
@@ -446,7 +458,6 @@
     <Content Include="Areas\Admin\Views\UserManage\_UserPartial.cshtml" />
     <Content Include="Areas\Admin\Views\RoleManage\_RolePartial.cshtml" />
     <Content Include="Areas\Admin\Views\RoleManage\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\UserManage\_DeletePartial.cshtml" />
     <Content Include="Mvc.sitemap">
       <SubType>Designer</SubType>
     </Content>
@@ -554,8 +565,8 @@
     <EmbeddedResource Include="Migrations\Cms\201703022122220_Event change property.resx">
       <DependentUpon>201703022122220_Event change property.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\PizzaShopMigration\201702132023000_Salad price change precision.resx">
-      <DependentUpon>201702132023000_Salad price change precision.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\PizzaShopMigration\201704122027122_Changes_1.resx">
+      <DependentUpon>201704122027122_Changes_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

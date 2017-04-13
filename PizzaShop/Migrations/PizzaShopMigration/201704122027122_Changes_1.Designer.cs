@@ -7,13 +7,13 @@ namespace PizzaShop.Migrations.PizzaShopMigration
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Saladpricechangeprecision : IMigrationMetadata
+    public sealed partial class Changes_1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Saladpricechangeprecision));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Changes_1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702132023000_Salad price change precision"; }
+            get { return "201704122027122_Changes_1"; }
         }
         
         string IMigrationMetadata.Source

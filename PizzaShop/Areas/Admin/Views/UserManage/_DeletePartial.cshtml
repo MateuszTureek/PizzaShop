@@ -1,7 +1,0 @@
-﻿
-@using (Html.BeginForm("Delete", "UserManage", new { area = "admin" }, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("id", Model as object)
-    <input type="submit" class="btn btn-danger btn-sm" value="Usuń" />
-}

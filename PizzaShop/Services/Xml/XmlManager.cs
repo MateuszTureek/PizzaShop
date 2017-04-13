@@ -1,14 +1,13 @@
-﻿using PizzaShop.XML.Services.XmlServices;
+﻿using PizzaShop.Services.Xml.XmlModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
-using System.Xml;
 using System.Xml.Serialization;
 
-namespace PizzaShop.XML.XmlServices
+namespace PizzaShop.Services.Xml
 {
     public class XmlManager : IXmlManager
     {
@@ -16,7 +15,7 @@ namespace PizzaShop.XML.XmlServices
         StreamReader _sReader = null;
         StreamWriter _sWriter = null;
 
-        public void CreateXmlFile<T>(string fileName, T model) where T: class
+        public void CreateXmlFile<T>(string fileName, T model) where T : class
         {
             using (_sWriter = new StreamWriter(HostingEnvironment.MapPath("~/App_Data/" + fileName + ".xml")))
             {
@@ -38,6 +37,19 @@ namespace PizzaShop.XML.XmlServices
                 T model = _serializer.Deserialize(_sReader) as T;
                 return model;
             }
+        }
+
+        public ContactAndHoursViewModel GetFullShopInformation()
+        {
+            var shopContact = GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName);
+            var openingHours = GetXmlModel<OpeningHours>(GlobalXmlManager.OpeningHoursFileName);
+            ContactAndHoursViewModel viewModel = new ContactAndHoursViewModel()
+            {
+                Address = shopContact.Address,
+                Contact = shopContact.Contact,
+                WorksDays = openingHours.WorksDays
+            };
+            return viewModel;
         }
     }
 }

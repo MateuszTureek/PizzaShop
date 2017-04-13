@@ -33,7 +33,7 @@
                         }
                     </td>
                     <td>
-                        @Html.Partial("_DeletePartial", user.Id)
+                        @Html.ActionLink("Usuń", "Delete", "UserManage", new { @id = user.Id }, new { @class = "btn btn-danger btn-sm", role = "button" })
                     </td>
                 </tr>
             }

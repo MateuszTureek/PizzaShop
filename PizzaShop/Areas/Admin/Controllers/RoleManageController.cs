@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PizzaShop.Areas.Admin.Models.ViewModels;
+using PizzaShop.Services.Identity.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,51 +15,49 @@ namespace PizzaShop.Areas.Admin.Controllers
     [Authorize(Roles ="superAdmin")]
     public class RoleManageController : Controller
     {
-        private RoleStore<IdentityRole> _roleStore;
+        readonly IRoleService _service;
+        readonly IMapper _mapper;
 
-        public RoleManageController(RoleStore<IdentityRole> roleStore)
+        public RoleManageController(IRoleService service, IMapper mapper)
         {
-            _roleStore = roleStore;
+            _service = service;
+            _mapper = mapper;
         }
 
         [ChildActionOnly]
         public ActionResult ListRoles()
         {
-            List<IdentityRole> roles = _roleStore.Roles.ToList();
-            List<RoleViewModel> model = new List<RoleViewModel>();
-            for (var i = 0; i < roles.Count; ++i)
-            {
-                model.Add(new RoleViewModel() { Id = roles[i].Id, Name = roles[i].Name });
-            }
+            var roles = _service.RoleList();
+            var model = _mapper.Map<List<IdentityRole>, List<RoleViewModel>>(roles);
             return PartialView("_RolePartial", model);
         }
 
         public ActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RoleViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Create", model);
             }
-            await _roleStore.CreateAsync(new IdentityRole()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = model.Name
-            });
+            await _service.CreateRoleAsync(model.Name);
             return RedirectToAction("Index", "UserManage", new { area = "admin" });
         }
 
         public async Task<ActionResult> Delete(string id)
         {
-            var role = await _roleStore.FindByIdAsync(id);
-            await _roleStore.DeleteAsync(role);
-            return RedirectToAction("Index", "UserManage", new { area = "admin" });
+            var role = await _service.FindByIdAsync(id);
+            if (role != null)
+            {
+                await _service.DeleteRoleAcync(role);
+                return RedirectToAction("Index", "UserManage", new { area = "admin" });
+            }
+            return HttpNotFound();
         }
     }
 }

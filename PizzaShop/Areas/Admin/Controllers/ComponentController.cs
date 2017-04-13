@@ -20,7 +20,7 @@ namespace PizzaShop.Areas.Admin.Controllers
         [ChildActionOnly]
         public ActionResult ComponentListPartial()
         {
-            var model = _repository.GetAll();
+            var model = _repository.GetAll().ToList();
             return PartialView("_ComponentsPartial",model);
         }
     }

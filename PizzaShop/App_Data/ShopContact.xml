@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ShopContact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Contact>
-    <PostalCode>31-331</PostalCode>
-    <City>Kraków</City>
-    <Street>ul. Legionów 32</Street>
+    <PostalCode>22-333</PostalCode>
+    <City>FakeCity</City>
+    <Street>ul. fake 11</Street>
   </Contact>
   <Address>
     <Email>fakeEmail@gmail.com</Email>
-    <InformationContact>211 211 211</InformationContact>
-    <DeliveryContact>000 000 111</DeliveryContact>
+    <InformationContact>333 000 002</InformationContact>
+    <DeliveryContact>111 111 111</DeliveryContact>
   </Address>
 </ShopContact>

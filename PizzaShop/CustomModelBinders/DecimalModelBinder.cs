@@ -9,11 +9,9 @@ namespace PizzaShop.CustomModelBinders
 {
     public class DecimalModelBilder : IModelBinder
     {
-        public object BindModel(ControllerContext controllerContext,
-        ModelBindingContext bindingContext)
+        public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            ValueProviderResult valueResult = bindingContext.ValueProvider
-                .GetValue(bindingContext.ModelName);
+            ValueProviderResult valueResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
             ModelState modelState = new ModelState { Value = valueResult };
             object actualValue = null;
             try

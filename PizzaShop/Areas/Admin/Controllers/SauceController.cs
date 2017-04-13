@@ -15,10 +15,12 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class SauceController : Controller
     {
         readonly ISauceRepository _repository;
+        readonly IMapper _mapper;
 
-        public SauceController(ISauceRepository repository)
+        public SauceController(ISauceRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
@@ -38,7 +40,7 @@ namespace PizzaShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = Mapper.Map<SauceViewModel, Sauce>(model);
+                var result = _mapper.Map<SauceViewModel, Sauce>(model);
                 _repository.Insert(result);
                 _repository.Save();
                 return RedirectToAction("Index");
@@ -67,8 +69,7 @@ namespace PizzaShop.Areas.Admin.Controllers
             var model = _repository.Get((int)id);
             if (model != null)
             {
-                SauceViewModel viewModel = null;
-                viewModel = Mapper.Map<Sauce, SauceViewModel>(model, viewModel);
+                var viewModel = _mapper.Map<Sauce, SauceViewModel>(model);
                 if (Request.IsAjaxRequest())
                     return PartialView("_EditPartial", viewModel);
             }
@@ -84,7 +85,7 @@ namespace PizzaShop.Areas.Admin.Controllers
                 var currentModel = _repository.Get(model.ID);
                 if (currentModel != null)
                 {
-                    var result = currentModel = Mapper.Map<SauceViewModel, Sauce>(model, currentModel);
+                    var result = _mapper.Map<SauceViewModel, Sauce>(model, currentModel);
                     _repository.Update(result);
                     _repository.Save();
                     return RedirectToAction("Index");

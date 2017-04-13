@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Hosting;
 
-namespace PizzaShop.XML.Services.XmlServices
+namespace PizzaShop.Services.Xml
 {
     public static class GlobalXmlManager
     {

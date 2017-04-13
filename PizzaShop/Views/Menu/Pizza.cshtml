@@ -7,37 +7,39 @@
 @model IEnumerable<PizzaShop.Models.PizzaShopModels.Entities.Pizza>
 
 <h2>@ViewBag.Title</h2>
-
-<table class="table table-responsive">
-    <tr>
-        <th>Nazwa</th>
-        @foreach (var pizzaSize in Model.Select(s=>s.PizzaSizePrices).First())
-        {
-            <th style="min-width: 110px;">@pizzaSize.PizzaSize.Size</th>
-        }
-    </tr>
-
-    @using PizzaShop.Models.PizzaShopModels.Entities;
-    @foreach (var pizza in Model)
-    {
+@if(Model != null)
+{
+    <table class="table table-responsive">
         <tr>
-            <td>
-                <p>@pizza.Name</p>
-                @{
-                    string pom = "";
-                    var components = pizza.Components.ToList();
-                    for (var i = 0; i < components.Count; ++i)
-                    {
-                        pom += components[i].Name + ", ";
-                    }
-                    pom = pom.Remove(pom.Length - 2);
-                    <p class="component">@pom</p>
-                }
-            </td>
-            @foreach(var price in pizza.PizzaSizePrices)
+            <th>Nazwa</th>
+            @foreach (var pizzaSize in Model.Select(s=>s.PizzaSizePrices).First())
             {
-                <td class="">@string.Format("{0:C}", price.Price)</td>
+                <th style="min-width: 110px;">@pizzaSize.PizzaSize.Size</th>
             }
         </tr>
-    }
-</table>
+
+        @using PizzaShop.Models.PizzaShopModels.Entities;
+        @foreach (var pizza in Model)
+        {
+            <tr>
+                <td>
+                    <p>@pizza.Name</p>
+                    @{
+                        string pom = "";
+                        var components = pizza.Components.ToList();
+                        for (var i = 0; i < components.Count; ++i)
+                        {
+                            pom += components[i].Name + ", ";
+                        }
+                        pom = pom.Remove(pom.Length - 2);
+                        <p class="component">@pom</p>
+                    }
+                </td>
+                @foreach(var price in pizza.PizzaSizePrices)
+                {
+                    <td class="">@string.Format("{0:C}", price.Price)</td>
+                }
+            </tr>
+        }
+    </table>
+}

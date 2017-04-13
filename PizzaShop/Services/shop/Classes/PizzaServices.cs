@@ -1,4 +1,5 @@
 ﻿using Ninject;
+using PizzaShop.Areas.Admin.Models.ViewModels;
 using PizzaShop.Models.PizzaShopModels.Entities;
 using PizzaShop.Repositories.Shop.Interfaces;
 using PizzaShop.Services.shop.Interfaces;
@@ -31,8 +32,37 @@ namespace PizzaShop.Services.shop.Classes
             _pizzaSizeRepsitory = pizzaSizeRepsitory;
         }
 
-        public void CreatePizza(Pizza pizza)
+        public void CreatePizza(PizzaViewModel pizzaModel)
         {
+            var components = FindComponents(pizzaModel.Components);
+            var pizzaSizes = GetAllPizzaSizes();
+            var pizza = new Pizza()
+            {
+                Name = pizzaModel.Name,
+                Components = components,
+            };
+            var pizzaSizePrices = new List<PizzaSizePrice>()
+            {
+                new PizzaSizePrice()
+                {
+                    PizzaID = pizza.ID,
+                    Price = pizzaModel.PriceForSmall,
+                    PizzaSizeID = pizzaSizes.First().ID
+                },
+                new PizzaSizePrice()
+                {
+                    PizzaID = pizza.ID,
+                    Price = pizzaModel.PriceForMedium,
+                    PizzaSizeID = pizzaSizes.Skip(1).First().ID
+                },
+                new PizzaSizePrice()
+                {
+                    PizzaID = pizza.ID,
+                    Price = pizzaModel.PriceForSmall,
+                    PizzaSizeID = pizzaSizes.Skip(2).First().ID
+                }
+            };
+            pizza.PizzaSizePrices = pizzaSizePrices;
             _pizzaRepository.Insert(pizza);
         }
 
@@ -112,8 +142,34 @@ namespace PizzaShop.Services.shop.Classes
             _pizzaSizePriceRepository.Insert(pizzaSizePrice);
         }
 
-        public void UpdatePizza(Pizza pizza)
+        public void UpdatePizza(PizzaViewModel model)
         {
+            var pizza = GetPizza(model.ID);
+            var components = FindComponents(model.Components);
+            var pizzaSizes = GetAllPizzaSizes();
+            pizza.Name = model.Name;
+            pizza.Components = components;
+            pizza.PizzaSizePrices = new List<PizzaSizePrice>()
+                {
+                    new PizzaSizePrice()
+                    {
+                        PizzaID = pizza.ID,
+                        Price = model.PriceForSmall,
+                        PizzaSizeID = pizzaSizes.First().ID
+                    },
+                    new PizzaSizePrice()
+                    {
+                        PizzaID = pizza.ID,
+                        Price = model.PriceForMedium,
+                        PizzaSizeID = pizzaSizes.Skip(1).First().ID
+                    },
+                    new PizzaSizePrice()
+                    {
+                        PizzaID = pizza.ID,
+                        Price = model.PriceForSmall,
+                        PizzaSizeID = pizzaSizes.Skip(2).First().ID
+                    }
+                };
             _pizzaRepository.Update(pizza);
         }
     }

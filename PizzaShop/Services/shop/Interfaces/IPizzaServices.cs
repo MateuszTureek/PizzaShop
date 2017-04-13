@@ -1,4 +1,5 @@
-﻿using PizzaShop.Models.PizzaShopModels.Entities;
+﻿using PizzaShop.Areas.Admin.Models.ViewModels;
+using PizzaShop.Models.PizzaShopModels.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace PizzaShop.Services.shop.Interfaces
         /// <summary>
         /// Create new pizza.
         /// </summary>
-        /// <param name="pizza"></param>
-        void CreatePizza(Pizza pizza);
+        /// <param name="pizzaModel"></param>
+        void CreatePizza(PizzaViewModel pizzaModel);
         /// <summary>
         /// Create new pizzaSizePirce for pizza.
         /// </summary>
@@ -78,7 +79,7 @@ namespace PizzaShop.Services.shop.Interfaces
         /// Update pizza.
         /// </summary>
         /// <param name="pizza"></param>
-        void UpdatePizza(Pizza pizza);
+        void UpdatePizza(PizzaViewModel pizza);
         /// <summary>
         /// Save whole pizza.
         /// </summary>

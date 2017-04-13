@@ -1,14 +1,17 @@
 ﻿
 @model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.Event>
 
-<ul>
-    @foreach (var eventItem in Model)
-    {
-        <li>
-            <p class="addedDate">Dodano: @eventItem.AddedDate.ToShortDateString()</p>
-            <h4>@eventItem.Title</h4>
-            <p>@eventItem.Content</p>
-            <hr />
-        </li>
-    }
-</ul>
+@if (Model != null)
+{
+    <ul>
+        @foreach (var eventItem in Model)
+        {
+            <li>
+                <p class="addedDate">Dodano: @eventItem.AddedDate.ToShortDateString()</p>
+                <h4>@eventItem.Title</h4>
+                <p>@eventItem.Content</p>
+                <hr />
+            </li>
+        }
+    </ul>
+}

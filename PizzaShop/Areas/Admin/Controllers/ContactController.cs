@@ -1,5 +1,6 @@
-﻿using PizzaShop.XML.Services.XmlServices;
-using PizzaShop.XML.Services.XmlServices.XmlModels;
+﻿using AutoMapper;
+using PizzaShop.Services.Xml;
+using PizzaShop.Services.Xml.XmlModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class ContactController : Controller
     {
         readonly IXmlManager _xmlManager;
+        readonly IMapper _mappper;
 
-        public ContactController(IXmlManager xmlManager)
+        public ContactController(IXmlManager xmlManager, IMapper mapper)
         {
             _xmlManager = xmlManager;
+            _mappper = mapper;
         }
 
         public ActionResult Index()
@@ -30,9 +33,12 @@ namespace PizzaShop.Areas.Admin.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                var model = _xmlManager.GetXmlModel<ShopContact>("ShopContact");
-                if (model != null)
+                var shopContact = _xmlManager.GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName);
+                if (shopContact != null)
+                {
+                    var model = _mappper.Map<ShopContact, ShopContactViewModel>(shopContact);
                     return PartialView("_EditPartial", model);
+                }
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -40,11 +46,12 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ShopContact model)
+        public ActionResult Edit(ShopContactViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                _xmlManager.CreateXmlFile<ShopContact>("ShopContact", model);
+                var shopContact = _mappper.Map<ShopContactViewModel, ShopContact>(model);
+                _xmlManager.CreateXmlFile<ShopContact>(GlobalXmlManager.ContactFileName, shopContact);
                 return RedirectToAction("Index");
             }
             return new HttpStatusCodeResult(HttpStatusCode.NotModified);

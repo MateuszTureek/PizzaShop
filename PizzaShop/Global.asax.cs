@@ -25,8 +25,6 @@ namespace PizzaShop
             Database.SetInitializer<PizzaShopDbContext>(new PizzaShopSampleData());
             Database.SetInitializer<CmsDbContext>(new CmsSampleData());
             Database.SetInitializer<ApplicationDbContext>(new IdentitySampleData());
-            //mapowanie objektów
-            AutoMapperConfig.RegisterMappings();
             //własny modelbinder służący do wlasnej walidacji pola decimal z ceną
             //należy jescze obsłużyc javascipt
             ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBilder());

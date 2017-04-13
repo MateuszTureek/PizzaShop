@@ -15,15 +15,17 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class SaladController : Controller
     {
         readonly ISaladRepository _repository;
+        readonly IMapper _mapper;
 
-        public SaladController(ISaladRepository repository)
+        public SaladController(ISaladRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
-            var model = _repository.GetAll();
+            var model = _repository.GetAll().ToList();
             return View("Index", model);
         }
 
@@ -38,7 +40,7 @@ namespace PizzaShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = Mapper.Map<SaladViewModel, Salad>(model);
+                var result = _mapper.Map<SaladViewModel, Salad>(model);
                 _repository.Insert(result);
                 _repository.Save();
                 return RedirectToAction("Index");
@@ -67,8 +69,7 @@ namespace PizzaShop.Areas.Admin.Controllers
             var model = _repository.Get((int)id);
             if (model != null)
             {
-                SaladViewModel viewModel = null;
-                viewModel = Mapper.Map<Salad, SaladViewModel>(model, viewModel);
+                var viewModel = _mapper.Map<Salad, SaladViewModel>(model);
                 if (Request.IsAjaxRequest())
                     return PartialView("_EditPartial", viewModel);
             }
@@ -84,7 +85,7 @@ namespace PizzaShop.Areas.Admin.Controllers
                 var currentModel = _repository.Get(model.ID);
                 if (currentModel != null)
                 {
-                    var result = currentModel = Mapper.Map<SaladViewModel, Salad>(model, currentModel);
+                    var result =  _mapper.Map<SaladViewModel, Salad>(model, currentModel);
                     _repository.Update(result);
                     _repository.Save();
                     return RedirectToAction("Index");

@@ -9,8 +9,6 @@ namespace PizzaShop.Models.PizzaShopModels.Entities
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
-
-        public virtual ICollection<Component> Components { get; set; }
+        public decimal? Price { get; set; }
     }
 }

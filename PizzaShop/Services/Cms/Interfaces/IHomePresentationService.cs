@@ -14,6 +14,6 @@ namespace PizzaShop.Services.Cms.Interfaces
         List<SliderItem> GetAllSliderItems();
         List<InformationItem> GetAllInformationItems();
         List<Event> GetAllEvents();
-        List<News> GetAllNews();    
+        List<News> GetAllNews();
     }
 }

@@ -11,7 +11,5 @@ namespace PizzaShop.Models.PizzaShopModels.Entities
         public string Name { get; set; }
 
         public virtual ICollection<Pizza> Pizzas { get; set; }
-
-        public virtual ICollection<Salad> Salads { get; set; }
     }
 }

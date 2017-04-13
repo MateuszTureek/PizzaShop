@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using PizzaShop.Areas.Admin.Models.ViewModels;
+﻿using PizzaShop.Areas.Admin.Models.ViewModels;
 using PizzaShop.Models.PizzaShopModels.Entities;
 using PizzaShop.Services.shop.Interfaces;
 using System;
@@ -15,7 +14,7 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class PizzaController : Controller
     {
         readonly IPizzaService _service;
-        
+
         public PizzaController(IPizzaService service)
         {
             _service = service;
@@ -35,40 +34,11 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "ID")]PizzaViewModel model)
+        public ActionResult Create([Bind(Exclude = "ID")]PizzaViewModel pizzaModel)
         {
             if (ModelState.IsValid)
             {
-                var components = _service.FindComponents(model.Components);
-                var pizzaSizes = _service.GetAllPizzaSizes();
-                var pizza = new Pizza()
-                {
-                    Name = model.Name,
-                    Components = components
-                };
-                var pizzaSizePrices = new List<PizzaSizePrice>()
-                {
-                    new PizzaSizePrice()
-                    {
-                        PizzaID = pizza.ID,
-                        Price = model.PriceForSmall,
-                        PizzaSizeID = pizzaSizes.First().ID
-                    },
-                    new PizzaSizePrice()
-                    {
-                        PizzaID = pizza.ID,
-                        Price = model.PriceForMedium,
-                        PizzaSizeID = pizzaSizes.Skip(1).First().ID
-                    },
-                    new PizzaSizePrice()
-                    {
-                        PizzaID = pizza.ID,
-                        Price = model.PriceForSmall,
-                        PizzaSizeID = pizzaSizes.Skip(2).First().ID
-                    }
-                };
-                _service.CreatePizza(pizza);
-                _service.CreatePizzaSizePrice(pizzaSizePrices);
+                _service.CreatePizza(pizzaModel);
                 _service.SavePizza();
                 return RedirectToAction("Index", "Pizza");
             }
@@ -101,7 +71,7 @@ namespace PizzaShop.Areas.Admin.Controllers
                     ViewBag.Components = _service.FindNotPizzaComponent(id);
                     ViewBag.CurrentComponents = _service.FindComponents(id);
                     var pizzaSizePrices = _service.GetPizzaSizePrices(id);
-                    PizzaViewModel viewModel = new PizzaViewModel()
+                    var viewModel = new PizzaViewModel()
                     {
                         ID = pizza.ID,
                         Name = pizza.Name,
@@ -121,33 +91,7 @@ namespace PizzaShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var pizza = _service.GetPizza(model.ID);
-                var components = _service.FindComponents(model.Components);
-                var pizzaSizes = _service.GetAllPizzaSizes();
-                pizza.Name = model.Name;
-                pizza.Components = components;
-                pizza.PizzaSizePrices = new List<PizzaSizePrice>()
-                {
-                    new PizzaSizePrice()
-                    {
-                        PizzaID = pizza.ID,
-                        Price = model.PriceForSmall,
-                        PizzaSizeID = pizzaSizes.First().ID
-                    },
-                    new PizzaSizePrice()
-                    {
-                        PizzaID = pizza.ID,
-                        Price = model.PriceForMedium,
-                        PizzaSizeID = pizzaSizes.Skip(1).First().ID
-                    },
-                    new PizzaSizePrice()
-                    {
-                        PizzaID = pizza.ID,
-                        Price = model.PriceForSmall,
-                        PizzaSizeID = pizzaSizes.Skip(2).First().ID
-                    }
-                };
-                _service.UpdatePizza(pizza);
+                _service.UpdatePizza(model);
                 _service.SavePizza();
                 return RedirectToAction("Index");
             }

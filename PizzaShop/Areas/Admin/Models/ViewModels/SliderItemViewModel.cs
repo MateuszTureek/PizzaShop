@@ -10,7 +10,7 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
     {
         public int ID { get; set; }
 
-        [Required]
+        [Range(1,1000)]
         [Display(Name="Pozycja")]
         [RegularExpression("^[0-9]*$")]
         public int Position { get; set; }

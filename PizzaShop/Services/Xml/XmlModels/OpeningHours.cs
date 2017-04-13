@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 
-namespace PizzaShop.XML.Services.XmlServices.XmlModels
+namespace PizzaShop.Services.Xml.XmlModels
 {
     [Serializable]
     [XmlRoot("OpeningHours")]
@@ -21,4 +21,4 @@ namespace PizzaShop.XML.Services.XmlServices.XmlModels
         [XmlAttribute]
         public string Name { get; set; }
     }
-}   
+}

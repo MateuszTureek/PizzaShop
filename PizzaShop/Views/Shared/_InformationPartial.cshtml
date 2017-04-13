@@ -1,11 +1,14 @@
 ﻿
 @model IEnumerable<PizzaShop.Models.PizzaShopModels.CMS.InformationItem>
 
-@foreach (var info in Model)
+@if (Model != null)
 {
-    <div class="col-md-4">
-        <h3>@info.Title</h3>
-        <img src="@info.PictureUrl" alt="brak zdjęcia" style="width: 100%; height: 200px;" />
-        <p>@info.Content</p>
-    </div>
+    foreach (var info in Model)
+    {
+        <div class="col-md-4">
+            <h3>@info.Title</h3>
+            <img src="@info.PictureUrl" alt="brak zdjęcia" style="width: 100%; height: 200px;" />
+            <p>@info.Content</p>
+        </div>
+    }
 }
