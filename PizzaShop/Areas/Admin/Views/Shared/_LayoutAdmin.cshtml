@@ -45,7 +45,7 @@
             </header>
             <main>
                 <nav class="col-md-2">
-                    <ul id="AdminMenuCategories" class="nav nav-stacked">
+                    <ul id="AdminMenuCategories" class="nav nav-stacked" style="background: #e0dede;">
                         <li class="navHeading">
                             <img src="~/Content/Images/pizzaSlide_3.jpg" />
                         </li>
@@ -57,17 +57,18 @@
                         <li>@Html.ActionLink("Wydarzenia", "Index", "Event", new { area = "admin" }, null)</li>
                         <li>@Html.ActionLink("Nowości", "Index", "News", new { area = "admin" }, null)</li>
                         <li class="dropdown">
-                                <a href="#" type="button" role="button">
-                                    Menu
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="nav list-unstyled sublist hide">
-                                    <li>@Html.ActionLink("Pizza", "Index", "Pizza", new { area = "admin" }, null)</li>
-                                    <li>@Html.ActionLink("Sosy", "Index", "Sauce", new { area = "admin" }, null)</li>
-                                    <li>@Html.ActionLink("Sałatki", "Index", "Salad", new { area = "admin" }, null)</li>
-                                    <li>@Html.ActionLink("Napoje", "Index", "Drink", new { area = "admin" }, null)</li>
-                                </ul>
+                            <a id="MenuLink" href="#" type="button" role="button">
+                                Menu
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="nav list-unstyled sublist hide">
+                                <li>@Html.ActionLink("Pizza", "Index", "Pizza", new { area = "admin" }, null)</li>
+                                <li>@Html.ActionLink("Sosy", "Index", "Sauce", new { area = "admin" }, null)</li>
+                                <li>@Html.ActionLink("Sałatki", "Index", "Salad", new { area = "admin" }, null)</li>
+                                <li>@Html.ActionLink("Napoje", "Index", "Drink", new { area = "admin" }, null)</li>
+                            </ul>
                         </li>
+                        <li>@Html.ActionLink("Składniki", "Index","Component",new { area = "admin" }, null)</li>
                         <li>@Html.ActionLink("Kontakt", "Index", "Contact", new { area = "admin" }, null)</li>
                     </ul>
                 </nav>

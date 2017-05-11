@@ -9,7 +9,7 @@ using PizzaShop.Repositories.CMS.Interfaces;
 
 namespace PizzaShop.Repositories.CMS.Classes
 {
-    public class EventRepository : Repository<int, Event>, IEventRepository
+    public class EventRepository : Repository<int?, Event>, IEventRepository
     {
         public EventRepository(DbContext context) : base(context)
         {

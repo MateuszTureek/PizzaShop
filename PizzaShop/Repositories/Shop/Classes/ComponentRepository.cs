@@ -9,7 +9,7 @@ using PizzaShop.Repositories.Shop.Interfaces;
 
 namespace PizzaShop.Repositories.Shop.Classes
 {
-    public class ComponentRepository : Repository<int,Component>, IComponentRepository
+    public class ComponentRepository : Repository<int?,Component>, IComponentRepository
     {
         public ComponentRepository(DbContext context) : base(context)
         {

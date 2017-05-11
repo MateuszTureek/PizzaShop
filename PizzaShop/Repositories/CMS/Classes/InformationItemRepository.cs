@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace PizzaShop.Repositories.CMS.Classes
 {
-    public class InformationItemRepository : Repository<int, InformationItem>, IInformationItemRepository
+    public class InformationItemRepository : Repository<int?, InformationItem>, IInformationItemRepository
     {
         public InformationItemRepository(DbContext context) : base(context)
         {

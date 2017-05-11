@@ -67,9 +67,16 @@ namespace PizzaShop.Services.Cms.Classes
             _unitOfWork.Commit();
         }
 
+
         public SliderItem MapViewModelToModel(SliderItemViewModel viewModel)
         {
             var model = _mapper.Map<SliderItemViewModel, SliderItem>(viewModel);
+            return model;
+        }
+
+        public SliderItem MapViewModelToModel(SliderItemViewModel viewModel, SliderItem sliderItem)
+        {
+            var model = _mapper.Map<SliderItemViewModel, SliderItem>(viewModel, sliderItem);
             return model;
         }
 

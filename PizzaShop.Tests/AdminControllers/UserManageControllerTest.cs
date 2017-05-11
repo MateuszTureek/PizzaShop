@@ -100,24 +100,20 @@ namespace PizzaShop.Tests.AdminControllers
         public async Task Delete_User_Is_Null()
         {
             // Arrange
-            var id = "null";
+            var id = "wdhjhfjdhj";
             ApplicationUser user = null;
             var service = Substitute.For<IUserService>();
             var controller = new UserManageController(service);
 
             // Act
-            var result = await controller.Delete(id) as RedirectToRouteResult;
-            var areaName = result.RouteValues.Values.ElementAt(0);
-            var actionName = result.RouteValues.Values.ElementAt(1);
-            var controllerName = result.RouteValues.Values.ElementAt(2);
+            var result = await controller.Delete(id) as HttpNotFoundResult;
+            var statusCode = result.StatusCode;
 
             service.FindUserAsync(id).Returns(Task.FromResult(user));
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(actionName));
-            Assert.That("Home", Is.EqualTo(controllerName));
-            Assert.That("admin", Is.EqualTo(areaName));
+            Assert.That(404, Is.EqualTo(statusCode));
         }
 
         [Test]
@@ -140,18 +136,14 @@ namespace PizzaShop.Tests.AdminControllers
             service.DeleteUserAsync(user).Returns(Task.FromResult(identityResult));
 
             // Act
-            var result = await controller.Delete(id) as RedirectToRouteResult;
-            var areaName = result.RouteValues.Values.ElementAt(0);
-            var actionName = result.RouteValues.Values.ElementAt(1);
-            var controllerName = result.RouteValues.Values.ElementAt(2);
+            var result = await controller.Delete(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
 
             service.FindUserAsync(id).Returns(Task.FromResult(user));
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(actionName));
-            Assert.That("Home", Is.EqualTo(controllerName));
-            Assert.That("admin", Is.EqualTo(areaName));
+            Assert.That(400, Is.EqualTo(statusCode));
         }
     }
 }

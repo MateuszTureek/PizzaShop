@@ -9,7 +9,7 @@ using PizzaShop.Models.PizzaShopModels.CMS;
 
 namespace PizzaShop.Repositories.CMS.Classes
 {
-    public class GalleryItemRepository : Repository<int, GalleryItem>, IGalleryItemRepository
+    public class GalleryItemRepository : Repository<int?, GalleryItem>, IGalleryItemRepository
     {
         public GalleryItemRepository(DbContext dbContext) : base(dbContext)
         {

@@ -21,8 +21,9 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var model = _service.SliderItemList();
-            return View("Index", model);
+            ViewBag.ModelIsNotValid = TempData["ModelIsNotValid"];
+            var sliderItems = _service.SliderItemList();
+            return View("Index", sliderItems);
         }
 
         public ActionResult CreatePartial()
@@ -32,64 +33,69 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "ID, PictureUrl")]SliderItemViewModel model, HttpPostedFileBase PictureContent)
+        public ActionResult Create([Bind(Exclude = "ID, PictureUrl")]SliderItemViewModel sliderItemViewModel, HttpPostedFileBase PictureContent)
         {
-            if (ModelState.IsValid && PictureContent != null && PictureContent.ContentLength > 0 && PictureContent.ContentType.Contains("image"))
+            if(!ModelState.IsValid)
             {
-                var result = _service.MapViewModelToModel(model);
-                result.PictureUrl = _service.AddSliderItemImage(PictureContent);
-                _service.CreateSliderItem(result);
-                _service.SaveSliderItem();
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
                 return RedirectToAction("Index");
             }
-            return View("Index");
+
+            if (PictureContent == null || PictureContent.ContentLength <= 0 || !PictureContent.ContentType.Contains("image"))
+            {
+                TempData["ModelIsNotValid"] = "Zdjęcie nie zostało przesłane prawidłowo. Spróbuj ponownie.";
+                return RedirectToAction("Index");
+            }
+            var sliderItem = _service.MapViewModelToModel(sliderItemViewModel);
+            sliderItem.PictureUrl = _service.AddSliderItemImage(PictureContent);
+            _service.CreateSliderItem(sliderItem);
+            _service.SaveSliderItem();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int? id)
         {
-            var model = _service.GetSliderItem((int)id);
-            if (model != null)
-            {
-                if (Request.IsAjaxRequest())
-                {
-                    _service.DeleteSliderItem(model);
-                    _service.SaveSliderItem();
-                    return Json("", JsonRequestBehavior.AllowGet);
-                }
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var sliderItem = _service.GetSliderItem((int)id);
+            if (sliderItem == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
                 return RedirectToAction("Index");
-            }
-            return HttpNotFound();
+            _service.DeleteSliderItem(sliderItem);
+            _service.SaveSliderItem();
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)
         {
-            var model = _service.GetSliderItem((int)id);
-            if (model != null)
-            {
-                var viewModel = _service.MapModelToViewModel(model);
-                if (Request.IsAjaxRequest())
-                    return PartialView("_EditPartial", viewModel);
-            }
-            return HttpNotFound("Nie znaleziono szukanego elementu.");
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var sliderItem = _service.GetSliderItem((int)id);
+            if (sliderItem == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
+                return RedirectToAction("Index");
+            var sliderItemViewModel = _service.MapModelToViewModel(sliderItem);
+            return PartialView("_EditPartial", sliderItemViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SliderItemViewModel model)
+        public ActionResult Edit(SliderItemViewModel sliderItemViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var currentModel = _service.GetSliderItem(model.ID);
-                if (currentModel != null)
-                {
-                    var result = _service.MapViewModelToModel(model);
-                    _service.UpdateSliderItem(result);
-                    _service.SaveSliderItem();
-                    return RedirectToAction("Index");
-                }
-                return HttpNotFound();
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
+                return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            var sliderItem = _service.GetSliderItem(sliderItemViewModel.ID);
+            if (sliderItem == null)
+                return HttpNotFound();
+            var result = _service.MapViewModelToModel(sliderItemViewModel, sliderItem);
+            _service.UpdateSliderItem(result);
+            _service.SaveSliderItem();
+            return RedirectToAction("Index");
         }
     }
 }

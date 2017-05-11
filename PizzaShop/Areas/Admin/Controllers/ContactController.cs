@@ -25,36 +25,38 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var model = _xmlManager.GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName);
-            return View("Index", model);
+            ViewBag.ModelIsNotValid = TempData["ModelIsNotValid"];
+            var shopContact = _xmlManager.GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName);
+            return View("Index", shopContact);
         }
 
         public ActionResult Edit()
         {
-            if (Request.IsAjaxRequest())
+            if (!Request.IsAjaxRequest())
             {
-                var shopContact = _xmlManager.GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName);
-                if (shopContact != null)
-                {
-                    var model = _mappper.Map<ShopContact, ShopContactViewModel>(shopContact);
-                    return PartialView("_EditPartial", model);
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var shopContact = _xmlManager.GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName);
+            if (shopContact == null)
+            {
+                return HttpNotFound();
+            }
+            var shopContextViewModel = _mappper.Map<ShopContact, ShopContactViewModel>(shopContact);
+            return PartialView("_EditPartial", shopContextViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ShopContactViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var shopContact = _mappper.Map<ShopContactViewModel, ShopContact>(model);
-                _xmlManager.CreateXmlFile<ShopContact>(GlobalXmlManager.ContactFileName, shopContact);
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
                 return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            var shopContact = _mappper.Map<ShopContactViewModel, ShopContact>(model);
+            _xmlManager.CreateXmlFile<ShopContact>(GlobalXmlManager.ContactFileName, shopContact);
+            return RedirectToAction("Index");
         }
     }
 }

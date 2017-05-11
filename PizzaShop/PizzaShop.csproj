@@ -220,6 +220,7 @@
     <Compile Include="Areas\Admin\Controllers\SauceController.cs" />
     <Compile Include="Areas\Admin\Controllers\SliderItemController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\ComponentViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\DrinkViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\EventViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\InformationItemViewModel.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Areas\Admin\Models\ViewModels\SliderItemViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -461,6 +463,9 @@
     <Content Include="Mvc.sitemap">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\Admin\Views\Component\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Component\_CreatePartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Component\_EditPartial.cshtml" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -490,7 +495,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -546,6 +553,10 @@
     <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
+    <Content Include="Views\Error\Error400.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Error\Error500.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

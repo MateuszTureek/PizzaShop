@@ -15,17 +15,16 @@ namespace PizzaShop.Areas.Admin.Controllers
     public class InformationItemController : Controller
     {
         readonly IInformationItemService _service;
-        readonly IMapper _mapper;
-        public InformationItemController(IInformationItemService service, IMapper mapper)
+        public InformationItemController(IInformationItemService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
-            var model = _service.GetAllInformationItems();
-            return View("Index", model);
+            ViewBag.ModelIsNotValid = TempData["ModelIsNotValid"];
+            var informationItems = _service.GetAllInformationItems();
+            return View("Index", informationItems);
         }
 
         public ActionResult CreatePartial()
@@ -35,64 +34,74 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "ID, PictureUrl")]InformationItemViewModel model, HttpPostedFileBase PictureContent)
+        public ActionResult Create([Bind(Exclude = "ID, PictureUrl")]InformationItemViewModel informationItemViewModel, HttpPostedFileBase PictureContent)
         {
-            if (ModelState.IsValid && PictureContent != null && PictureContent.ContentLength > 0 && PictureContent.ContentType.Contains("image"))
+            if (!ModelState.IsValid)
             {
-                var result = _mapper.Map<InformationItemViewModel, InformationItem>(model);
-                result.PictureUrl = _service.AddInformationItemImage(PictureContent);
-                _service.CreateInformationItem(result);
-                _service.SaveInfomrationItem();
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
                 return RedirectToAction("Index");
             }
-            return View("Index");
+            if (PictureContent == null || PictureContent.ContentLength <= 0 || !PictureContent.ContentType.Contains("image"))
+            {
+                TempData["ModelIsNotValid"] = "Zdjęcie nie zostało przesłane prawidłowo. Spróbuj ponownie.";
+                return RedirectToAction("Index");
+            }
+            var informationItem = _service.MapViewModelToObject(informationItemViewModel);
+            informationItem.PictureUrl = _service.AddInformationItemImage(PictureContent);
+            _service.CreateInformationItem(informationItem);
+            _service.SaveInfomrationItem();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int? id)
         {
-            var model = _service.GetInfomrationItem((int)id);
-            if (model != null)
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var informationItem = _service.GetInfomrationItem((int)id);
+            if (informationItem == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
-                {
-                    _service.DeleteInfomationItem(model);
-                    _service.SaveInfomrationItem();
-                    return Json("", JsonRequestBehavior.AllowGet);
-                }
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
                 return RedirectToAction("Index");
             }
-            return HttpNotFound();
+            _service.DeleteInfomationItem(informationItem);
+            _service.SaveInfomrationItem();
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)
         {
-            var model = _service.GetInfomrationItem((int)id);
-            if (model != null)
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var informationItem = _service.GetInfomrationItem((int)id);
+            if (informationItem == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
             {
-                var viewModel = _mapper.Map<InformationItem, InformationItemViewModel>(model);
-                if (Request.IsAjaxRequest())
-                    return PartialView("_EditPartial", viewModel);
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
+                return RedirectToAction("Index");
             }
-            return HttpNotFound("Nie znaleziono szukanego elementu.");
+            var viewModel = _service.MapObjectToViewModel(informationItem);
+            return PartialView("_EditPartial", viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(InformationItemViewModel model)
+        public ActionResult Edit(InformationItemViewModel informationItemViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var currentModel = _service.GetInfomrationItem(model.ID);
-                if (currentModel != null)
-                {
-                    var result = _mapper.Map<InformationItemViewModel, InformationItem>(model,currentModel);
-                    _service.UpdateInformationItem(result);
-                    _service.SaveInfomrationItem();
-                    return RedirectToAction("Index");
-                }
-                return HttpNotFound();
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
+                return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            var informationItem = _service.GetInfomrationItem(informationItemViewModel.ID);
+            if (informationItem == null)
+                return HttpNotFound();
+            var result = _service.MapViewModelToObject(informationItemViewModel, informationItem);
+            _service.UpdateInformationItem(result);
+            _service.SaveInfomrationItem();
+            return RedirectToAction("Index");
         }
     }
 }

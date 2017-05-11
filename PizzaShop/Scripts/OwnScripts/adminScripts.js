@@ -1,5 +1,33 @@
 ﻿/* READY */
 $(document).ready(function () {
+
+    var $sublist = $('.sublist');
+    var $menuLink = $('#MenuLink');
+    $($menuLink).on('click', function (e) {
+        e.preventDefault();
+        if(!$($sublist).hasClass('hide'))
+        {
+            $($sublist).addClass('hide');
+            $($menuLink).addClass('active');
+        }
+        else {
+            $($sublist).removeClass('hide');
+            $($menuLink).remove('active');
+        }
+    });
+
+    var $errorDiv = $(".errorMsg");
+    if ($($errorDiv).html()=="")
+    {
+        $($errorDiv).closest('h4').addClass('hide');
+    }
+    else {
+        $($errorDiv).closest('h4').removeClass('hide');
+    }
+    $('.close').on('click', function () {
+        $($errorDiv).closest('h4').addClass('hide');
+    });
+
     // All items height setting on max height.
     var news = {
         findMaxHeight: findMaxHeight

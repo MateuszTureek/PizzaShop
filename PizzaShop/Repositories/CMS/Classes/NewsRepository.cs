@@ -9,7 +9,7 @@ using PizzaShop.Repositories.CMS.Interfaces;
 
 namespace PizzaShop.Repositories.CMS.Classes
 {
-    public class NewsRepository : Repository<int, News>, INewsRepository
+    public class NewsRepository : Repository<int?, News>, INewsRepository
     {
         public NewsRepository(DbContext context) : base(context)
         {

@@ -33,15 +33,19 @@ namespace PizzaShop.Tests.AdminControllers
             var mappper = Substitute.For<IMapper>();
             var controller = new EventController(repository, mappper);
 
+            controller.TempData["ModelIsNotValid"] = "Fake content.";
+            controller.ViewBag.ModelIsNotValid = controller.TempData["ModelIsNotValid"];
             repository.GetAll().Returns(events);
 
             // Act
             var result = controller.Index() as ViewResult;
             var viewName = result.ViewName;
             var model = result.Model as List<Event>;
+            var viewBag = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(result, !Is.Null);
+            Assert.That("Fake content.", Is.EqualTo(viewBag));
             Assert.That(viewName, Is.EqualTo(viewName));
             Assert.That(model, !Is.Null);
             Assert.That(3, Is.EqualTo(model.Count));
@@ -65,18 +69,18 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Post_Create_Is_Valid()
+        public void Good_Post_Create()
         {
             // Arrange
             var eventObj = new Event()
             {
-                Title = "Wydarzenie 1",
-                Content = "Treść wydarzenia 1"
+                Title = "Wydarzenie",
+                Content = "Treść wydarzenia"
             };
             var eventViewModel = new EventViewModel()
             {
-                Title = "Wydarzenie 1",
-                Content = "Treść wydarzenia 1"
+                Title = "Wydarzenie",
+                Content = "Treść wydarzenia"
             };
             var repository = Substitute.For<IEventRepository>();
             var mapper = Substitute.For<IMapper>();
@@ -116,17 +120,19 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Create(eventViewModel) as ViewResult;
-            var viewName = result.ViewName;
+            var result = controller.Create(eventViewModel) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(viewName));
+            Assert.That("Index", Is.EqualTo(actionName));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
             Assert.That(valid, Is.False);
         }
 
         [Test]
-        public void Delete_Ajax_Request()
+        public void Good_Delete()
         {
             // Arrange
             var eventObj = new Event()
@@ -161,6 +167,24 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
+        public void Delete_Id_Is_Null()
+        {
+            // Arrange
+            int? id = null;
+            var repository = Substitute.For<IEventRepository>();
+            var mapper = Substitute.For<IMapper>();
+            var controller = new EventController(repository, mapper);
+
+            // Act
+            var result = controller.Delete(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
+        }
+
+        [Test]
         public void Delete_Not_Ajax_Request()
         {
             // Arrange
@@ -185,14 +209,16 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var result = controller.Delete(id) as RedirectToRouteResult;
             var actionName = result.RouteValues.Values.ElementAt(0);
+            var ajaxRequest = controller.Request.IsAjaxRequest();
 
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That("Index", Is.EqualTo(actionName));
+            Assert.That(ajaxRequest, Is.False);
         }
 
         [Test]
-        public void Delete_Model_Is_Null()
+        public void Delete_EventObj_Is_Null()
         {
             // Arrange
             Event eventObj = null;
@@ -213,7 +239,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Get_Edit_Is_Ajax_Request()
+        public void Good_Get_Edit()
         {
             // Arrange
             var eventObj = new Event()
@@ -284,13 +310,13 @@ namespace PizzaShop.Tests.AdminControllers
             mapper.Map<Event, EventViewModel>(eventObj).Returns(eventViewModel);
 
             // Act
-            var result = controller.Edit(id) as HttpNotFoundResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(id) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
             var ajaxRequest = controller.Request.IsAjaxRequest();
 
             //Assert
             Assert.That(result, !Is.Null);
-            Assert.That(404, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(actionName));
             Assert.That(ajaxRequest, Is.False);
         }
 
@@ -309,34 +335,32 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var result = controller.Edit(id) as HttpNotFoundResult;
             var statusCode = result.StatusCode;
-            var statusDescription = result.StatusDescription;
             
             //Assert
             Assert.That(result, !Is.Null);
             Assert.That(404, Is.EqualTo(statusCode));
-            Assert.That("Nie znaleziono szukanego elementu.", Is.EqualTo(statusDescription));
         }
 
         [Test]
-        public void Post_Edit_Model_Is_Valid()
+        public void Good_Post_Edit()
         {
             // Arrange
             var eventObj = new Event()
             {
                 ID = 1,
-                Title = "Wydarzenie 1",
-                Content = "Treść wydarzenia 1"
+                Title = "Wydarzenie ",
+                Content = "Treść wydarzenia"
             };
             var resultEventObj = new Event()
             {
                 ID = 1,
-                Title = "Wydarzenie 1.1",
+                Title = "Wydarzenie Nowe",
                 Content = "Treść.",
             };
             var eventViewModel = new EventViewModel()
             {
                 ID = 1,
-                Title = "Wydarzenie 1.1",
+                Title = "Wydarzenie",
                 Content = "Treść.",
             };
             var id = 1;
@@ -381,25 +405,27 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Edit(eventViewModel) as HttpStatusCodeResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(eventViewModel) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             //Assert
             Assert.That(result, !Is.Null);
-            Assert.That(304, Is.EqualTo(statusCode));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
+            Assert.That("Index", Is.EqualTo(actionName));
             Assert.That(valid, Is.False);
         }
 
         [Test]
-        public void Post_Edit_Model_Is_Null()
+        public void Post_Edit_Event_Is_Null()
         {
             // Arrange
             Event eventObj = null;
             var eventViewModel = new EventViewModel()
             {
                 ID = -1,
-                Title = "Wydarzenie 1",
-                Content = "Treść wydarzenia 1",
+                Title = "Wydarzenie",
+                Content = "Treść wydarzenia",
             };
             var id = -1;
             var repository = Substitute.For<IEventRepository>();

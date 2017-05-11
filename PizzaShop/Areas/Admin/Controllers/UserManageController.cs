@@ -7,6 +7,7 @@ using PizzaShop.Services.Identity.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -32,23 +33,21 @@ namespace PizzaShop.Areas.Admin.Controllers
         public ActionResult ListUsers()
         {
             var users = _service.UserList();
-            var viewModelList = _service.UsersToViewModels(users);
-            return PartialView("_UserPartial", viewModelList);
+            var userViewModelList = _service.UsersToViewModels(users);
+            return PartialView("_UserPartial", userViewModelList);
         }
-        
+
         public async Task<ActionResult> Delete(string id)
         {
+            if (id == string.Empty)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var user = await _service.FindUserAsync(id);
-            if (user != null)
-            {
-                var result = await _service.DeleteUserAsync(user);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "UserManage", new { area = "admin" });
-                }
-                return RedirectToAction("Index", "Home", new { area = "admin" });
-            }
-            return RedirectToAction("Index", "Home", new { area = "admin" });
+            if (user == null)
+                return HttpNotFound();
+            var result = await _service.DeleteUserAsync(user);
+            if (!result.Succeeded)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return RedirectToAction("Index", "UserManage", new { area = "admin" });
         }
     }
 }

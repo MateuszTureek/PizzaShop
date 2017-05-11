@@ -98,25 +98,25 @@ namespace PizzaShop.Tests.AdminControllers
             // Arrange
             var xmlManager = Substitute.For<IXmlManager>();
             var mapper = Substitute.For<IMapper>();
-            
+
             var fakeController = new FakeController();
             fakeController.PrepareFakeRequest();
             var controller = new ContactController(xmlManager, mapper);
             controller.ControllerContext = fakeController.GetControllerContext<ContactController>(new RouteData(), controller);
 
             // Act
-            var result = controller.Edit() as HttpStatusCodeResult;
+            var result = controller.Edit() as RedirectToRouteResult; ;
             var ajaxRequest = controller.Request.IsAjaxRequest();
-            var statusCode = result.StatusCode;
+            var actionName = result.RouteValues.Values.ElementAt(0);
 
             // Assert
             Assert.IsNotNull(result);
             Assert.IsFalse(ajaxRequest);
-            Assert.That(400, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(actionName));
         }
 
         [Test]
-        public void Get_Edit_Ajax_Request_ShopContact_Null()
+        public void Get_Edit_ShopContact_Is_Null()
         {
             // Arrange
             var xmlManager = Substitute.For<IXmlManager>();
@@ -131,7 +131,7 @@ namespace PizzaShop.Tests.AdminControllers
             xmlManager.GetXmlModel<ShopContact>(GlobalXmlManager.ContactFileName).Returns(shopContact);
 
             // Act
-            var result = controller.Edit() as HttpStatusCodeResult;
+            var result = controller.Edit() as HttpNotFoundResult;
             var ajaxRequest = controller.Request.IsAjaxRequest();
             var statusCode = result.StatusCode;
 
@@ -170,13 +170,13 @@ namespace PizzaShop.Tests.AdminControllers
 
             //Act
             var result = controller.Edit(shopContactViewModel) as RedirectToRouteResult;
-            var actionName = result.RouteValues.Values.ElementAt(0); //only action name
+            var actionName = result.RouteValues.Values.ElementAt(0);
             var modelIsValid = validator.IsValid();
 
             //Assert
-            Assert.IsNotNull(result);
+            Assert.That(result, !Is.Null);
             Assert.That("Index", Is.EqualTo(actionName));
-            Assert.IsTrue(modelIsValid);
+            Assert.That(modelIsValid, Is.True);
         }
 
         [Test]
@@ -209,12 +209,14 @@ namespace PizzaShop.Tests.AdminControllers
             //Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Edit(shopContactViewModel) as HttpStatusCodeResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(shopContactViewModel) as RedirectToRouteResult;
+            var viewName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             //Assert
             Assert.That(result,!Is.Null);
-            Assert.That(304, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(viewName));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
             Assert.That(valid, Is.False);
         }
     }

@@ -35,7 +35,7 @@ namespace PizzaShop.Tests.Controllers
         }
 
         [Test]
-        public void Gallery()
+        public void Gallery()   
         {
             // Arrange
             List<GalleryItem> galleryItems = new List<GalleryItem>()
@@ -47,7 +47,6 @@ namespace PizzaShop.Tests.Controllers
                 new GalleryItem() { Position=5, PictureUrl="/Content/Images/pizzaSlide_2.jpg" },
                 new GalleryItem() { Position=6, PictureUrl="/Content/Images/pizzaSlide_3.jpg" }
             };
-
             var homePresentationService = Substitute.For<IHomePresentationService>();
             var xmlManager = Substitute.For<IXmlManager>();
             HomeController controller = new HomeController(homePresentationService, xmlManager);

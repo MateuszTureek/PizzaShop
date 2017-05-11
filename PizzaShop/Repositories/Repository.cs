@@ -52,6 +52,7 @@ namespace PizzaShop.Repository
 
         public void Update(TEntity entity)
         {
+            _dbSet.Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
     }

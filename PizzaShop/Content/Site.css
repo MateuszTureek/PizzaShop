@@ -25,11 +25,14 @@ nav>ul.navbar-nav{
     right: 20px;
     top: 10px;
 }
-#loginLink, #logedLink, #logoutForm a{
-    padding: 5px;
-    font-size: 1.1em;
+
+#LoginList, #LoggedList{
     position: relative;
     right: 30px;
+}
+#loginLink, #userLink, #logoutForm a{
+    font-size: 1.1em;
+    padding: 5px;
 }
 #loginLink:hover,
 #logoutForm a:hover,
@@ -38,7 +41,10 @@ nav>ul.navbar-nav{
     color: #221D46;
 }
 nav>ul.navbar-nav a:hover,
-nav>ul.navbar-nav a:focus{
+nav>ul.navbar-nav a:focus,
+#userLink:focus,
+#adminPanelLink:focus,
+#logoutLink:focus{
     background: white;
     color: #221D46;
 }

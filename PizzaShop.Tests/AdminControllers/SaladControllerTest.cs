@@ -33,15 +33,19 @@ namespace PizzaShop.Tests.AdminControllers
             var mapper = Substitute.For<IMapper>();
             var controller = new SaladController(service, mapper);
 
+            controller.TempData["ModelIsNotValid"] = "Fake content.";
+            controller.ViewBag.ModelIsNotValid = controller.TempData["ModelIsNotValid"];
             service.GetAll().Returns(salads);
 
             // Act
             var result = controller.Index() as ViewResult;
             var viewName = result.ViewName;
             var model = result.Model;
+            var viewBag = controller.ViewBag.ModelIsNotValid;
 
             //Assert
             Assert.That(result, !Is.Null);
+            Assert.That("Fake content.", Is.EqualTo(viewBag));
             Assert.That("Index", Is.EqualTo(viewName));
             Assert.That(model, !Is.Null);
         }
@@ -66,7 +70,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Post_Create_Good()
+        public void Good_Post_Create()
         {
             // Arrange
             var saladViewModel = new SaladViewModel()
@@ -119,19 +123,19 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Create(saladViewModel) as ViewResult;
-            var viewName = result.ViewName;
-            var model = result.Model;
+            var result = controller.Create(saladViewModel) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(valid, Is.False);
             Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(viewName));
-            Assert.That(model, Is.Null);
+            Assert.That("Index", Is.EqualTo(actionName));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
         }
 
         [Test]
-        public void Delete_Good()
+        public void Good_Delete()
         {
             // Arrange
             var id = 1;
@@ -166,6 +170,24 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
+        public void Delete_Id_Is_Null()
+        {
+            // Arrange
+            int? id = null;
+            var service = Substitute.For<ISaladRepository>();
+            var mapper = Substitute.For<IMapper>();
+            var controller = new SaladController(service, mapper);
+
+            // Act
+            var result = controller.Delete(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
+        }
+
+        [Test]
         public void Delete_Not_Ajax_Request()
         {
             // Arrange
@@ -197,7 +219,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Delete_Model_Null()
+        public void Delete_Salad_Null()
         {
             // Arrange
             var id = -1;
@@ -218,7 +240,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Get_Edit_Good()
+        public void Good_Get_Edit()
         {
             // Arrange
             var id = 1;
@@ -258,6 +280,24 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
+        public void Get_Edit_Id_Is_Null()
+        {
+            // Arrange
+            int? id = null;
+            var service = Substitute.For<ISaladRepository>();
+            var mapper = Substitute.For<IMapper>();
+            var controller = new SaladController(service, mapper);
+
+            // Act
+            var result = controller.Edit(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
+        }
+
+        [Test]
         public void Get_Edit_Not_Ajax_Request()
         {
             // Arrange
@@ -285,13 +325,13 @@ namespace PizzaShop.Tests.AdminControllers
             mapper.Map<Salad, SaladViewModel>(salad).Returns(saladViewModel);
 
             // Act
-            var result = controller.Edit(id) as HttpNotFoundResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(id) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
             var ajaxRequest = controller.Request.IsAjaxRequest();
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That(404, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(actionName));
             Assert.That(ajaxRequest, Is.False);
         }
 
@@ -310,16 +350,14 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var result = controller.Edit(id) as HttpNotFoundResult;
             var statusCode = result.StatusCode;
-            var statusDescription = result.StatusDescription;
-
+            
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That(404, Is.EqualTo(statusCode));
-            Assert.That("Nie znaleziono szukanego elementu.", Is.EqualTo(statusDescription));
         }
 
         [Test]
-        public void Post_Edit_Good()
+        public void Good_Post_Edit()
         {
             // Arrange
             var salad = new Salad()
@@ -410,13 +448,15 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Edit(saladViewModel) as HttpStatusCodeResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(saladViewModel) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That(valid, Is.False);
-            Assert.That(304, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(actionName));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
         }
     }
 }

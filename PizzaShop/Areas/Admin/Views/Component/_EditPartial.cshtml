@@ -1,0 +1,36 @@
+﻿
+@model PizzaShop.Areas.Admin.Models.ViewModels.ComponentViewModel
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+            </button>
+            <h4>Edytuj</h4>
+        </div>
+        @using (Html.BeginForm("Edit", "Component", new { area = "admin" }, FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row modal-body">
+                <div class="col-md-12">
+                    @Html.HiddenFor(m => m.ID)
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-admin">Zapisz zmiany</button>
+            </div>
+        }
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/customValidation")

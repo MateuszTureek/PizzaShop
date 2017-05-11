@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using PizzaShop.Areas.Admin.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace PizzaShop.Services.Identity.Interfaces
         Task CreateRoleAsync(string name);
         Task<IdentityRole> FindByIdAsync(string id);
         Task DeleteRoleAcync(IdentityRole role);
+        List<RoleViewModel> MapRoleListToViewModelList(List<IdentityRole> roleList);
     }
 }

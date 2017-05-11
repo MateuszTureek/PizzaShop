@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories.Shop.Interfaces
 {
-    public interface IPizzaSizePriceRepository : IRepository<int, PizzaSizePrice>
+    public interface IPizzaSizePriceRepository : IRepository<int?, PizzaSizePrice>
     {
         
     }

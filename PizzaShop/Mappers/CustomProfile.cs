@@ -32,6 +32,8 @@ namespace PizzaShop.Mappers
             CreateMap<SaladViewModel, Salad>();
             CreateMap<Drink, DrinkViewModel>();
             CreateMap<DrinkViewModel, Drink>();
+            CreateMap<ComponentViewModel, Component>().ForMember(d => d.Pizzas, s => s.Ignore());
+            CreateMap<Component, ComponentViewModel>();
             /* ================================== */
             CreateMap<ShopContactViewModel, ShopContact>().
                 ForMember<Address>(dest => dest.Address, input => input.MapFrom(s => new Address()

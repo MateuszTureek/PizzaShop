@@ -9,7 +9,7 @@ using PizzaShop.Repositories.CMS.Interfaces;
 
 namespace PizzaShop.Repositories.CMS.Classes
 {
-    public class SliderItemRepository : Repository<int, SliderItem>, ISliderItemRepository
+    public class SliderItemRepository : Repository<int?, SliderItem>, ISliderItemRepository
     {
         public SliderItemRepository(DbContext context) : base(context)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories.Shop.Interfaces
 {
-    public interface IPizzaSizeRepository : IRepository<int, PizzaSize>
+    public interface IPizzaSizeRepository : IRepository<int?, PizzaSize>
     {
         List<PizzaSize> GetBySize();
     }

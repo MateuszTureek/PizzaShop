@@ -33,15 +33,19 @@ namespace PizzaShop.Tests.AdminControllers
             var repository = Substitute.For<IDrinkRepository>();
             var mapper = Substitute.For<IMapper>();
             var controller = new DrinkController(repository, mapper);
+
+            controller.TempData["ModelIsNotValid"] = "Fake content.";
+            controller.ViewBag.ModelIsNotValid = controller.TempData["ModelIsNotValid"];
             repository.GetAll().Returns(drinks);
 
             // Act
             var result = controller.Index() as ViewResult;
             var viewName = result.ViewName;
             var model = result.Model as List<Drink>;
+            var viewBag = controller.ViewBag.ModelIsNotValid;
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.That("Fake content.", Is.EqualTo(viewBag));
             Assert.That("Index", Is.EqualTo(viewName));
             Assert.IsNotNull(model);
             Assert.That(5, Is.EqualTo(model.Count));
@@ -84,6 +88,7 @@ namespace PizzaShop.Tests.AdminControllers
             var mapper = Substitute.For<IMapper>();
             var controller = new DrinkController(repository, mapper);
             var validator = new ModelValidator<DrinkViewModel>(drinkViewModel);
+
             mapper.Map<DrinkViewModel, Drink>(drinkViewModel).Returns(drink);
             repository.Insert(drink);
             repository.Save();
@@ -117,17 +122,19 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Create(drinkViewModel) as ViewResult;
-            var viewName = result.ViewName;
+            var result = controller.Create(drinkViewModel) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(viewName));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
+            Assert.That("Index", Is.EqualTo(actionName));
             Assert.That(valid, Is.False);
         }
 
         [Test]
-        public void Delete_Ajax_Request()
+        public void Good_Delete()
         {
             // Arrange 
             var drink = new Drink()
@@ -160,6 +167,24 @@ namespace PizzaShop.Tests.AdminControllers
             Assert.That(result, !Is.Null);
             Assert.That(ajaxRequest, Is.True);
             Assert.That(jsonRequestBehavior, Is.EqualTo(JsonRequestBehavior.AllowGet));
+        }
+
+        [Test]
+        public void Delete_Id_Is_Null()
+        {
+            // Arrange
+            int? id = null;
+            var repository = Substitute.For<IDrinkRepository>();
+            var mapper = Substitute.For<IMapper>();
+            var controller = new DrinkController(repository, mapper);
+
+            // Act
+            var result = controller.Delete(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
         }
 
         [Test]
@@ -196,7 +221,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Delete_Model_Is_Null()
+        public void Delete_Drink_Is_Null()
         {
             // Arrange 
             Drink drink = null;
@@ -217,7 +242,25 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Get_Edit_Ajax_Request()
+        public void Get_Edit_Id_Is_Null()
+        {
+            // Arrange
+            int? id = null;
+            var repository = Substitute.For<IDrinkRepository>();
+            var mapper = Substitute.For<IMapper>();
+            var controller = new DrinkController(repository, mapper);
+
+            // Act
+            var result = controller.Edit(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
+        }
+
+        [Test]
+        public void Good_Get_Edit()
         {
             // Arrange
             var drink = new Drink()
@@ -288,18 +331,18 @@ namespace PizzaShop.Tests.AdminControllers
             mapper.Map<Drink, DrinkViewModel>(drink).Returns(drinkViewModel);
 
             // Act
-            var result = controller.Edit(id) as HttpNotFoundResult;
+            var result = controller.Edit(id) as RedirectToRouteResult;
             var ajaxRequest = controller.Request.IsAjaxRequest();
-            var statusCode = result.StatusCode;
+            var actionName= result.RouteValues.Values.ElementAt(0);
 
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That(ajaxRequest, Is.False);
-            Assert.That(404, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(actionName));
         }
 
         [Test]
-        public void Get_Edit_Model_Is_Null()
+        public void Get_Edit_Drink_Is_Null()
         {
             // Arrange
             Drink drink = null;
@@ -319,7 +362,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Post_Edit_Valid_Model_Current()
+        public void Good_Post_Edit()
         {
             // Arrange
             var drink = new Drink()
@@ -353,12 +396,12 @@ namespace PizzaShop.Tests.AdminControllers
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That(actionName, Is.EqualTo(actionName));
+            Assert.That("Index", Is.EqualTo(actionName));
             Assert.That(valid, Is.True);
         }
 
         [Test]
-        public void Post_Edit_Valid_Model_And_Current_Model_Is_Null()
+        public void Post_Edit_Drink_Is_Null()
         {
             // Arrange
             Drink drink = null;
@@ -381,7 +424,7 @@ namespace PizzaShop.Tests.AdminControllers
             var result = controller.Edit(drinkViewModel) as HttpNotFoundResult;
             var statusCode = result.StatusCode;
             var valid = validator.IsValid();
-
+            
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That(404, Is.EqualTo(statusCode));
@@ -407,13 +450,15 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Edit(drinkViewModel) as HttpStatusCodeResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(drinkViewModel) as ViewResult;
+            var viewName = result.ViewName;
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That(valid, Is.False);
-            Assert.That(304, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(viewName));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
         }
     }
 }

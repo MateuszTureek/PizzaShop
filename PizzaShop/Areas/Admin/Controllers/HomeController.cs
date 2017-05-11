@@ -20,14 +20,14 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var model = new MenuCardViewModel()
+            var menuCartViewModel = new MenuCardViewModel()
             {
                 Drinks = _service.GetAllDrinks(),
                 Pizzas = _service.GetAllPizzas(),
                 Salads = _service.GetAllSalads(),
                 Sauces = _service.GetAllSauces()
             };
-            return View("Index", model);
+            return View("Index", menuCartViewModel);
         }
 
         public ActionResult LoadingPartial()

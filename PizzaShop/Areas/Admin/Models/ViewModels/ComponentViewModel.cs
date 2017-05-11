@@ -6,18 +6,13 @@ using System.Web;
 
 namespace PizzaShop.Areas.Admin.Models.ViewModels
 {
-    public class SaladViewModel
+    public class ComponentViewModel
     {
         public int ID { get; set; }
 
         [Required]
-        [Display(Name = "Nazwa")]
+        [StringLength(30, ErrorMessage ="Max. ilość znaków dla pola {0} to {1}.")]
         [RegularExpression(@"^[a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ\s]*$")]
         public string Name { get; set; }
-
-        [Required]
-        [Display(Name = "Cena")]
-        [RegularExpression(@"\d+(\,\d{1,3})?", ErrorMessage = "Niewprawidłowa cena. Max. 3 znaki po przecinku.")]
-        public decimal? Price { get; set; }
     }
 }

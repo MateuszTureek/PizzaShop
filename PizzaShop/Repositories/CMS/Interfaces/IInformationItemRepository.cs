@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories.CMS.Interfaces
 {
-    public interface IInformationItemRepository : IRepository<int, InformationItem>
+    public interface IInformationItemRepository : IRepository<int?, InformationItem>
     {
         List<InformationItem> GetByPosition();
     }

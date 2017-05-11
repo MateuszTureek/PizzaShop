@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories.CMS.Interfaces
 {
-    public interface INewsRepository : IRepository<int, News>
+    public interface INewsRepository : IRepository<int?, News>
     {
         List<News> GetByAddedDate();
     }

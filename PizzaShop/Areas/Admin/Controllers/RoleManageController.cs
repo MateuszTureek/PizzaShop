@@ -6,6 +6,7 @@ using PizzaShop.Services.Identity.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -28,8 +29,8 @@ namespace PizzaShop.Areas.Admin.Controllers
         public ActionResult ListRoles()
         {
             var roles = _service.RoleList();
-            var model = _mapper.Map<List<IdentityRole>, List<RoleViewModel>>(roles);
-            return PartialView("_RolePartial", model);
+            var roleViewModelList = _service.MapRoleListToViewModelList(roles);
+            return PartialView("_RolePartial", roleViewModelList);
         }
 
         public ActionResult Create()
@@ -51,13 +52,13 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public async Task<ActionResult> Delete(string id)
         {
+            if (id == string.Empty)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var role = await _service.FindByIdAsync(id);
-            if (role != null)
-            {
-                await _service.DeleteRoleAcync(role);
-                return RedirectToAction("Index", "UserManage", new { area = "admin" });
-            }
-            return HttpNotFound();
+            if (role == null)
+                return HttpNotFound();
+            await _service.DeleteRoleAcync(role);
+            return RedirectToAction("Index", "UserManage", new { area = "admin" });
         }
     }
 }

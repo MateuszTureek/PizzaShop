@@ -12,7 +12,7 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
 
         [Required]
         [Display(Name = "Nazwa")]
-        [RegularExpression(@"^[a-zA-Z0-9\s-]*$", ErrorMessage = "Niepoprawna nazwa.")]
+        [RegularExpression(@"^[a-zA-Z0-9\s-ąćęłńóśźżĄĘŁŃÓŚŹŻ]*$", ErrorMessage = "Niepoprawna nazwa.")]
         public string Name { get; set; }
 
         [Range(double.MinValue,double.MaxValue)]

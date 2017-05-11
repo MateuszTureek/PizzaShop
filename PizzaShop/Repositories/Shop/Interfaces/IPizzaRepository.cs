@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories.Shop.Interfaces
 {
-    public interface IPizzaRepository : IRepository<int, Pizza>
+    public interface IPizzaRepository : IRepository<int?, Pizza>
     {
         /// <summary>
         /// Get pizza's component by pizza id.

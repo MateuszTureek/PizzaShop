@@ -41,8 +41,7 @@ namespace PizzaShop.Tests.AdminControllers
             var controller = new RoleManageController(service, mapper);
 
             service.RoleList().Returns(roles);
-            mapper.Map<List<IdentityRole>, List<RoleViewModel>>(roles).Returns(modelRoles);
-
+            service.MapRoleListToViewModelList(roles).Returns(modelRoles);
             // Act
             var result = controller.ListRoles() as PartialViewResult;
             var viewName = result.ViewName;
@@ -162,10 +161,28 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
+        public async Task Delete_Id_Is_Null()
+        {
+            // Arrange
+            string id = string.Empty;
+            var service = Substitute.For<IRoleService>();
+            var mapper = Substitute.For<IMapper>();
+            var controller = new RoleManageController(service, mapper);
+
+            // Act
+            var result = await controller.Delete(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
+        }
+
+        [Test]
         public async Task Delete_Role_Is_Null()
         {
             // Arrange
-            string id = "";
+            string id = "hkddkj";
             IdentityRole role = null;
             var service = Substitute.For<IRoleService>();
             var mapper = Substitute.For<IMapper>();

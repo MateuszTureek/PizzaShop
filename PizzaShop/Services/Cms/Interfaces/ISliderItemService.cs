@@ -19,6 +19,7 @@ namespace PizzaShop.Services.Cms.Interfaces
         string AddSliderItemImage(HttpPostedFileBase contentImage);
         void SaveSliderItem();
         SliderItem MapViewModelToModel(SliderItemViewModel viewModel);
+        SliderItem MapViewModelToModel(SliderItemViewModel viewModel, SliderItem sliderItem);
         SliderItemViewModel MapModelToViewModel(SliderItem model);
     }
 }

@@ -14,7 +14,7 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
         [Required]
         [Display(Name = "Nazwa")]
         [StringLength(50, ErrorMessage = "Max. liczba znaków {1}.")]
-        [RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Pole powinno składać się z liter lub cyfr.")]
+        [RegularExpression(@"^[a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ\s]*$", ErrorMessage = "Pole powinno składać się z liter lub cyfr.")]
         public string Name { get; set; }
         
         [Required]

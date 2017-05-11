@@ -35,7 +35,7 @@ namespace PizzaShop.Services.shop.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Pizza GetPizza(int id);
+        Pizza GetPizza(int? id);
         /// <summary>
         /// Get all pizzas.
         /// </summary>

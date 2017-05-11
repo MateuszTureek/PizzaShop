@@ -12,7 +12,7 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
         public int ID { get; set; }
 
         [Required]
-        [RegularExpression(@"^[a-zA-Z\s]*$", ErrorMessage ="Pole {0} powinno skłądać się z samych liter.")]
+        [RegularExpression(@"^[a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ\s]*$")]
         [Display(Name = "Tytuł")]
         [MaxLength(30, ErrorMessage = "Max. liczba znaków {1}")]
         public string Title { get; set; }

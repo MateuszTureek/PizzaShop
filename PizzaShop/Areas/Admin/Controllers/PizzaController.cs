@@ -22,8 +22,9 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var model = _service.GetAllPizzas();
-            return View("Index", model);
+            ViewBag.ModelIsNotValid = TempData["ModelIsNotValid"];
+            var pizzas = _service.GetAllPizzas();
+            return View("Index", pizzas);
         }
 
         public ActionResult CreatePartial()
@@ -34,68 +35,67 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "ID")]PizzaViewModel pizzaModel)
+        public ActionResult Create([Bind(Exclude = "ID")]PizzaViewModel pizzaViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _service.CreatePizza(pizzaModel);
-                _service.SavePizza();
-                return RedirectToAction("Index", "Pizza");
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
+                return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            _service.CreatePizza(pizzaViewModel);
+            _service.SavePizza();
+            return RedirectToAction("Index", "Pizza");
         }
 
         public ActionResult Delete(int? id)
         {
-            var model = _service.GetPizza((int)id);
-            if (model != null)
-            {
-                if (Request.IsAjaxRequest())
-                {
-                    _service.DeletePizza(model);
-                    _service.SavePizza();
-                    return Json("", JsonRequestBehavior.AllowGet);
-                }
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var pizza = _service.GetPizza(id);
+            if (pizza == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
                 return RedirectToAction("Index");
-            }
-            return HttpNotFound();
+            _service.DeletePizza(pizza);
+            _service.SavePizza();
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)
         {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var pizza = _service.GetPizza((int)id);
-            if (pizza != null)
+            if (pizza == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
+                return RedirectToAction("Index");
+            ViewBag.Components = _service.FindNotPizzaComponent(id);
+            ViewBag.CurrentComponents = _service.FindComponents(id);
+            var pizzaSizePrices = _service.GetPizzaSizePrices(id);
+            var pizzaViewModel = new PizzaViewModel()
             {
-                if (Request.IsAjaxRequest())
-                {
-                    ViewBag.Components = _service.FindNotPizzaComponent(id);
-                    ViewBag.CurrentComponents = _service.FindComponents(id);
-                    var pizzaSizePrices = _service.GetPizzaSizePrices(id);
-                    var viewModel = new PizzaViewModel()
-                    {
-                        ID = pizza.ID,
-                        Name = pizza.Name,
-                        PriceForSmall = pizzaSizePrices[0].Price,
-                        PriceForMedium = pizzaSizePrices[1].Price,
-                        PriceForLarge = pizzaSizePrices[2].Price
-                    };
-                    return PartialView("_EditPartial", viewModel);
-                }
-            }
-            return HttpNotFound("Nie znaleziono szukanego elementu.");
+                ID = pizza.ID,
+                Name = pizza.Name,
+                PriceForSmall = pizzaSizePrices[0].Price,
+                PriceForMedium = pizzaSizePrices[1].Price,
+                PriceForLarge = pizzaSizePrices[2].Price
+            };
+            return PartialView("_EditPartial", pizzaViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(PizzaViewModel model)
+        public ActionResult Edit(PizzaViewModel pizzaViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _service.UpdatePizza(model);
-                _service.SavePizza();
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
                 return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            _service.UpdatePizza(pizzaViewModel);
+            _service.SavePizza();
+            return RedirectToAction("Index");
         }
     }
 }

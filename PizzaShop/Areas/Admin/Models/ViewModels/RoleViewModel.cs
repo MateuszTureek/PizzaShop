@@ -13,6 +13,7 @@ namespace PizzaShop.Areas.Admin.Models.ViewModels
         [Required]
         [Display(Name="Nazwa")]
         [StringLength(256, ErrorMessage ="Pole {0} max. {1} znaków.")]
+        [RegularExpression(@"^[a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ\s]*$")]
         public string Name { get; set; }
     }
 }

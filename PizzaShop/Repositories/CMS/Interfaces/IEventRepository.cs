@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Repositories.CMS.Interfaces
 {
-    public interface IEventRepository : IRepository<int, Event>
+    public interface IEventRepository : IRepository<int?, Event>
     {
         List<Event> GetByAddedDate();
     }

@@ -5,21 +5,22 @@
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav">
+        <ul id="LoggedList" class="nav navbar-nav navbar-right">
             <li>
-                <a href="@Url.Action("Index","Manage")" title="Manage" id="logedLink">
+                <a href="@Url.Action("Index","Manage")" title="Manage" id="userLink">
                     <span class="glyphicon glyphicon-user"></span>
                     @User.Identity.GetUserName()
                 </a>
             </li>
-            <li>@Html.ActionLink("Panel administracyjny", "Index", "Home", new { area = "admin" }, null)</li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
+            <li>@Html.ActionLink("Panel administracyjny", "Index", "Home", new { area = "admin" },
+                                 htmlAttributes: new { id = "adminPanelLink" })</li>
+            <li><a id="logoutLink" href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
         </ul>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
+    <ul id="LoginList" class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Logowanie", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

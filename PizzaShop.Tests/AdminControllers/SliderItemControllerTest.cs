@@ -32,16 +32,20 @@ namespace PizzaShop.Tests.AdminControllers
             var service = Substitute.For<ISliderItemService>();
             var controller = new SliderItemController(service);
 
+            controller.TempData["ModelIsNotValid"] = "Fake content.";
+            controller.ViewBag.ModelIsNotValid = controller.TempData["ModelIsNotValid"];
             service.SliderItemList().Returns(sliderItems);
 
             // Act
             var result = controller.Index() as ViewResult;
             var viewName = result.ViewName;
             var model = result.Model;
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             //Assert
             Assert.That(result, !Is.Null);
             Assert.That("Index", Is.EqualTo(viewName));
+            Assert.That("Fake content.", Is.EqualTo(tempData));
             Assert.That(model, !Is.Null);
         }
 
@@ -64,7 +68,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Post_Create_Model_Is_Valid_File_Good()
+        public void Good_Post_Create()
         {
             // Arrange
             var sliderItemViewModel = new SliderItemViewModel()
@@ -136,19 +140,19 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Create(sliderItemViewModel, fakeImage) as ViewResult;
-            var viewName = result.ViewName;
-            var model = result.Model;
+            var result = controller.Create(sliderItemViewModel, fakeImage) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(valid, Is.False);
             Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(viewName));
-            Assert.That(model, Is.Null);
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
+            Assert.That("Index", Is.EqualTo(actionName));
         }
 
         [Test]
-        public void Post_Create_File_Is_Null()
+        public void Post_Create_File_Is_Null_And_Content_Type_Not_Image()
         {
             // Arrange
             var sliderItemViewModel = new SliderItemViewModel()
@@ -162,77 +166,18 @@ namespace PizzaShop.Tests.AdminControllers
             var controller = new SliderItemController(service);
 
             // Act
-            var result = controller.Create(sliderItemViewModel, fakeImage) as ViewResult;
-            var viewName = result.ViewName;
-            var model = result.Model;
-
-
-            // Assert
-            Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(viewName));
-            Assert.That(model, Is.Null);
-        }
-
-        [Test]
-        public void Post_Create_File_Content_Lenght_0()
-        {
-            // Arrange
-            var sliderItemViewModel = new SliderItemViewModel()
-            {
-                Position = 1,
-                ShortDescription = "Slider description 1",
-                PictureUrl = "/Content/Images/pizzaSlide_1.jpg"
-            };
-            var fakeImage = Substitute.For<HttpPostedFileBase>();
-            var service = Substitute.For<ISliderItemService>();
-            var controller = new SliderItemController(service);
-
-            // Act
-            var result = controller.Create(sliderItemViewModel, fakeImage) as ViewResult;
-            var viewName = result.ViewName;
-            var model = result.Model;
+            var result = controller.Create(sliderItemViewModel, fakeImage) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(viewName));
-            Assert.That(model, Is.Null);
+            Assert.That("Index", Is.EqualTo(actionName));
+            Assert.That("Zdjęcie nie zostało przesłane prawidłowo. Spróbuj ponownie.", Is.EqualTo(tempData));
         }
 
         [Test]
-        public void Post_Create_Content_Type_Is_Bad()
-        {
-            // Arrange
-            var sliderItemViewModel = new SliderItemViewModel()
-            {
-                Position = 1,
-                ShortDescription = "Slider description 1",
-                PictureUrl = "/Content/Images/pizzaSlide_1.jpg"
-            };
-            var fileName = "text.jpg";
-            var fileLength = 1000;
-            var contentType = "text";
-            var fakeImage = Substitute.For<HttpPostedFileBase>();
-            var service = Substitute.For<ISliderItemService>();
-
-            fakeImage.FileName.Returns(fileName);
-            fakeImage.ContentType.Returns(contentType);
-            fakeImage.ContentLength.Returns(fileLength);
-
-            var controller = new SliderItemController(service);
-
-            // Act
-            var result = controller.Create(sliderItemViewModel, fakeImage) as ViewResult;
-            var viewName = result.ViewName;
-            var model = result.Model;
-
-            // Assert
-            Assert.That(result, !Is.Null);
-            Assert.That("Index", Is.EqualTo(viewName));
-            Assert.That(model, Is.Null);
-        }
-
-        [Test]
-        public void Delete_Good()
+        public void Good_Delete()
         {
             // Arrange
             var id = 1;
@@ -264,6 +209,24 @@ namespace PizzaShop.Tests.AdminControllers
             Assert.That(ajaxRequest, Is.True);
             Assert.That(JsonRequestBehavior.AllowGet, Is.EqualTo(jsonRequestBehavior));
             Assert.That("", Is.EqualTo(data));
+        }
+
+        [Test]
+        public void Delete_Id_Is_Null()
+        {
+            // Arrange
+            int? id = null;
+            var service = Substitute.For<ISliderItemService>();
+            var controller = new SliderItemController(service);
+
+            // Act
+            var result = controller.Delete(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
+
         }
 
         [Test]
@@ -318,7 +281,7 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
-        public void Get_Edit_Good()
+        public void Good_Get_Edit()
         {
             // Arrange
             var id = 1;
@@ -359,6 +322,24 @@ namespace PizzaShop.Tests.AdminControllers
         }
 
         [Test]
+        public void Get_Edit_Id_Is_Null()
+        {
+            // Arrange
+            int? id = null;
+            var service = Substitute.For<ISliderItemService>();
+            var controller = new SliderItemController(service);
+
+            // Act
+            var result = controller.Edit(id) as HttpStatusCodeResult;
+            var statusCode = result.StatusCode;
+
+            // Assert
+            Assert.That(result, !Is.Null);
+            Assert.That(400, Is.EqualTo(statusCode));
+
+        }
+
+        [Test]
         public void Get_Edit_Not_Ajax_Request()
         {
             // Arrange
@@ -385,15 +366,15 @@ namespace PizzaShop.Tests.AdminControllers
             controller.ControllerContext = fakeController.GetControllerContext<SliderItemController>(new RouteData(), controller);
             service.GetSliderItem(id).Returns(sliderItem);
             service.MapModelToViewModel(sliderItem).Returns(sliderItemViewModel);
-            
+
             // Act
-            var result = controller.Edit(id) as HttpNotFoundResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(id) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
             var ajaxRequest = controller.Request.IsAjaxRequest();
 
             // Assert
             Assert.That(result, !Is.Null);
-            Assert.That(404, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(actionName));
             Assert.That(ajaxRequest, Is.False);
         }
 
@@ -411,16 +392,14 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var result = controller.Edit(id) as HttpNotFoundResult;
             var statusCode = result.StatusCode;
-            var statusDescription = result.StatusDescription;
-
+            
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That(404, Is.EqualTo(statusCode));
-            Assert.That("Nie znaleziono szukanego elementu.", Is.EqualTo(statusDescription));
         }
 
         [Test]
-        public void Post_Edit_Good()
+        public void Good_Post_Edit()
         {
             // Arrange
             var id = 1;
@@ -512,13 +491,15 @@ namespace PizzaShop.Tests.AdminControllers
             // Act
             var valid = validator.IsValid();
             validator.AddToModelError(controller);
-            var result = controller.Edit(sliderItemViewModel) as HttpStatusCodeResult;
-            var statusCode = result.StatusCode;
+            var result = controller.Edit(sliderItemViewModel) as RedirectToRouteResult;
+            var actionName = result.RouteValues.Values.ElementAt(0);
+            var tempData = controller.TempData["ModelIsNotValid"];
 
             // Assert
             Assert.That(result, !Is.Null);
             Assert.That(valid, Is.False);
-            Assert.That(304, Is.EqualTo(statusCode));
+            Assert.That("Index", Is.EqualTo(actionName));
+            Assert.That("Wystąpił błąd w formularzu, spróbuj ponownie.", Is.EqualTo(tempData));
         }
     }
 }

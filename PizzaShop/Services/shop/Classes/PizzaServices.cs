@@ -76,7 +76,7 @@ namespace PizzaShop.Services.shop.Classes
             _pizzaRepository.Delete(pizza);
         }
 
-        public Pizza GetPizza(int id)
+        public Pizza GetPizza(int? id)
         {
             var result = _pizzaRepository.Get(id);
             return result;

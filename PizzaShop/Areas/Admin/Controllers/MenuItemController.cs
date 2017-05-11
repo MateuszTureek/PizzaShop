@@ -25,8 +25,9 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var model = _repository.GetAll();
-            return View("Index", model);
+            ViewBag.ModelIsNotValid = TempData["ModelIsNotValid"];
+            var menuItems = _repository.GetAll().ToList();
+            return View("Index", menuItems);
         }
 
         public ActionResult CreatePartial()
@@ -36,63 +37,62 @@ namespace PizzaShop.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "ID")]MenuItemViewModel model)
+        public ActionResult Create([Bind(Exclude = "ID")]MenuItemViewModel menuItemViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = _mapper.Map<MenuItemViewModel, MenuItem>(model);
-                _repository.Insert(result);
-                _repository.Save();
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
                 return RedirectToAction("Index");
             }
-            return View("Index");
+            var menuItem = _mapper.Map<MenuItemViewModel, MenuItem>(menuItemViewModel);
+            _repository.Insert(menuItem);
+            _repository.Save();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int? id)
         {
-            var model = _repository.Get((int)id);
-            if (model != null)
-            {
-                if (Request.IsAjaxRequest())
-                {
-                    _repository.Delete(model);
-                    _repository.Save();
-                    return Json("", JsonRequestBehavior.AllowGet);
-                }
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var menuItem = _repository.Get(id);
+            if (menuItem == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
                 return RedirectToAction("Index");
-            }
-            return HttpNotFound();
+            _repository.Delete(menuItem);
+            _repository.Save();
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)
         {
-            var model = _repository.Get((int)id);
-            if (model != null)
-            {
-                var viewModel = _mapper.Map<MenuItem, MenuItemViewModel>(model);
-                if (Request.IsAjaxRequest())
-                    return PartialView("_EditPartial", viewModel);
-            }
-            return HttpNotFound("Nie znaleziono szukanego elementu.");
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var menuItem = _repository.Get(id);
+            if (menuItem == null)
+                return HttpNotFound();
+            if (!Request.IsAjaxRequest())
+                return RedirectToAction("Index");
+            var menuItemViewModel = _mapper.Map<MenuItem, MenuItemViewModel>(menuItem);
+            return PartialView("_EditPartial", menuItemViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MenuItemViewModel model)
+        public ActionResult Edit(MenuItemViewModel menuItemViewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var currentModel = _repository.Get(model.ID);
-                if (currentModel != null)
-                {
-                    var result = _mapper.Map<MenuItemViewModel, MenuItem>(model, currentModel);
-                    _repository.Update(result);
-                    _repository.Save();
-                    return RedirectToAction("Index");
-                }
-                return HttpNotFound();
+                TempData["ModelIsNotValid"] = "Wystąpił błąd w formularzu, spróbuj ponownie.";
+                return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            var menuItem = _repository.Get(menuItemViewModel.ID);
+            if (menuItem == null)
+                return HttpNotFound();
+            var result = _mapper.Map<MenuItemViewModel, MenuItem>(menuItemViewModel, menuItem);
+            _repository.Update(result);
+            _repository.Save();
+            return RedirectToAction("Index");
         }
     }
 }
