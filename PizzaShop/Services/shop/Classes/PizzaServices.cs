@@ -166,7 +166,7 @@ namespace PizzaShop.Services.shop.Classes
                     new PizzaSizePrice()
                     {
                         PizzaID = pizza.ID,
-                        Price = model.PriceForSmall,
+                        Price = model.PriceForLarge,
                         PizzaSizeID = pizzaSizes.Skip(2).First().ID
                     }
                 };
