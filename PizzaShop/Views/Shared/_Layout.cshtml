@@ -10,12 +10,32 @@
 </head>
 <body>
     <div id="Container" class="container">
-        <header class="navbar navbar-pizza">
+        <nav class="navbar navbar-pizza">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Navbar-Collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Pizza Shop", "", "", null, new { @class = "navbar-brand navbar-logo" })
+                </div>
+
+                <div id="Navbar-Collapse" class="collapse navbar-collapse">
+                    @Html.Partial("_LoginPartial")
+                    <div class="clearfix"></div>
+                    @Html.Action("SiteMenuPartial", "Home")
+                </div>
+            </div>
+        </nav>
+        @*
+        <nav class="navbar navbar-pizza">
             <div class="container-fluid">
                 <div id="Logo" class="navbar-left">
                     @Html.ActionLink("Pizza Shop", "", "", null, new { @class = "navbar-logo" })
                 </div>
-                <div class="navbar-right">
+                <div class="navbar-right" style="border: 1px solid red;">
                     @Html.Partial("_LoginPartial")
                     <div class="clearfix"></div>
                     <div id="OrderPhoneNumber" class="navbar-right">
@@ -23,11 +43,12 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <nav class="navbar-right">
+                <div class="navbar-right" style="border: 1px solid red; margin:0;padding:0;">
                     @Html.Action("SiteMenuPartial","Home")
-                </nav>
+                </div>
             </div>
-        </header>
+        </nav>
+        *@
         <main class="container-fluid">
             @RenderBody()
         </main>
